@@ -1,0 +1,1721 @@
+You are a senior full-stack engineer, database architect, CMS engineer, and premium UI/UX designer.
+
+Build a COMPLETE production-ready website and custom CMS for:
+
+REKAR GROUP
+Digital Agency & Technology
+
+IMPORTANT:
+This must NOT be a static agency website.
+
+I need a FULL BACKEND + DATABASE + SECURE ADMIN DASHBOARD so that almost every visible part of the website can be managed without editing source code.
+
+The final website must behave like a custom-built CMS.
+
+==================================================
+1. CORE GOAL
+==================================================
+
+Build a premium Kurdish technology/agency website for Rekar Group.
+
+The public website must contain:
+
+- Home
+- Services
+- Projects / Portfolio
+- Project Details
+- News / Insights / Blog
+- Blog Details
+- About
+- Contact
+- Custom dynamic pages
+
+But all important website content must be editable from an Admin Dashboard.
+
+I must be able to:
+
+- add content
+- remove content
+- edit content
+- hide/show content
+- reorder content
+- publish/unpublish content
+- change images
+- change titles
+- change descriptions
+- change buttons
+- change navigation
+- change footer
+- change social links
+- add new services
+- remove services
+- add projects
+- remove projects
+- add blog posts
+- create new categories
+- add custom pages
+- change homepage sections
+- enable/disable homepage sections
+- reorder homepage sections
+
+WITHOUT changing the code.
+
+==================================================
+2. TECHNOLOGY STACK
+==================================================
+
+Use:
+
+Frontend:
+- Next.js latest stable
+- App Router
+- React
+- TypeScript
+- Tailwind CSS
+
+Backend:
+- Next.js Server Actions / Route Handlers where appropriate
+
+Database:
+- Supabase PostgreSQL
+
+Authentication:
+- Supabase Auth
+
+Storage:
+- Supabase Storage
+
+Use:
+- Server Components where appropriate
+- Client Components only when required
+- Zod validation
+- React Hook Form
+- proper TypeScript types
+
+Optional UI libraries:
+- shadcn/ui
+- Lucide icons
+
+Animations:
+- Framer Motion
+
+Rich text editor:
+- Tiptap or another modern production-ready editor
+
+Do NOT use a fake API.
+
+Actually connect the application to Supabase.
+
+==================================================
+3. BRAND IDENTITY
+==================================================
+
+The Rekar Group logo is based around purple.
+
+The website's old blue/cyan style is NOT appropriate.
+
+Build the visual identity around the real logo.
+
+Primary palette:
+
+Deep background:
+#100018
+
+Secondary background:
+#190026
+
+Purple:
+#6F00B8
+
+Primary purple:
+#7B00C8
+
+Bright purple:
+#9A24F0
+
+Light violet:
+#C878FF
+
+White:
+#FFFFFF
+
+Main text:
+#FBF7FF
+
+Muted text:
+#C8ABD9
+
+Borders:
+rgba(255,255,255,0.10)
+
+Cards:
+rgba(255,255,255,0.04)
+
+The site should use:
+
+- Deep purple backgrounds
+- Purple ambient glow
+- White typography
+- Subtle violet gradients
+- Glass effects
+- Very subtle decorative shapes based on the geometry of the Rekar Group logo
+
+DO NOT make everything bright purple.
+
+Maintain strong contrast and premium visual hierarchy.
+
+==================================================
+4. LOGO
+==================================================
+
+Use the real Rekar Group logo asset supplied with the project.
+
+Create:
+
+public/brand/logo.png
+public/brand/logo-mark.png
+
+Do not create a fake R logo if the real logo exists.
+
+Use the logo in:
+
+- Header
+- Mobile menu
+- Hero visual
+- Admin login
+- Admin sidebar
+- Footer
+- Open Graph image where appropriate
+
+The background and accent colors must visually match the logo.
+
+==================================================
+5. LANGUAGE AND RTL
+==================================================
+
+Primary website language:
+
+Kurdish Sorani
+
+HTML:
+
+lang="ckb"
+dir="rtl"
+
+Everything must support proper RTL.
+
+Check individually:
+
+- navigation
+- icons
+- arrows
+- breadcrumbs
+- cards
+- forms
+- dialogs
+- tables
+- pagination
+- admin dashboard
+- rich text editor
+
+Do not simply reverse everything blindly.
+
+Directional icons must make sense in RTL.
+
+Use a Kurdish-compatible font such as:
+
+Noto Sans Arabic
+
+or another high-quality font bundled locally.
+
+==================================================
+6. PUBLIC WEBSITE STRUCTURE
+==================================================
+
+Create these routes:
+
+/
+ /services
+ /projects
+ /projects/[slug]
+ /insights
+ /insights/[slug]
+ /about
+ /contact
+ /[slug]
+
+The /[slug] route is for custom CMS pages.
+
+==================================================
+7. HOME PAGE
+==================================================
+
+The default homepage order should be:
+
+1. Header
+2. Hero
+3. Auto-scrolling project/app logos
+4. Services
+5. Selected Projects
+6. Company Statistics
+7. Work Process
+8. Clients
+9. Latest News / Insights
+10. Testimonials
+11. CTA
+12. Footer
+
+IMPORTANT:
+
+These sections MUST NOT be permanently hardcoded.
+
+Create a database-driven homepage section system.
+
+From Admin I must be able to:
+
+- enable section
+- disable section
+- reorder section
+- rename section heading
+- change section subtitle
+- change section settings
+
+Example:
+
+Hero
+Enabled: true
+Order: 1
+
+Project Marquee
+Enabled: true
+Order: 2
+
+Services
+Enabled: true
+Order: 3
+
+Testimonials
+Enabled: false
+Order: 9
+
+==================================================
+8. HOMEPAGE SECTION MANAGER
+==================================================
+
+Create an Admin page:
+
+/admin/home
+
+Display all homepage sections.
+
+Each section should have:
+
+- drag handle
+- section name
+- enabled/disabled switch
+- edit button
+
+Allow drag-and-drop reordering.
+
+Save order to database.
+
+Supported section types:
+
+hero
+project_marquee
+services
+featured_projects
+stats
+process
+clients
+posts
+testimonials
+cta
+custom_content
+
+Design the architecture so more section types can be added later.
+
+==================================================
+9. HERO CMS
+==================================================
+
+Hero must be fully editable.
+
+Admin fields:
+
+- small badge
+- main heading
+- highlighted heading
+- description
+- primary button label
+- primary button URL
+- secondary button label
+- secondary button URL
+- visual enabled
+- stats enabled
+
+Hero statistics:
+
+- number
+- label
+- order
+- visible
+
+Default example:
+
+150+
+پڕۆژەی تەواوکراو
+
+98%
+ڕەزامەندی کڕیارەکان
+
+5+
+ساڵ ئەزموون
+
+==================================================
+10. SERVICES CMS
+==================================================
+
+Create database-driven services.
+
+Admin route:
+
+/admin/services
+
+I must be able to:
+
+CREATE
+EDIT
+DELETE
+PUBLISH
+UNPUBLISH
+REORDER
+
+Fields:
+
+id
+title
+slug
+short_description
+full_description
+icon
+cover_image
+features
+sort_order
+status
+seo_title
+seo_description
+created_at
+updated_at
+
+Default examples:
+
+سپۆنسەر و ڕیکلام
+سۆشیال میدیا
+دیزاین و براندینگ
+وێبسایت
+مۆبایل ئەپ
+داتابەیس و سیستەم
+ڕاوێژکاری دیجیتاڵ
+
+==================================================
+11. PROJECT / PORTFOLIO CMS
+==================================================
+
+Admin:
+
+/admin/projects
+
+Provide full CRUD.
+
+Fields:
+
+id
+name
+slug
+category_id
+short_description
+full_description
+icon
+cover_image
+featured
+status
+client_name
+completion_date
+website_url
+play_store_url
+app_store_url
+github_url
+sort_order
+created_at
+updated_at
+
+Additional related information:
+
+technologies
+platforms
+features
+screenshots
+gallery
+case_study
+challenge
+solution
+result
+
+Project statuses:
+
+draft
+published
+archived
+
+Categories example:
+
+Apps
+Websites
+Systems
+
+Admin must be able to create additional categories.
+
+==================================================
+12. PROJECT GALLERY
+==================================================
+
+Allow multiple screenshots per project.
+
+Each image:
+
+- image
+- alt text
+- caption
+- order
+
+Admin must be able to:
+
+upload
+delete
+reorder
+replace images
+
+Use Supabase Storage.
+
+==================================================
+13. PROJECT DETAIL PAGE
+==================================================
+
+Create:
+
+/projects/[slug]
+
+Display:
+
+- project icon
+- project title
+- category
+- hero screenshot
+- description
+- technologies
+- platforms
+- challenge
+- solution
+- features
+- screenshot gallery
+- external links
+- related projects
+
+Do not show empty sections.
+
+==================================================
+14. AUTO-SCROLL PROJECT MARQUEE
+==================================================
+
+Create an automatically moving horizontal section.
+
+It should display project icons and names.
+
+Examples:
+
+KRD TV
+Noor
+Kurdish POS
+Girfan
+Krin
+Dagirtin
+Walam
+
+But these MUST come from the database.
+
+Add a project field:
+
+show_in_marquee
+
+Admin can turn this on/off.
+
+The marquee must:
+
+- scroll continuously
+- loop infinitely
+- pause on hover
+- remain smooth
+- work on mobile
+- allow horizontal touch interaction
+
+==================================================
+15. BLOG / NEWS / INSIGHTS CMS
+==================================================
+
+Create:
+
+/admin/posts
+
+Full blogging CMS.
+
+Fields:
+
+id
+title
+slug
+excerpt
+content
+cover_image
+category_id
+author_id
+featured
+status
+published_at
+seo_title
+seo_description
+og_image
+created_at
+updated_at
+
+Statuses:
+
+draft
+published
+scheduled
+archived
+
+Admin must be able to:
+
+- create post
+- edit post
+- delete post
+- preview post
+- publish post
+- unpublish post
+- schedule post
+
+==================================================
+16. RICH TEXT EDITOR
+==================================================
+
+Use a modern rich editor.
+
+Support:
+
+- headings
+- paragraphs
+- bold
+- italic
+- lists
+- links
+- quotes
+- code blocks
+- images
+- captions
+- separators
+
+Store editor content safely.
+
+Sanitize rendered HTML/content.
+
+==================================================
+17. BLOG CATEGORIES AND TAGS
+==================================================
+
+Create:
+
+/admin/categories
+/admin/tags
+
+Admin can:
+
+create
+edit
+delete
+
+Posts can have:
+
+one category
+multiple tags
+
+==================================================
+18. CUSTOM PAGE BUILDER
+==================================================
+
+This is extremely important.
+
+Create:
+
+/admin/pages
+
+I must be able to create completely new website pages without editing code.
+
+Example:
+
+/privacy
+/company
+/careers
+/advertising
+/support
+
+Page fields:
+
+title
+slug
+status
+seo_title
+seo_description
+
+Each page contains ordered content blocks.
+
+Create reusable block types:
+
+Heading
+Text
+Rich Text
+Image
+Image + Text
+Gallery
+Button
+CTA
+FAQ
+Stats
+Features
+Video Embed
+Spacer
+Custom HTML only for super admin
+
+Admin must be able to:
+
+- add block
+- edit block
+- delete block
+- duplicate block
+- hide block
+- drag/drop reorder block
+
+Store page blocks in a scalable structure.
+
+==================================================
+19. NAVIGATION MANAGER
+==================================================
+
+Create:
+
+/admin/navigation
+
+I must be able to manage website menus.
+
+Navigation item fields:
+
+label
+URL
+type
+parent
+order
+open_in_new_tab
+visible
+
+Support nested items.
+
+Example:
+
+سەرەتا
+خزمەتگوزارییەکان
+پڕۆژەکان
+زانیاری و نوێکاری
+دەربارەی ئێمە
+پەیوەندی
+
+Admin can add/remove these.
+
+Do not hardcode menu items permanently.
+
+==================================================
+20. FOOTER MANAGER
+==================================================
+
+Footer must also be database-driven.
+
+Admin page:
+
+/admin/settings/footer
+
+Editable:
+
+company description
+phone
+email
+location
+copyright
+footer navigation
+social links
+
+Social links:
+
+Facebook
+Instagram
+TikTok
+Telegram
+LinkedIn
+YouTube
+X
+
+Each can be:
+
+enabled
+disabled
+reordered
+edited
+
+==================================================
+21. GENERAL SITE SETTINGS
+==================================================
+
+Create:
+
+/admin/settings
+
+Editable:
+
+Company Name
+English Company Name
+Tagline
+Logo
+Logo Mark
+Favicon
+Phone
+Email
+Address
+WhatsApp
+Default SEO title
+Default SEO description
+OG image
+Theme settings
+Contact information
+Google Maps URL
+
+==================================================
+22. THEME SETTINGS
+==================================================
+
+I want the site to remain consistent with Rekar Group's purple brand.
+
+Do NOT create a complete visual page designer.
+
+But Admin should be able to change basic brand settings:
+
+primary color
+secondary color
+accent color
+background color
+logo
+favicon
+
+Use safe validation.
+
+Create CSS variables from these settings.
+
+Do not allow settings to destroy readability.
+
+==================================================
+23. STATS MANAGER
+==================================================
+
+Create:
+
+/admin/stats
+
+Fields:
+
+value
+label
+icon
+order
+visible
+
+Examples:
+
+150+
+پڕۆژە
+
+98%
+ڕەزامەندی
+
+5+
+ساڵ ئەزموون
+
+==================================================
+24. WORK PROCESS MANAGER
+==================================================
+
+Create:
+
+/admin/process
+
+Admin can edit:
+
+step number
+title
+description
+icon
+order
+visible
+
+==================================================
+25. CLIENTS / PARTNERS
+==================================================
+
+Create:
+
+/admin/clients
+
+Fields:
+
+name
+logo
+website
+order
+visible
+
+Display as a modern logo marquee/grid.
+
+==================================================
+26. TESTIMONIALS
+==================================================
+
+Create:
+
+/admin/testimonials
+
+Fields:
+
+name
+job_title
+company
+avatar
+testimonial
+rating
+featured
+visible
+order
+
+==================================================
+27. CONTACT FORM
+==================================================
+
+Public route:
+
+/contact
+
+Fields:
+
+ناوی تەواو
+ژمارەی مۆبایل
+ئیمەیڵ
+کۆمپانیا
+جۆری پڕۆژە
+بودجە
+پەیام
+
+Save every submission in database.
+
+Create:
+
+/admin/messages
+
+Admin can:
+
+- view messages
+- mark unread/read
+- mark important
+- archive
+- delete
+
+Add spam protection.
+
+Add server-side validation.
+
+Never expose Supabase service-role key to the browser.
+
+==================================================
+28. ADMIN DASHBOARD
+==================================================
+
+Create:
+
+/admin
+
+Dashboard overview cards:
+
+Total Projects
+Published Projects
+Posts
+Draft Posts
+Unread Messages
+Services
+Pages
+
+Add:
+
+Recent messages
+Recent projects
+Recent posts
+
+Keep Admin UI dark and purple like Rekar Group.
+
+But make Admin practical, not decorative.
+
+==================================================
+29. ADMIN SIDEBAR
+==================================================
+
+Sidebar:
+
+Dashboard
+Home
+Projects
+Services
+Posts
+Categories
+Tags
+Pages
+Clients
+Testimonials
+Process
+Messages
+Navigation
+Media
+Settings
+
+At bottom:
+
+View Website
+Logout
+
+==================================================
+30. ADMIN AUTHENTICATION
+==================================================
+
+Secure all /admin routes.
+
+Use Supabase Auth.
+
+Create roles:
+
+super_admin
+admin
+editor
+
+Permissions:
+
+SUPER ADMIN:
+Everything.
+
+ADMIN:
+Content, projects, posts, pages, messages, settings.
+
+EDITOR:
+Can create/edit content but cannot manage administrators or sensitive configuration.
+
+Implement authorization server-side.
+
+Do NOT rely only on hidden UI.
+
+==================================================
+31. ADMIN USER MANAGEMENT
+==================================================
+
+Create:
+
+/admin/users
+
+Only super_admin can access.
+
+Allow:
+
+invite admin
+change role
+disable admin
+
+Never display passwords.
+
+==================================================
+32. DATABASE SECURITY
+==================================================
+
+Use proper Supabase Row Level Security.
+
+Public users:
+
+can read published public content only.
+
+Authenticated admins:
+
+permissions based on roles.
+
+Contact form:
+
+can insert valid messages.
+
+Anonymous users must NOT:
+
+edit
+delete
+update
+read private admin data.
+
+Create SQL migrations / policies.
+
+==================================================
+33. MEDIA LIBRARY
+==================================================
+
+Create:
+
+/admin/media
+
+Use Supabase Storage.
+
+Admin can:
+
+upload image
+view images
+copy URL
+delete unused media
+search media
+
+Store metadata:
+
+filename
+size
+mime_type
+alt_text
+uploaded_by
+created_at
+
+Generate optimized image usage on frontend.
+
+==================================================
+34. SEO
+==================================================
+
+SEO must be manageable.
+
+For:
+
+projects
+posts
+pages
+services
+
+Support:
+
+SEO title
+meta description
+canonical URL
+Open Graph title
+Open Graph description
+Open Graph image
+
+Generate:
+
+sitemap.xml
+robots.txt
+
+Use Next.js Metadata API.
+
+Create meaningful structured data where appropriate.
+
+==================================================
+35. URL SLUGS
+==================================================
+
+Automatically create slugs.
+
+Allow admin to edit them.
+
+Prevent duplicates.
+
+Examples:
+
+/projects/krd-tv
+/insights/modern-web-design
+
+==================================================
+36. DRAFT AND PREVIEW SYSTEM
+==================================================
+
+Content must support:
+
+Draft
+Published
+Archived
+
+Blog additionally supports:
+
+Scheduled
+
+Admin should be able to preview draft content before publishing.
+
+Public visitors must NEVER see drafts.
+
+==================================================
+37. DELETE BEHAVIOR
+==================================================
+
+Do not immediately permanently delete important content.
+
+Implement soft delete where appropriate.
+
+Fields:
+
+deleted_at
+
+Allow restore from Trash.
+
+Create Trash for:
+
+projects
+posts
+pages
+
+==================================================
+38. AUDIT LOG
+==================================================
+
+Create an audit log.
+
+Store:
+
+admin user
+action
+entity
+entity id
+timestamp
+
+Example:
+
+Admin Rekar
+updated
+project
+KRD TV
+2026-09-09
+
+Create:
+
+/admin/activity
+
+==================================================
+39. DATABASE TABLES
+==================================================
+
+Design a clean relational schema.
+
+At minimum consider:
+
+profiles
+site_settings
+theme_settings
+navigation_items
+
+homepage_sections
+hero_settings
+stats
+
+services
+
+project_categories
+projects
+project_technologies
+technologies
+project_images
+
+post_categories
+posts
+tags
+post_tags
+
+pages
+page_blocks
+
+clients
+testimonials
+process_steps
+
+contact_messages
+
+media
+
+audit_logs
+
+Do not create duplicated unnecessary tables.
+
+Use proper:
+
+foreign keys
+indexes
+unique constraints
+created_at
+updated_at
+
+==================================================
+40. SEARCH
+==================================================
+
+Public blog:
+
+search articles.
+
+Admin:
+
+search:
+
+projects
+posts
+pages
+messages
+
+Use PostgreSQL search where appropriate.
+
+==================================================
+41. ADMIN TABLE FEATURES
+==================================================
+
+Admin lists should support:
+
+search
+filter
+sorting
+pagination
+status
+bulk selection where useful
+
+For example Projects:
+
+Search project...
+
+Filter:
+All
+Published
+Draft
+Archived
+
+Filter category.
+
+==================================================
+42. RESPONSIVE DESIGN
+==================================================
+
+Public website:
+
+Desktop
+Laptop
+Tablet
+Mobile
+
+Admin:
+
+Desktop-first but fully usable on tablet/mobile.
+
+Never use fixed layout that overflows.
+
+==================================================
+43. PUBLIC DESIGN
+==================================================
+
+The website needs to feel:
+
+Premium
+Technology-driven
+Modern
+Kurdish
+Professional
+Custom
+
+Not like a generic ThemeForest template.
+
+Use:
+
+large typography
+deep purple atmosphere
+controlled gradients
+glass cards
+subtle logo-inspired background shapes
+micro-interactions
+smooth animations
+large spacing
+
+==================================================
+44. HERO DEFAULT CONTENT
+==================================================
+
+Badge:
+
+ڕێکار گروپ — Digital Agency & Technology
+
+Heading:
+
+تەکنەلۆجیا بەهێزتر بۆ
+داهاتوویەکی باشتر
+
+Description:
+
+لە بیرۆکە و ستراتیژییەوە تا دیزاین، وێبسایت، ئەپ، سیستەم و ڕیکلام؛ ڕێکار گروپ چارەسەری دیجیتاڵی دروست دەکات کە کاروبارەکان گەشە پێبدات و براندەکان جیاواز بکاتەوە.
+
+Primary CTA:
+
+پڕۆژەکەت دەستپێبکە
+
+Secondary CTA:
+
+سەیری کارەکانمان بکە
+
+==================================================
+45. CONTACT INFO
+==================================================
+
+Default:
+
+Phone:
+07710500202
+
+Email:
+contact@rekar.group
+
+Website:
+https://www.rekar.group
+
+But ALL these values must come from site settings.
+
+==================================================
+46. DATA FETCHING
+==================================================
+
+Do not hardcode CMS content into frontend components.
+
+Read public data from Supabase.
+
+Use caching/revalidation correctly.
+
+After an Admin update, invalidate/revalidate affected pages.
+
+Example:
+
+Updating KRD TV should update:
+
+/projects
+/projects/krd-tv
+homepage featured projects
+project marquee
+
+without requiring a redeploy.
+
+==================================================
+47. PERFORMANCE
+==================================================
+
+Optimize:
+
+images
+database queries
+fonts
+JS bundle
+animations
+
+Avoid querying the database repeatedly for the same information.
+
+Use indexes.
+
+Use Next.js caching appropriately.
+
+==================================================
+48. ERROR HANDLING
+==================================================
+
+Create:
+
+loading states
+empty states
+404 pages
+error states
+form error messages
+admin confirmation dialogs
+
+Do not fail silently.
+
+==================================================
+49. ADMIN UX
+==================================================
+
+Every form should provide:
+
+Save Draft
+Publish / Update
+Cancel
+
+Warn user about unsaved changes.
+
+Use toast notifications:
+
+پاشەکەوت کرا
+بڵاوکرایەوە
+هەڵەیەک ڕوویدا
+سڕایەوە
+
+==================================================
+50. IMAGE UPLOAD UX
+==================================================
+
+Provide:
+
+drag & drop upload
+file picker
+upload progress
+image preview
+replace image
+remove image
+
+Validate:
+
+file type
+file size
+
+==================================================
+51. NO HARDCODED CONTENT RULE
+==================================================
+
+The following must NOT require code changes:
+
+Homepage headings
+Hero
+Stats
+Services
+Featured projects
+Project marquee
+Projects
+Blog posts
+Blog categories
+Clients
+Testimonials
+CTA
+Navigation
+Footer
+Contact information
+Social links
+Custom pages
+
+The website should be manageable from the Admin Dashboard.
+
+==================================================
+52. SEED DATA
+==================================================
+
+Create initial seed/demo data for:
+
+Services
+
+Projects:
+KRD TV
+Noor
+Kurdish POS
+Girfan
+Krin Store
+
+Blog posts
+
+Stats
+
+Process steps
+
+Navigation
+
+Homepage sections
+
+But make all of it editable/deletable in Admin.
+
+==================================================
+53. ENVIRONMENT VARIABLES
+==================================================
+
+Create:
+
+.env.example
+
+Include variables such as:
+
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+Never expose service role credentials client-side.
+
+==================================================
+54. SUPABASE SETUP
+==================================================
+
+Provide:
+
+database schema
+migrations
+RLS policies
+storage bucket configuration
+seed script
+
+Document setup clearly.
+
+If Supabase credentials are not configured yet:
+
+Build the entire project structure anyway.
+
+Provide a safe local demo/fallback only when needed for UI development.
+
+Do NOT pretend the database connection is working when it is not.
+
+==================================================
+55. CODE ARCHITECTURE
+==================================================
+
+Use a clean structure such as:
+
+app/
+  (public)/
+  admin/
+  api/
+
+components/
+  public/
+  admin/
+  ui/
+
+lib/
+  supabase/
+  auth/
+  validation/
+  permissions/
+  seo/
+
+services/
+
+types/
+
+config/
+
+Do not make one giant component.
+
+==================================================
+56. SECURITY
+==================================================
+
+Security is critical.
+
+Protect:
+
+Admin routes
+Admin APIs
+Storage writes
+Database mutations
+
+Validate every mutation server-side.
+
+Implement:
+
+RLS
+RBAC
+input validation
+HTML sanitization
+secure cookies/auth
+rate limits where needed
+
+Never trust client-provided role values.
+
+==================================================
+57. FINAL IMPLEMENTATION PROCESS
+==================================================
+
+IMPORTANT:
+
+Do not only write documentation.
+
+Actually build the application.
+
+First inspect the existing repository.
+
+Preserve working project setup where possible.
+
+Then implement in this order:
+
+1. Analyze existing project
+2. Create theme/design system
+3. Configure Supabase
+4. Build database schema/migrations
+5. Configure RLS
+6. Implement authentication
+7. Build admin layout
+8. Build CMS tables and forms
+9. Build media system
+10. Connect public website to database
+11. Build dynamic homepage
+12. Build Projects
+13. Build Blog
+14. Build Services
+15. Build Page Builder
+16. Build Navigation/Settings
+17. Build Contact Inbox
+18. Implement SEO
+19. Add animations
+20. Test RTL
+21. Test responsive design
+22. Run TypeScript checks
+23. Run lint
+24. Fix all errors
+25. Verify production build
+
+Do not stop halfway.
+
+Do not leave core functionality as TODO.
+
+==================================================
+58. MOST IMPORTANT REQUIREMENT
+==================================================
+
+Think of this system as:
+
+"Rekar Group Website + Rekar CMS"
+
+not:
+
+"a website with a small blog admin".
+
+I want control over the entire website.
+
+If later I want to:
+
+remove a service
+add a new project category
+hide testimonials
+change hero text
+move blog above projects
+add a new homepage section
+change navigation
+create a new page
+change footer links
+publish a new project
+replace an app icon
+
+I should be able to do it from the Admin Dashboard without opening the source code.
+
+Build the architecture around this requirement.
+
+Start by inspecting the current project and then implement the complete system.
