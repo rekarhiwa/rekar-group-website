@@ -26,7 +26,7 @@ export const demoSiteSettings: SiteSettings = {
   favicon_url: "/brand/logo-mark.png",
   phone: "07710500202",
   email: "contact@rekar.group",
-  address: "هەولێر، کوردستان",
+  address: "کوردوستان - رانیە",
   whatsapp: "07710500202",
   website_url: "https://www.rekar.group",
   default_seo_title: "ڕێکار گروپ — Digital Agency & Technology",

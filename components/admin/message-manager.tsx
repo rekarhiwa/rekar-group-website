@@ -25,12 +25,12 @@ export function MessageManager({
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="text-lg font-semibold text-white">{item.full_name}</h3>
-                {!item.is_read ? <Badge>Unread</Badge> : null}
-                {item.is_important ? <Badge variant="warning">Important</Badge> : null}
-                {item.is_archived ? <Badge variant="outline">Archived</Badge> : null}
+                {!item.is_read ? <Badge>نەخوێندراو</Badge> : null}
+                {item.is_important ? <Badge variant="warning">گرنگ</Badge> : null}
+                {item.is_archived ? <Badge variant="outline">ئەرشیفکراو</Badge> : null}
               </div>
               <p className="text-sm text-muted">
-                {item.company ?? "No company"} - {item.email ?? "No email"} - {item.phone ?? "No phone"}
+                {item.company ?? "بێ کۆمپانیا"} - {item.email ?? "بێ ئیمەیڵ"} - {item.phone ?? "بێ تەلەفۆن"}
               </p>
               <p className="rounded-2xl bg-black/20 p-4 text-sm leading-7 text-foreground">
                 {item.message}
@@ -44,7 +44,7 @@ export function MessageManager({
                 }
                 variant="secondary"
               >
-                {item.is_read ? "Mark unread" : "Mark read"}
+                {item.is_read ? "نیشانەکردن وەک نەخوێندراو" : "نیشانەکردن وەک خوێندراو"}
               </ActionButton>
               <ActionButton
                 action={() =>
@@ -55,7 +55,7 @@ export function MessageManager({
                 }
                 variant="outline"
               >
-                {item.is_important ? "Unstar" : "Star"}
+                {item.is_important ? "لابردنی ئەستێرە" : "ئەستێرە"}
               </ActionButton>
               <ActionButton
                 action={() =>
@@ -66,14 +66,14 @@ export function MessageManager({
                 }
                 variant="outline"
               >
-                {item.is_archived ? "Unarchive" : "Archive"}
+                {item.is_archived ? "دەرهێنان لە ئەرشیف" : "ئەرشیف"}
               </ActionButton>
               <ActionButton
                 action={() => deleteAction(item.id)}
                 variant="destructive"
                 className="disabled:opacity-60"
               >
-                Delete
+                سڕینەوە
               </ActionButton>
             </div>
           </div>
@@ -81,7 +81,7 @@ export function MessageManager({
       ))}
       {!items.length ? (
         <Card className="border-white/10 bg-white/[0.03] p-10 text-center text-muted">
-          No messages yet.
+          هێشتا هیچ نامەیەک نییە.
         </Card>
       ) : null}
     </div>

@@ -12,7 +12,7 @@ import {
 } from "@/app/admin/actions/_shared";
 
 const schema = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, "ناونیشان پێویستە"),
   slug: z.string().optional().default(""),
   short_description: z.string().optional().default(""),
   full_description: z.string().optional().default(""),

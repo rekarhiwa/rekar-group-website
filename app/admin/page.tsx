@@ -5,11 +5,18 @@ import { ReadonlyBanner } from "@/components/admin/readonly-banner";
 import { getAdminDashboard } from "@/lib/admin/data";
 import { formatDate } from "@/lib/utils";
 
+const statusLabel: Record<string, string> = {
+  draft: "ڕەشنووس",
+  published: "بڵاوکراو",
+  archived: "ئەرشیفکراو",
+  scheduled: "خشتەکراو",
+};
+
 const quickLinks = [
-  { href: "/admin/projects", label: "Projects" },
-  { href: "/admin/posts", label: "Posts" },
-  { href: "/admin/pages", label: "Pages" },
-  { href: "/admin/messages", label: "Messages" },
+  { href: "/admin/projects", label: "پڕۆژەکان" },
+  { href: "/admin/posts", label: "پۆستەکان" },
+  { href: "/admin/pages", label: "پەڕەکان" },
+  { href: "/admin/messages", label: "نامەکان" },
 ];
 
 export default async function AdminDashboardPage() {
@@ -21,15 +28,15 @@ export default async function AdminDashboardPage() {
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {[
-          ["Total Projects", data.counts.projects],
-          ["Published Projects", data.counts.publishedProjects],
-          ["Posts", data.counts.posts],
-          ["Draft Posts", data.counts.draftPosts],
-          ["Unread Messages", data.counts.unreadMessages],
-          ["Services", data.counts.services],
-          ["Pages", data.counts.pages],
+          ["کۆی پڕۆژەکان", data.counts.projects],
+          ["پڕۆژە بڵاوکراوەکان", data.counts.publishedProjects],
+          ["پۆستەکان", data.counts.posts],
+          ["پۆستە ڕەشنووسەکان", data.counts.draftPosts],
+          ["نامە نەخوێندراوەکان", data.counts.unreadMessages],
+          ["خزمەتگوزارییەکان", data.counts.services],
+          ["پەڕەکان", data.counts.pages],
         ].map(([label, value]) => (
-          <Card key={label} className="border-white/10 bg-white/[0.03] p-5">
+          <Card key={String(label)} className="border-white/10 bg-white/[0.03] p-5">
             <p className="text-sm text-muted">{label}</p>
             <p className="mt-3 text-3xl font-bold text-white">{value}</p>
           </Card>
@@ -39,14 +46,14 @@ export default async function AdminDashboardPage() {
       <section className="grid gap-6 xl:grid-cols-3">
         <Card className="border-white/10 bg-white/[0.03] p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">Recent Projects</h2>
+            <h2 className="text-lg font-semibold text-white">پڕۆژە نوێیەکان</h2>
             <Badge variant="outline">{data.recentProjects.length}</Badge>
           </div>
           <div className="space-y-3">
             {data.recentProjects.map((item) => (
               <div key={item.id} className="rounded-2xl border border-white/10 p-4">
                 <p className="font-medium text-white">{item.name}</p>
-                <p className="text-sm text-muted">{item.status}</p>
+                <p className="text-sm text-muted">{statusLabel[item.status] ?? item.status}</p>
               </div>
             ))}
           </div>
@@ -54,14 +61,14 @@ export default async function AdminDashboardPage() {
 
         <Card className="border-white/10 bg-white/[0.03] p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">Recent Posts</h2>
+            <h2 className="text-lg font-semibold text-white">پۆستە نوێیەکان</h2>
             <Badge variant="outline">{data.recentPosts.length}</Badge>
           </div>
           <div className="space-y-3">
             {data.recentPosts.map((item) => (
               <div key={item.id} className="rounded-2xl border border-white/10 p-4">
                 <p className="font-medium text-white">{item.title}</p>
-                <p className="text-sm text-muted">{item.status}</p>
+                <p className="text-sm text-muted">{statusLabel[item.status] ?? item.status}</p>
               </div>
             ))}
           </div>
@@ -69,7 +76,7 @@ export default async function AdminDashboardPage() {
 
         <Card className="border-white/10 bg-white/[0.03] p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">Recent Messages</h2>
+            <h2 className="text-lg font-semibold text-white">نامە نوێیەکان</h2>
             <Badge variant="outline">{data.recentMessages.length}</Badge>
           </div>
           <div className="space-y-3">
@@ -84,7 +91,7 @@ export default async function AdminDashboardPage() {
       </section>
 
       <Card className="border-white/10 bg-white/[0.03] p-5">
-        <h2 className="mb-4 text-lg font-semibold text-white">Quick access</h2>
+        <h2 className="mb-4 text-lg font-semibold text-white">دەستگەیشتنی خێرا</h2>
         <div className="flex flex-wrap gap-3">
           {quickLinks.map((item) => (
             <Link

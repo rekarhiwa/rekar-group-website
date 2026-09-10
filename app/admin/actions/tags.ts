@@ -9,7 +9,7 @@ import {
 } from "@/app/admin/actions/_shared";
 
 const schema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "ناو پێویستە"),
   slug: z.string().optional().default(""),
 });
 

@@ -20,7 +20,7 @@ const blockSchema = z.array(
 );
 
 const schema = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, "ناونیشان پێویستە"),
   slug: z.string().optional().default(""),
   status: z.string().optional().default("draft"),
   seo_title: z.string().optional().default(""),

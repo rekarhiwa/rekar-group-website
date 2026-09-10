@@ -37,20 +37,20 @@ export default async function AdminSectionDetailPage({
       <div className="space-y-6">
         <ReadonlyBanner demoMode={data.demoMode} />
         <Card className="border-white/10 bg-white/[0.03] p-6">
-          <h2 className="mb-4 text-xl font-semibold text-white">Footer Settings</h2>
+          <h2 className="mb-4 text-xl font-semibold text-white">ڕێکخستنەکانی فووتەر</h2>
           <p className="mb-4 text-sm text-muted">
-            Footer description, contact details, and social links come from settings and navigation.
+            وەسفی فووتەر، زانیاری پەیوەندی، و بەستەرە کۆمەڵایەتییەکان لە ڕێکخستنەکان و گەشتکردن دێن.
           </p>
           <div className="space-y-3">
             <p className="rounded-2xl border border-white/10 p-4 text-white">
-              {data.site.footer_description ?? "No footer description yet."}
+              {data.site.footer_description ?? "هێشتا وەسفی فووتەر نییە."}
             </p>
             <div className="flex gap-3">
               <Button asChild variant="secondary">
-                <Link href="/admin/settings">Site settings</Link>
+                <Link href="/admin/settings">ڕێکخستنەکانی سایت</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="/admin/navigation">Footer links</Link>
+                <Link href="/admin/navigation">بەستەرەکانی فووتەر</Link>
               </Button>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default async function AdminSectionDetailPage({
     <div className="space-y-6">
       <ReadonlyBanner demoMode={demoMode} />
       <EntityForm
-        title={id === "new" ? `New ${config.title.slice(0, -1)}` : `${config.title} Editor`}
+        title={id === "new" ? "بڕگەی نوێ" : "دەستکاری"}
         description={config.description}
         fields={config.fields ?? []}
         record={record as Record<string, unknown>}

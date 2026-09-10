@@ -47,6 +47,32 @@ export function getActionMessage(intent: string) {
 
 export async function withMutationGuard(role: UserRole = "editor") {
   if (!isSupabaseConfigured()) return { ok: false as const, state: demoError() };
+
+  const { hasServiceRoleKey, isCmsSchemaReady } = await import("@/lib/supabase/schema");
+  const { isClerkConfigured } = await import("@/lib/auth/clerk");
+
+  if (!(await isCmsSchemaReady())) {
+    return {
+      ok: false as const,
+      state: {
+        status: "error" as const,
+        message:
+          "داتابەیس ئامادە نییە. تکایە migration ـەکانی supabase جێبەجێ بکە پێش پاشەکەوتکردن.",
+      },
+    };
+  }
+
+  if (isClerkConfigured() && !hasServiceRoleKey()) {
+    return {
+      ok: false as const,
+      state: {
+        status: "error" as const,
+        message:
+          "بۆ پاشەکەوتکردن لەگەڵ Clerk، پێویستە SUPABASE_SERVICE_ROLE_KEY لە .env.local دابنرێت.",
+      },
+    };
+  }
+
   try {
     await requireRole(role);
     return { ok: true as const, supabase: await createClient() };

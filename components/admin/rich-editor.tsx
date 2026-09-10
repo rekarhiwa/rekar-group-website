@@ -13,14 +13,14 @@ const toolbarButtons = [
   { label: "H2", action: "heading" },
   { label: "UL", action: "bulletList" },
   { label: "OL", action: "orderedList" },
-  { label: "Quote", action: "blockquote" },
-  { label: "Code", action: "codeBlock" },
+  { label: "دەق", action: "blockquote" },
+  { label: "کۆد", action: "codeBlock" },
 ] as const;
 
 export function RichEditor({
   name,
   defaultValue = "",
-  placeholder = "Write here...",
+  placeholder = "لێرە بنووسە...",
 }: {
   name: string;
   defaultValue?: string;
@@ -95,21 +95,21 @@ export function RichEditor({
           type="button"
           className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-muted transition hover:text-white"
           onClick={() => {
-            const url = window.prompt("Image URL");
+            const url = window.prompt("بەستەری وێنە");
             if (url) editor?.chain().focus().setImage({ src: url }).run();
           }}
         >
-          Image
+          وێنە
         </button>
         <button
           type="button"
           className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-muted transition hover:text-white"
           onClick={() => {
-            const url = window.prompt("Link URL");
+            const url = window.prompt("بەستەری لینک");
             if (url) editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
           }}
         >
-          Link
+          بەستەر
         </button>
       </div>
       <EditorContent editor={editor} />

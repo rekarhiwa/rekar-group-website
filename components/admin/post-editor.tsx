@@ -52,6 +52,13 @@ type FormState = {
   deleted_at: string | null;
 };
 
+const statusLabels: Record<string, string> = {
+  draft: "ڕەشنووس",
+  published: "بڵاوکراو",
+  scheduled: "خشتەکراو",
+  archived: "ئەرشیفکراو",
+};
+
 function toDatetimeLocal(value?: string | null) {
   if (!value) return "";
   const d = new Date(value);
@@ -241,57 +248,57 @@ export function PostEditor({
             ) : null}
           </div>
           <p className="mt-1 text-sm text-muted">
-            دۆخ: {form.status}
+            دۆخ: {statusLabels[form.status] || form.status}
             {form.deleted_at ? " · لە زبڵدایە" : ""}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button type="button" variant="secondary" disabled={pending} onClick={() => runIntent("save_draft")}>
             <Save className="h-4 w-4" />
-            Save Draft
+            پاشەکەوتی ڕەشنووس
           </Button>
           <Button type="button" variant="outline" onClick={openPreview}>
             <Eye className="h-4 w-4" />
-            Preview
+            پێشبینین
           </Button>
           <Button type="button" disabled={pending} onClick={() => runIntent("publish_now")}>
             <Send className="h-4 w-4" />
-            Publish Now
+            ئێستا بڵاوی بکەوە
           </Button>
           <Button type="button" variant="secondary" disabled={pending} onClick={() => runIntent("schedule")}>
             <CalendarClock className="h-4 w-4" />
-            Schedule
+            خشتەکردن
           </Button>
           {form.id ? (
             <Button type="button" variant="outline" disabled={pending} onClick={() => runIntent("update")}>
-              Update
+              نوێکردنەوە
             </Button>
           ) : null}
           {form.status === "published" ? (
             <Button type="button" variant="outline" disabled={pending} onClick={() => runIntent("unpublish")}>
-              Unpublish
+              هەڵوەشاندنی بڵاوکردنەوە
             </Button>
           ) : null}
           <Button type="button" variant="outline" disabled={pending} onClick={() => runIntent("archive")}>
             <Archive className="h-4 w-4" />
-            Archive
+            ئەرشیف
           </Button>
           {form.deleted_at ? (
             <Button type="button" variant="secondary" onClick={handleRestore}>
               <Undo2 className="h-4 w-4" />
-              Restore
+              گەڕاندنەوە
             </Button>
           ) : form.id ? (
             <Button type="button" variant="destructive" onClick={handleTrash}>
               <Trash2 className="h-4 w-4" />
-              Trash
+              زبڵ
             </Button>
           ) : null}
           {form.slug && form.status === "published" ? (
             <Button asChild variant="ghost">
               <Link href={`/insights/${form.slug}`} target="_blank">
                 <ExternalLink className="h-4 w-4" />
-                View
+                بینین
               </Link>
             </Button>
           ) : null}
@@ -302,7 +309,7 @@ export function PostEditor({
         <div className="space-y-5">
           <div className="glass rounded-2xl p-5 space-y-4">
             <div>
-              <Label className="mb-2 block">Title</Label>
+              <Label className="mb-2 block">ناونیشان</Label>
               <Input
                 value={form.title}
                 onChange={(e) => {
@@ -327,7 +334,7 @@ export function PostEditor({
               />
             </div>
             <div>
-              <Label className="mb-2 block">Excerpt</Label>
+              <Label className="mb-2 block">کورتەباس</Label>
               <Textarea
                 value={form.excerpt}
                 onChange={(e) => update("excerpt", e.target.value)}
@@ -337,7 +344,7 @@ export function PostEditor({
           </div>
 
           <div className="glass rounded-2xl p-5">
-            <Label className="mb-3 block">Full Content</Label>
+            <Label className="mb-3 block">ناوەڕۆکی تەواو</Label>
             <PostRichEditor
               value={form.content}
               onChange={(html) => update("content", html)}
@@ -348,18 +355,18 @@ export function PostEditor({
           <div className="glass rounded-2xl p-5 space-y-4">
             <h3 className="font-semibold text-white">SEO</h3>
             <div>
-              <Label className="mb-2 block">SEO Title</Label>
+              <Label className="mb-2 block">ناونیشانی SEO</Label>
               <Input value={form.seo_title} onChange={(e) => update("seo_title", e.target.value)} />
             </div>
             <div>
-              <Label className="mb-2 block">SEO Description</Label>
+              <Label className="mb-2 block">وەسفی SEO</Label>
               <Textarea
                 value={form.seo_description}
                 onChange={(e) => update("seo_description", e.target.value)}
               />
             </div>
             <div>
-              <Label className="mb-2 block">OG Image</Label>
+              <Label className="mb-2 block">وێنەی OG</Label>
               <ImageUpload
                 name="og_image_upload"
                 defaultValue={form.og_image}
@@ -379,20 +386,20 @@ export function PostEditor({
         <aside className="space-y-5">
           <div className="glass rounded-2xl p-5 space-y-4">
             <div>
-              <Label className="mb-2 block">Status</Label>
+              <Label className="mb-2 block">دۆخ</Label>
               <select
                 className="flex h-11 w-full rounded-xl border border-border bg-card px-3 text-sm"
                 value={form.status}
                 onChange={(e) => update("status", e.target.value)}
               >
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-                <option value="scheduled">Scheduled</option>
-                <option value="archived">Archived</option>
+                <option value="draft">ڕەشنووس</option>
+                <option value="published">بڵاوکراو</option>
+                <option value="scheduled">خشتەکراو</option>
+                <option value="archived">ئەرشیفکراو</option>
               </select>
             </div>
             <div>
-              <Label className="mb-2 block">Publish Date</Label>
+              <Label className="mb-2 block">بەرواری بڵاوکردنەوە</Label>
               <Input
                 type="datetime-local"
                 value={form.published_at}
@@ -401,14 +408,14 @@ export function PostEditor({
               />
             </div>
             <div className="flex items-center justify-between gap-3">
-              <Label>Featured</Label>
+              <Label>تایبەت</Label>
               <Switch
                 checked={form.featured}
                 onCheckedChange={(checked) => update("featured", checked)}
               />
             </div>
             <div>
-              <Label className="mb-2 block">Category</Label>
+              <Label className="mb-2 block">پۆل</Label>
               <select
                 className="flex h-11 w-full rounded-xl border border-border bg-card px-3 text-sm"
                 value={form.category_id}
@@ -423,7 +430,7 @@ export function PostEditor({
               </select>
             </div>
             <div>
-              <Label className="mb-2 block">Author</Label>
+              <Label className="mb-2 block">نووسەر</Label>
               <select
                 className="flex h-11 w-full rounded-xl border border-border bg-card px-3 text-sm"
                 value={form.author_id}
@@ -438,7 +445,7 @@ export function PostEditor({
               </select>
             </div>
             <div>
-              <Label className="mb-2 block">Tags</Label>
+              <Label className="mb-2 block">تاگەکان</Label>
               <div className="flex flex-wrap gap-2">
                 {tags.map((tag) => {
                   const active = form.tag_ids.includes(tag.id);
@@ -469,7 +476,7 @@ export function PostEditor({
           </div>
 
           <div className="glass rounded-2xl p-5 space-y-3">
-            <Label>Cover Image</Label>
+            <Label>وێنەی بەرگ</Label>
             <ImageUpload
               name="cover_upload"
               defaultValue={form.cover_image}
@@ -483,16 +490,16 @@ export function PostEditor({
             <Input
               value={form.cover_image}
               onChange={(e) => update("cover_image", e.target.value)}
-              placeholder="URL"
+              placeholder="https://..."
               dir="ltr"
             />
           </div>
 
           {typeof post?.view_count === "number" ? (
             <div className="glass rounded-2xl p-5 text-sm text-muted">
-              <p>Views: <span className="text-white">{post.view_count}</span></p>
+              <p>بینینەکان: <span className="text-white">{post.view_count}</span></p>
               <p className="mt-1">
-                Unique: <span className="text-white">{post.unique_view_count ?? 0}</span>
+                بینینی جیاواز: <span className="text-white">{post.unique_view_count ?? 0}</span>
               </p>
             </div>
           ) : null}

@@ -38,11 +38,11 @@ export function InlineCollectionManager({
         columns={[
           {
             key: "name",
-            header: "Item",
+            header: "بڕگە",
             render: (row) => (
               <div>
                 <p className="font-medium text-white">
-                  {String(row.title ?? row.name ?? row.label ?? row.value ?? "Untitled")}
+                  {String(row.title ?? row.name ?? row.label ?? row.value ?? "بێ ناونیشان")}
                 </p>
                 <p className="text-xs text-muted">
                   {String(row.slug ?? row.company ?? row.icon ?? row.website ?? "")}
@@ -54,25 +54,25 @@ export function InlineCollectionManager({
           },
           {
             key: "status",
-            header: "Meta",
+            header: "زانیاری",
             render: (row) => (
               <div className="space-y-1 text-xs text-muted">
-                {"status" in row ? <p>Status: {String(row.status ?? "-")}</p> : null}
-                {"sort_order" in row ? <p>Order: {String(row.sort_order ?? "-")}</p> : null}
-                {"visible" in row ? <p>Visible: {String(Boolean(row.visible))}</p> : null}
+                {"status" in row ? <p>دۆخ: {String(row.status ?? "-")}</p> : null}
+                {"sort_order" in row ? <p>ڕیزبەندی: {String(row.sort_order ?? "-")}</p> : null}
+                {"visible" in row ? <p>دیار: {Boolean(row.visible) ? "بەڵێ" : "نەخێر"}</p> : null}
               </div>
             ),
           },
           {
             key: "action",
-            header: "Action",
+            header: "کردار",
             render: (row) => (
               <ActionButton
                 variant="destructive"
                 action={() => deleteAction(String(row.id ?? ""))}
                 className="h-9"
               >
-                Delete
+                سڕینەوە
               </ActionButton>
             ),
           },
@@ -81,7 +81,7 @@ export function InlineCollectionManager({
 
       <Card className="border-white/10 bg-white/[0.03] p-6">
         <div className="mb-5">
-          <h3 className="text-xl font-semibold text-white">New {title}</h3>
+          <h3 className="text-xl font-semibold text-white">{title}ی نوێ</h3>
           <p className="text-sm text-muted">{description}</p>
         </div>
         <ServerForm action={saveAction} className="space-y-4">
@@ -111,7 +111,7 @@ export function InlineCollectionManager({
             </div>
           ))}
           <Button type="submit" disabled={demoMode}>
-            Save
+            پاشەکەوت
           </Button>
         </ServerForm>
       </Card>

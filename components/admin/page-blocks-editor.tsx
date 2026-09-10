@@ -49,7 +49,7 @@ export function PageBlocksEditor({
   const [blocks, setBlocks] = useState<BlockItem[]>(
     initial.length
       ? initial
-      : [{ type: "heading", sort_order: 1, visible: true, content: { text: "New block" } }]
+      : [{ type: "heading", sort_order: 1, visible: true, content: { text: "بلۆکی نوێ" } }]
   );
 
   return (
@@ -76,7 +76,7 @@ export function PageBlocksEditor({
               ))}
             </select>
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted">Visible</span>
+              <span className="text-sm text-muted">دیار</span>
               <Switch
                 checked={block.visible}
                 onCheckedChange={(checked) =>
@@ -94,7 +94,7 @@ export function PageBlocksEditor({
                   setBlocks((current) => current.filter((_, itemIndex) => itemIndex !== index))
                 }
               >
-                Remove
+                لابردن
               </Button>
             </div>
           </div>
@@ -113,7 +113,7 @@ export function PageBlocksEditor({
                 )
               )
             }
-            placeholder="Block title"
+            placeholder="ناونیشانی بلۆک"
             className="mb-3 border-white/10 bg-[#14001f]"
           />
           <Textarea
@@ -131,7 +131,7 @@ export function PageBlocksEditor({
                 )
               )
             }
-            placeholder="Block content"
+            placeholder="ناوەڕۆکی بلۆک"
             className="min-h-28 border-white/10 bg-[#14001f]"
           />
         </div>
@@ -146,12 +146,12 @@ export function PageBlocksEditor({
               type: "text",
               sort_order: current.length + 1,
               visible: true,
-              content: { text: "New block" },
+              content: { text: "بلۆکی نوێ" },
             },
           ])
         }
       >
-        Add block
+        زیادکردنی بلۆک
       </Button>
     </div>
   );

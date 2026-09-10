@@ -6,8 +6,8 @@ import { withMutationGuard } from "@/app/admin/actions/_shared";
 import { revalidatePath } from "next/cache";
 
 const siteSchema = z.object({
-  company_name: z.string().min(1, "Company name is required"),
-  company_name_en: z.string().min(1, "English company name is required"),
+  company_name: z.string().min(1, "ناوی کۆمپانیا پێویستە"),
+  company_name_en: z.string().min(1, "ناوی ئینگلیزی کۆمپانیا پێویستە"),
   tagline: z.string().optional().default(""),
   logo_url: z.string().optional().default(""),
   logo_mark_url: z.string().optional().default(""),
@@ -26,10 +26,10 @@ const siteSchema = z.object({
 });
 
 const themeSchema = z.object({
-  primary_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "Hex color required"),
-  secondary_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "Hex color required"),
-  accent_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "Hex color required"),
-  background_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "Hex color required"),
+  primary_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "ڕەنگی Hex پێویستە"),
+  secondary_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "ڕەنگی Hex پێویستە"),
+  accent_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "ڕەنگی Hex پێویستە"),
+  background_color: z.string().regex(/^#([0-9a-fA-F]{6})$/, "ڕەنگی Hex پێویستە"),
 });
 
 export async function saveSiteSettingsAction(formData: FormData) {

@@ -131,7 +131,7 @@ async function uploadFile(file: File): Promise<string | null> {
   formData.append("file", file);
   const result = await uploadEditorImageAction(formData);
   if (!result.ok || !result.url) {
-    window.alert(result.error || "Upload failed");
+    window.alert(result.error || "ئاپڵۆد سەرکەوتوو نەبوو");
     return null;
   }
   return result.url;
@@ -221,7 +221,7 @@ export function PostRichEditor({
             .chain()
             .focus()
             .insertContent(
-              `<figure><img src="${escapeAttr(src)}" alt="" /><figcaption>Caption</figcaption></figure>`,
+              `<figure><img src="${escapeAttr(src)}" alt="" /><figcaption>سەردێڕ</figcaption></figure>`,
             )
             .run();
           return;
@@ -384,25 +384,25 @@ export function PostRichEditor({
           }
         />
         <ToolbarButton
-          label="Bold"
+          label="B"
           active={editor?.isActive("bold")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleBold().run()}
         />
         <ToolbarButton
-          label="Italic"
+          label="I"
           active={editor?.isActive("italic")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleItalic().run()}
         />
         <ToolbarButton
-          label="Underline"
+          label="U"
           active={editor?.isActive("underline")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleUnderline().run()}
         />
         <ToolbarButton
-          label="Link"
+          label="بەستەر"
           active={editor?.isActive("link")}
           disabled={busy}
           onClick={() => {
@@ -414,7 +414,7 @@ export function PostRichEditor({
             const previous = editor.getAttributes("link").href as
               | string
               | undefined;
-            const url = window.prompt("Link URL", previous || "https://");
+            const url = window.prompt("بەستەری لینک", previous || "https://");
             if (!url) return;
             editor
               .chain()
@@ -425,47 +425,47 @@ export function PostRichEditor({
           }}
         />
         <ToolbarButton
-          label="Bullet"
+          label="لیست"
           active={editor?.isActive("bulletList")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleBulletList().run()}
         />
         <ToolbarButton
-          label="Numbered"
+          label="ژمارە"
           active={editor?.isActive("orderedList")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleOrderedList().run()}
         />
         <ToolbarButton
-          label="Quote"
+          label="دەق"
           active={editor?.isActive("blockquote")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleBlockquote().run()}
         />
         <ToolbarButton
-          label="Code"
+          label="کۆد"
           active={editor?.isActive("codeBlock")}
           disabled={busy}
           onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
         />
         <ToolbarButton
-          label="Image"
+          label="وێنە"
           disabled={busy}
           onClick={() => imageInputRef.current?.click()}
         />
         <ToolbarButton
-          label="Gallery"
+          label="گەلەری"
           active={editor?.isActive("gallery")}
           disabled={busy}
           onClick={() => galleryInputRef.current?.click()}
         />
         <ToolbarButton
-          label="Video"
+          label="ڤیدیۆ"
           active={editor?.isActive("youtube")}
           disabled={busy}
           onClick={() => {
             const url = window.prompt(
-              "YouTube URL",
+              "بەستەری YouTube",
               "https://www.youtube.com/watch?v=",
             );
             if (!url) return;
@@ -473,7 +473,7 @@ export function PostRichEditor({
           }}
         />
         <ToolbarButton
-          label="Table"
+          label="خشتە"
           active={editor?.isActive("table")}
           disabled={busy}
           onClick={() =>
@@ -485,12 +485,12 @@ export function PostRichEditor({
           }
         />
         <ToolbarButton
-          label="Divider"
+          label="جیاکەرەوە"
           disabled={busy}
           onClick={() => editor?.chain().focus().setHorizontalRule().run()}
         />
         <ToolbarButton
-          label="Callout"
+          label="تێبینی"
           active={editor?.isActive("callout")}
           disabled={busy}
           onClick={() =>
@@ -498,19 +498,19 @@ export function PostRichEditor({
               ?.chain()
               .focus()
               .insertContent(
-                `<div class="callout" data-type="callout"><p>Callout text</p></div>`,
+                `<div class="callout" data-type="callout"><p>دەقی تێبینی</p></div>`,
               )
               .run()
           }
         />
         <ToolbarButton
-          label="Button"
+          label="دوگمە"
           disabled={busy}
           onClick={() => {
             const href =
-              window.prompt("Button URL", "https://") || "https://";
+              window.prompt("بەستەری دوگمە", "https://") || "https://";
             const label =
-              window.prompt("Button label", "Button") || "Button";
+              window.prompt("ناوی دوگمە", "دوگمە") || "دوگمە";
             editor
               ?.chain()
               .focus()
@@ -523,7 +523,7 @@ export function PostRichEditor({
       </div>
 
       {uploading ? (
-        <p className="text-xs text-violet-300/90">Uploading image…</p>
+        <p className="text-xs text-violet-300/90">ئاپڵۆدی وێنە...</p>
       ) : null}
 
       <div className="rounded-2xl border border-white/10 bg-[#160021]">

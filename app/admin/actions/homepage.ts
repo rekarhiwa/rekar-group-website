@@ -14,7 +14,7 @@ import {
 
 const heroSchema = z.object({
   badge: z.string().optional().default(""),
-  heading: z.string().min(1, "Heading is required"),
+  heading: z.string().min(1, "سەردێڕ پێویستە"),
   highlighted_heading: z.string().optional().default(""),
   description: z.string().optional().default(""),
   primary_button_label: z.string().optional().default(""),

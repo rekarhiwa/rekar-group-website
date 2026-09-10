@@ -20,6 +20,13 @@ const statusColors: Record<string, string> = {
   archived: "bg-slate-500/20 text-slate-200",
 };
 
+const statusLabels: Record<string, string> = {
+  draft: "ڕەشنووس",
+  published: "بڵاوکراو",
+  scheduled: "خشتەکراو",
+  archived: "ئەرشیفکراو",
+};
+
 export function PostsAdminTable({
   items,
   total,
@@ -122,10 +129,10 @@ export function PostsAdminTable({
           className="h-11 rounded-xl border border-border bg-card px-3 text-sm"
         >
           <option value="all">هەموو دۆخەکان</option>
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
-          <option value="scheduled">Scheduled</option>
-          <option value="archived">Archived</option>
+          <option value="draft">ڕەشنووس</option>
+          <option value="published">بڵاوکراو</option>
+          <option value="scheduled">خشتەکراو</option>
+          <option value="archived">ئەرشیفکراو</option>
         </select>
         <select
           name="categoryId"
@@ -160,19 +167,19 @@ export function PostsAdminTable({
         <div className="flex flex-wrap gap-2 rounded-2xl border border-primary/30 bg-primary/10 p-3">
           <span className="text-sm text-white">{selected.length} هەڵبژێردراو</span>
           <Button size="sm" variant="secondary" disabled={pending} onClick={() => runBulk("publish")}>
-            Publish
+            بڵاوکردنەوە
           </Button>
           <Button size="sm" variant="outline" disabled={pending} onClick={() => runBulk("unpublish")}>
-            Unpublish
+            هەڵوەشاندنی بڵاوکردنەوە
           </Button>
           <Button size="sm" variant="outline" disabled={pending} onClick={() => runBulk("archive")}>
-            Archive
+            ئەرشیف
           </Button>
           <Button size="sm" variant="outline" disabled={pending} onClick={() => runBulk("feature")}>
-            Feature
+            تایبەت
           </Button>
           <Button size="sm" variant="destructive" disabled={pending} onClick={() => runBulk("trash")}>
-            Trash
+            زبڵ
           </Button>
         </div>
       ) : null}
@@ -188,13 +195,13 @@ export function PostsAdminTable({
                   onChange={toggleAll}
                 />
               </th>
-              <th className="p-3 text-start">Title</th>
-              <th className="p-3 text-start">Category</th>
-              <th className="p-3 text-start">Author</th>
-              <th className="p-3 text-start">Status</th>
-              <th className="p-3 text-start">Published</th>
-              <th className="p-3 text-start">Views</th>
-              <th className="p-3 text-start">Updated</th>
+              <th className="p-3 text-start">ناونیشان</th>
+              <th className="p-3 text-start">پۆل</th>
+              <th className="p-3 text-start">نووسەر</th>
+              <th className="p-3 text-start">دۆخ</th>
+              <th className="p-3 text-start">بڵاوکراو</th>
+              <th className="p-3 text-start">بینین</th>
+              <th className="p-3 text-start">نوێکراوەتەوە</th>
             </tr>
           </thead>
           <tbody>
@@ -218,7 +225,7 @@ export function PostsAdminTable({
                     {post.title}
                   </Link>
                   {post.featured ? (
-                    <Badge className="ms-2">Featured</Badge>
+                    <Badge className="ms-2">تایبەت</Badge>
                   ) : null}
                 </td>
                 <td className="p-3 text-muted">{post.category?.name || "—"}</td>
@@ -227,7 +234,7 @@ export function PostsAdminTable({
                 </td>
                 <td className="p-3">
                   <span className={`rounded-lg px-2 py-1 text-xs ${statusColors[post.status] || ""}`}>
-                    {post.status}
+                    {statusLabels[post.status] || post.status}
                   </span>
                 </td>
                 <td className="p-3 text-muted">

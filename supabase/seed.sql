@@ -36,7 +36,7 @@ INSERT INTO public.site_settings (
   '/brand/logo-mark.png',
   '07710500202',
   'contact@rekar.group',
-  'هەولێر، کوردستان',
+  'کوردوستان - رانیە',
   '07710500202',
   'https://www.rekar.group',
   'ڕێکار گروپ — Digital Agency & Technology',

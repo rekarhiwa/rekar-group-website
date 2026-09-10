@@ -56,15 +56,15 @@ function SortableRow({
       <div className="flex-1">
         <p className="font-medium text-white">{section.name}</p>
         <p className="text-sm text-muted">
-          {section.heading ?? "No custom heading"} - order {section.sort_order}
+          {section.heading ?? "بێ سەردێڕی تایبەت"} - ڕیزبەندی {section.sort_order}
         </p>
       </div>
       <Button type="button" size="sm" variant="ghost" onClick={() => onEdit(section.id)}>
         <Settings2 className="h-4 w-4" />
-        Edit
+        دەستکاری
       </Button>
       <div className="flex items-center gap-3">
-        <span className="text-sm text-muted">Enabled</span>
+        <span className="text-sm text-muted">چالاک</span>
         <Switch
           checked={section.enabled}
           onCheckedChange={(checked) => onToggle(section.id, checked)}
@@ -139,13 +139,13 @@ export function HomepageSectionsManager({
     <Card className="border-white/10 bg-white/[0.03] p-6">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-white">Homepage Sections</h2>
+          <h2 className="text-xl font-semibold text-white">بەشەکانی پەڕەی سەرەکی</h2>
           <p className="text-sm text-muted">
-            Drag to reorder, toggle visibility, edit section settings, then save.
+            ڕاکێشە بۆ ڕیزکردنەوە، دیاری بکە، ڕێکخستنەکان دەستکاری بکە، پاشان پاشەکەوتی بکە.
           </p>
         </div>
         <Button type="button" onClick={handleSave} disabled={pending || demoMode}>
-          {pending ? "Saving..." : "Save"}
+          {pending ? "پاشەکەوت دەکرێت..." : "پاشەکەوت"}
         </Button>
       </div>
 
@@ -167,21 +167,21 @@ export function HomepageSectionsManager({
       {editing ? (
         <div className="mt-6 space-y-4 rounded-2xl border border-primary/30 bg-primary/10 p-5">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-white">Edit: {editing.name}</h3>
+            <h3 className="font-semibold text-white">دەستکاری: {editing.name}</h3>
             <Button type="button" size="sm" variant="ghost" onClick={() => setEditingId(null)}>
-              Close
+              داخستن
             </Button>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <Label className="mb-2 block">Section title</Label>
+              <Label className="mb-2 block">ناونیشانی بەش</Label>
               <Input
                 value={editing.heading ?? ""}
                 onChange={(e) => updateEditing({ heading: e.target.value })}
               />
             </div>
             <div>
-              <Label className="mb-2 block">Section subtitle</Label>
+              <Label className="mb-2 block">ژێرناونیشانی بەش</Label>
               <Input
                 value={editing.subtitle ?? ""}
                 onChange={(e) => updateEditing({ subtitle: e.target.value })}
@@ -192,7 +192,7 @@ export function HomepageSectionsManager({
           {editing.type === "posts" ? (
             <div className="grid gap-4 md:grid-cols-3">
               <div>
-                <Label className="mb-2 block">Number of posts</Label>
+                <Label className="mb-2 block">ژمارەی پۆست</Label>
                 <Input
                   type="number"
                   min={1}
@@ -209,7 +209,7 @@ export function HomepageSectionsManager({
                 />
               </div>
               <div>
-                <Label className="mb-2 block">Category</Label>
+                <Label className="mb-2 block">پۆل</Label>
                 <select
                   className="flex h-11 w-full rounded-xl border border-border bg-card px-3 text-sm"
                   value={String(editing.settings?.category_id ?? "")}
@@ -222,7 +222,7 @@ export function HomepageSectionsManager({
                     })
                   }
                 >
-                  <option value="">All categories</option>
+                  <option value="">هەموو پۆلەکان</option>
                   {postCategories.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
@@ -231,7 +231,7 @@ export function HomepageSectionsManager({
                 </select>
               </div>
               <div className="flex items-end justify-between rounded-xl border border-white/10 px-4 py-3">
-                <Label>Featured only</Label>
+                <Label>تەنها تایبەت</Label>
                 <Switch
                   checked={Boolean(editing.settings?.featured_only)}
                   onCheckedChange={(checked) =>

@@ -338,7 +338,7 @@ export async function uploadEditorImageAction(formData: FormData): Promise<{
   error?: string;
 }> {
   const guard = await withMutationGuard("editor");
-  if (!guard.ok) return { ok: false, error: "Unauthorized or demo mode" };
+  if (!guard.ok) return { ok: false, error: "دەسەڵاتت نییە یان دۆخی demo چالاکە" };
 
   const file = formData.get("file");
   if (!(file instanceof File)) return { ok: false, error: "فایل نەدۆزرایەوە" };

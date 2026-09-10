@@ -11,7 +11,7 @@ import {
 } from "@/app/admin/actions/_shared";
 
 const schema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "ناو پێویستە"),
   logo: z.string().optional().default(""),
   website: z.string().optional().default(""),
   sort_order: z.coerce.number().int().default(0),

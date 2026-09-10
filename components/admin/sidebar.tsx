@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 import { LogOut, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -11,22 +12,49 @@ import { adminSidebarLinks } from "@/lib/admin/shared";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
-export function AdminSidebar() {
-  const pathname = usePathname();
+function ClerkLogoutButton({ collapsed }: { collapsed: boolean }) {
+  const { signOut } = useClerk();
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      className="w-full justify-center"
+      onClick={() => void signOut({ redirectUrl: "/" })}
+    >
+      <LogOut className="h-4 w-4" />
+      {!collapsed ? "چوونەدەرەوە" : null}
+    </Button>
+  );
+}
+
+function LegacyLogoutButton({ collapsed }: { collapsed: boolean }) {
   const router = useRouter();
-  const [collapsed, setCollapsed] = useState(false);
 
   async function handleLogout() {
-    if (!isSupabaseConfigured()) {
-      router.push("/");
-      return;
+    if (isSupabaseConfigured()) {
+      const supabase = createClient();
+      await supabase.auth.signOut();
     }
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
     router.push("/auth/login");
     router.refresh();
   }
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      className="w-full justify-center"
+      onClick={() => void handleLogout()}
+    >
+      <LogOut className="h-4 w-4" />
+      {!collapsed ? "چوونەدەرەوە" : null}
+    </Button>
+  );
+}
+
+export function AdminSidebar({ clerkEnabled = true }: { clerkEnabled?: boolean }) {
+  const pathname = usePathname();
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <aside
@@ -43,7 +71,7 @@ export function AdminSidebar() {
           {!collapsed ? (
             <div>
               <p className="font-semibold text-white">Rekar CMS</p>
-              <p className="text-xs text-muted">Admin control panel</p>
+              <p className="text-xs text-muted">پانێڵی بەڕێوەبردن</p>
             </div>
           ) : null}
         </Link>
@@ -51,7 +79,7 @@ export function AdminSidebar() {
           type="button"
           onClick={() => setCollapsed((value) => !value)}
           className="rounded-lg border border-white/10 p-2 text-muted transition hover:text-white"
-          aria-label="Toggle sidebar"
+          aria-label="کردنەوە و داخستنی لایەن"
         >
           {collapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
         </button>
@@ -60,7 +88,10 @@ export function AdminSidebar() {
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <div className="space-y-1">
           {adminSidebarLinks.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const active =
+              item.href === "/admin"
+                ? pathname === "/admin"
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
@@ -82,18 +113,14 @@ export function AdminSidebar() {
       <div className="space-y-3 border-t border-white/10 p-4">
         <Button asChild variant="secondary" className="w-full">
           <Link href="/" target="_blank" rel="noreferrer">
-            {collapsed ? "View" : "View Website"}
+            {collapsed ? "بینین" : "بینینی وێبسایت"}
           </Link>
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full justify-center"
-          onClick={handleLogout}
-        >
-          <LogOut className="h-4 w-4" />
-          {!collapsed ? "Logout" : null}
-        </Button>
+        {clerkEnabled ? (
+          <ClerkLogoutButton collapsed={collapsed} />
+        ) : (
+          <LegacyLogoutButton collapsed={collapsed} />
+        )}
       </div>
     </aside>
   );

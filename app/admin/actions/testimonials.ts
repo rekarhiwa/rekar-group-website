@@ -11,11 +11,11 @@ import {
 } from "@/app/admin/actions/_shared";
 
 const schema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "ناو پێویستە"),
   job_title: z.string().optional().default(""),
   company: z.string().optional().default(""),
   avatar: z.string().optional().default(""),
-  testimonial: z.string().min(1, "Testimonial is required"),
+  testimonial: z.string().min(1, "شایەتحاڵی پێویستە"),
   rating: z.coerce.number().int().min(1).max(5).default(5),
   featured: z.string().optional().default(""),
   visible: z.string().optional().default(""),

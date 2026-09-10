@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import { Toaster } from "@/components/ui/toaster";
 import { getSiteSettings } from "@/services/content";
+import { isClerkConfigured } from "@/lib/auth/clerk";
 import "./globals.css";
 
 const rabar = localFont({
@@ -42,6 +44,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const body = (
+    <>
+      {children}
+      <Toaster />
+    </>
+  );
+
   return (
     <html
       lang="ckb"
@@ -49,8 +58,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${rabar.variable} h-full antialiased`}
     >
       <body className={`${rabar.className} min-h-full flex flex-col`}>
-        {children}
-        <Toaster />
+        {isClerkConfigured() ? (
+          <ClerkProvider
+            signInUrl="/auth/login"
+            signUpUrl="/auth/login"
+            afterSignOutUrl="/"
+          >
+            {body}
+          </ClerkProvider>
+        ) : (
+          body
+        )}
       </body>
     </html>
   );

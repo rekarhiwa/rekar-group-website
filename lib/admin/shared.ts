@@ -24,31 +24,19 @@ export interface AdminField {
   description?: string;
 }
 
+/** Slim admin nav — related tools live as tabs inside each hub page */
 export const adminSidebarLinks = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/home", label: "Home" },
-  { href: "/admin/projects", label: "Projects" },
-  { href: "/admin/projects/categories", label: "Project Categories" },
-  { href: "/admin/projects/technologies", label: "Project Technologies" },
-  { href: "/admin/projects/trash", label: "Projects Trash" },
-  { href: "/admin/services", label: "Services" },
-  { href: "/admin/posts", label: "Posts" },
-  { href: "/admin/categories", label: "Categories" },
-  { href: "/admin/tags", label: "Tags" },
-  { href: "/admin/pages", label: "Pages" },
-  { href: "/admin/clients", label: "Clients" },
-  { href: "/admin/testimonials", label: "Testimonials" },
-  { href: "/admin/process", label: "Process" },
-  { href: "/admin/stats", label: "Stats" },
-  { href: "/admin/messages", label: "Messages" },
-  { href: "/admin/navigation", label: "Navigation" },
-  { href: "/admin/media", label: "Media" },
-  { href: "/admin/settings", label: "Settings" },
-  { href: "/admin/users", label: "Users" },
-  { href: "/admin/activity", label: "Activity" },
-  { href: "/admin/trash", label: "Trash" },
+  { href: "/admin", label: "داشبۆرد" },
+  { href: "/admin/home", label: "ماڵەوە" },
+  { href: "/admin/projects", label: "پڕۆژەکان" },
+  { href: "/admin/services", label: "خزمەتگوزارییەکان" },
+  { href: "/admin/posts", label: "پۆستەکان" },
+  { href: "/admin/content", label: "ناوەڕۆک" },
+  { href: "/admin/pages", label: "پەڕەکان" },
+  { href: "/admin/messages", label: "نامەکان" },
+  { href: "/admin/settings", label: "ڕێکخستنەکان" },
 ];
 
 export function getAdminSetupMessage() {
-  return "CMS گۆڕانکارییەکان پێویستیان بە ڕێکخستنی Supabase هەیە. UI ئێستا لە دۆخی demo / read-only دایە.";
+  return "گۆڕانکارییەکانی CMS پێویستیان بە ڕێکخستنی Supabase هەیە. ئێستا تەنها لە دۆخی دیمۆ / خوێندنەوەدایە.";
 }

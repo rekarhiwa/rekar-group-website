@@ -12,7 +12,7 @@ import {
 
 const schema = z.object({
   step_number: z.coerce.number().int().default(1),
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, "ناونیشان پێویستە"),
   description: z.string().optional().default(""),
   icon: z.string().optional().default(""),
   sort_order: z.coerce.number().int().default(0),

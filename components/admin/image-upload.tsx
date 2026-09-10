@@ -96,11 +96,11 @@ export function ImageUpload({
             onChange={(event) => void handleUpload(event.target.files?.[0] ?? null)}
           />
           <span className="inline-flex h-11 items-center rounded-xl border border-white/10 px-4 text-sm text-white">
-            {uploading ? "Uploading..." : "Upload file"}
+            {uploading ? "ئاپڵۆد دەکرێت..." : "ئاپڵۆدی فایل"}
           </span>
         </label>
         <Button type="button" variant="ghost" onClick={() => setUrl("")}>
-          Remove
+          لابردن
         </Button>
       </div>
     </div>

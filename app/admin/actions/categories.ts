@@ -10,13 +10,13 @@ import {
 } from "@/app/admin/actions/_shared";
 
 const projectCategorySchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "ناو پێویستە"),
   slug: z.string().optional().default(""),
   sort_order: z.coerce.number().int().default(0),
 });
 
 const postCategorySchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "ناو پێویستە"),
   slug: z.string().optional().default(""),
 });
 

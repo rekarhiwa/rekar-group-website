@@ -54,9 +54,11 @@ export async function getPublicPosts(opts?: {
       .is("deleted_at", null)
       .order("published_at", { ascending: false });
 
-    // Published OR scheduled-due (RLS also enforces); app-level filter:
-    // We fetch published + scheduled and filter due ones client-side for safety with older RLS
-    const { data } = await q;
+    const { data, error } = await q;
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (error && isMissingRelationError(error.message)) {
+      return demoPosts.filter((p) => isPostPubliclyVisible(p)).slice(0, opts?.limit);
+    }
     let list = ((data as Record<string, unknown>[]) ?? []).map(mapPost).filter(isPostPubliclyVisible);
 
     if (opts?.featuredOnly) list = list.filter((p) => p.featured);
@@ -67,7 +69,8 @@ export async function getPublicPosts(opts?: {
         (p) => p.title.toLowerCase().includes(s) || p.excerpt?.toLowerCase().includes(s)
       );
     }
-    return opts?.limit ? list.slice(0, opts.limit) : list;
+    const result = opts?.limit ? list.slice(0, opts.limit) : list;
+    return result.length ? result : demoPosts.filter((p) => isPostPubliclyVisible(p)).slice(0, opts?.limit);
   } catch {
     return demoPosts.filter((p) => isPostPubliclyVisible(p)).slice(0, opts?.limit);
   }
@@ -174,7 +177,23 @@ export async function getAdminPosts(filters: {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
   const { data, count, error } = await q.range(from, to);
-  if (error) throw new Error(error.message);
+  if (error) {
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (isMissingRelationError(error.message)) {
+      let list = demoPosts.map((p) => ({ ...p, view_count: p.view_count ?? 0 }));
+      if (filters.search) {
+        const s = filters.search.toLowerCase();
+        list = list.filter((p) => p.title.toLowerCase().includes(s));
+      }
+      if (filters.status && filters.status !== "all") {
+        list = list.filter((p) => p.status === filters.status);
+      }
+      const total = list.length;
+      const start = (page - 1) * pageSize;
+      return { items: list.slice(start, start + pageSize), total };
+    }
+    throw new Error(error.message);
+  }
 
   return {
     items: ((data as Record<string, unknown>[]) ?? []).map(mapPost),
@@ -186,16 +205,24 @@ export async function getAdminPostById(id: string): Promise<Post | null> {
   if (!isSupabaseConfigured()) {
     return demoPosts.find((p) => p.id === id) ?? null;
   }
-  const supabase = await db();
-  const { data } = await supabase
-    .from("posts")
-    .select(
-      "*, category:post_categories(*), author:profiles(*), tags:post_tags(tag:tags(*))"
-    )
-    .eq("id", id)
-    .maybeSingle();
-  if (!data) return null;
-  return mapPost(data as Record<string, unknown>);
+  try {
+    const supabase = await db();
+    const { data, error } = await supabase
+      .from("posts")
+      .select(
+        "*, category:post_categories(*), author:profiles(*), tags:post_tags(tag:tags(*))"
+      )
+      .eq("id", id)
+      .maybeSingle();
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (error && isMissingRelationError(error.message)) {
+      return demoPosts.find((p) => p.id === id) ?? null;
+    }
+    if (!data) return null;
+    return mapPost(data as Record<string, unknown>);
+  } catch {
+    return demoPosts.find((p) => p.id === id) ?? null;
+  }
 }
 
 export async function getPostFormOptions() {
@@ -206,15 +233,32 @@ export async function getPostFormOptions() {
       authors: [] as Profile[],
     };
   }
-  const supabase = await db();
-  const [{ data: categories }, { data: tags }, { data: authors }] = await Promise.all([
-    supabase.from("post_categories").select("*").order("name"),
-    supabase.from("tags").select("*").order("name"),
-    supabase.from("profiles").select("*").eq("is_active", true).order("full_name"),
-  ]);
-  return {
-    categories: (categories as PostCategory[]) ?? [],
-    tags: (tags as Tag[]) ?? [],
-    authors: (authors as Profile[]) ?? [],
-  };
+  try {
+    const supabase = await db();
+    const [{ data: categories, error: cErr }, { data: tags, error: tErr }, { data: authors }] =
+      await Promise.all([
+        supabase.from("post_categories").select("*").order("name"),
+        supabase.from("tags").select("*").order("name"),
+        supabase.from("profiles").select("*").eq("is_active", true).order("full_name"),
+      ]);
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (isMissingRelationError(cErr?.message) || isMissingRelationError(tErr?.message)) {
+      return {
+        categories: [] as PostCategory[],
+        tags: [] as Tag[],
+        authors: [] as Profile[],
+      };
+    }
+    return {
+      categories: (categories as PostCategory[]) ?? [],
+      tags: (tags as Tag[]) ?? [],
+      authors: (authors as Profile[]) ?? [],
+    };
+  } catch {
+    return {
+      categories: [] as PostCategory[],
+      tags: [] as Tag[],
+      authors: [] as Profile[],
+    };
+  }
 }

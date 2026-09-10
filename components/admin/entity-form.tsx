@@ -57,7 +57,7 @@ export function EntityForm({
           <p className="text-sm text-muted">{description}</p>
         </div>
         <Button asChild variant="secondary">
-          <Link href={backHref}>Back to list</Link>
+          <Link href={backHref}>گەڕانەوە بۆ لیست</Link>
         </Button>
       </div>
 
@@ -112,7 +112,7 @@ export function EntityForm({
                   <Textarea
                     name={field.name}
                     defaultValue={stringValue}
-                    placeholder="item-1, item-2"
+                    placeholder="بڕگە-١، بڕگە-٢"
                     className="min-h-28 border-white/10 bg-[#160021]"
                   />
                 ) : null}
@@ -123,7 +123,7 @@ export function EntityForm({
                     defaultValue={stringValue}
                     className="flex h-11 w-full rounded-xl border border-white/10 bg-[#160021] px-3 text-sm text-white outline-none"
                   >
-                    <option value="">Select</option>
+                    <option value="">هەڵبژێرە</option>
                     {options.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
@@ -159,7 +159,7 @@ export function EntityForm({
 
         <div className="flex flex-wrap justify-end gap-3 pt-4">
           <Button type="submit" name="intent" value="save" disabled={pending || demoMode}>
-            {pending ? "Saving..." : "Save Draft"}
+            {pending ? "پاشەکەوت دەکرێت..." : "پاشەکەوتی ڕەشنووس"}
           </Button>
           <Button
             type="submit"
@@ -168,7 +168,7 @@ export function EntityForm({
             variant="secondary"
             disabled={pending || demoMode}
           >
-            Publish / Update
+            بڵاوکردنەوە / نوێکردنەوە
           </Button>
         </div>
       </form>

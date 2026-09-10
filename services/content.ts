@@ -78,12 +78,16 @@ export async function getSocialLinks(): Promise<SocialLink[]> {
   if (!isSupabaseConfigured()) return demoSocial.filter((s) => s.enabled);
   try {
     const supabase = await db();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("social_links")
       .select("*")
       .eq("enabled", true)
       .order("sort_order");
-    return data ?? [];
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (error && isMissingRelationError(error.message)) {
+      return demoSocial.filter((s) => s.enabled);
+    }
+    return data?.length ? data : demoSocial.filter((s) => s.enabled);
   } catch {
     return demoSocial.filter((s) => s.enabled);
   }
@@ -106,12 +110,18 @@ export async function getHomepageSections(): Promise<HomepageSection[]> {
 
 export async function getAllHomepageSections(): Promise<HomepageSection[]> {
   if (!isSupabaseConfigured()) return demoSections;
-  const supabase = await db();
-  const { data } = await supabase
-    .from("homepage_sections")
-    .select("*")
-    .order("sort_order");
-  return data ?? demoSections;
+  try {
+    const supabase = await db();
+    const { data, error } = await supabase
+      .from("homepage_sections")
+      .select("*")
+      .order("sort_order");
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (error && isMissingRelationError(error.message)) return demoSections;
+    return data?.length ? data : demoSections;
+  } catch {
+    return demoSections;
+  }
 }
 
 export async function getHeroSettings(): Promise<HeroSettings> {

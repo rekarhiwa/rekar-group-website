@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { isClerkConfigured } from "@/lib/auth/clerk";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -65,268 +66,268 @@ export interface AdminSectionConfig {
 }
 
 export const STATUS_OPTIONS: AdminFieldOption[] = [
-  { label: "Draft", value: "draft" },
-  { label: "Published", value: "published" },
-  { label: "Archived", value: "archived" },
-  { label: "Scheduled", value: "scheduled" },
+  { label: "ڕەشنووس", value: "draft" },
+  { label: "بڵاوکراو", value: "published" },
+  { label: "ئەرشیفکراو", value: "archived" },
+  { label: "خشتەکراو", value: "scheduled" },
 ];
 
 export const PAGE_BLOCK_OPTIONS: AdminFieldOption[] = [
-  { label: "Heading", value: "heading" },
-  { label: "Text", value: "text" },
-  { label: "Rich Text", value: "rich_text" },
-  { label: "Image", value: "image" },
-  { label: "Image + Text", value: "image_text" },
-  { label: "Gallery", value: "gallery" },
-  { label: "Button", value: "button" },
-  { label: "CTA", value: "cta" },
-  { label: "FAQ", value: "faq" },
-  { label: "Stats", value: "stats" },
-  { label: "Features", value: "features" },
-  { label: "Video", value: "video" },
-  { label: "Spacer", value: "spacer" },
-  { label: "Custom HTML", value: "custom_html" },
+  { label: "سەردێڕ", value: "heading" },
+  { label: "دەق", value: "text" },
+  { label: "دەقی دەوڵەمەند", value: "rich_text" },
+  { label: "وێنە", value: "image" },
+  { label: "وێنە + دەق", value: "image_text" },
+  { label: "گالەری", value: "gallery" },
+  { label: "دوگمە", value: "button" },
+  { label: "بانگەواز بۆ کردار", value: "cta" },
+  { label: "پرسیار و وەڵام", value: "faq" },
+  { label: "ئامارەکان", value: "stats" },
+  { label: "تایبەتمەندییەکان", value: "features" },
+  { label: "ڤیدیۆ", value: "video" },
+  { label: "بۆشایی", value: "spacer" },
+  { label: "HTMLی تایبەت", value: "custom_html" },
 ];
 
 export const adminSections: Record<string, AdminSectionConfig> = {
   services: {
     key: "services",
-    title: "Services",
-    description: "Manage service cards, descriptions, status, and ordering.",
-    entityLabel: "service",
+    title: "خزمەتگوزارییەکان",
+    description: "کارتی خزمەتگوزاری، وەسف، دۆخ و ڕیزکردن بەڕێوەببە.",
+    entityLabel: "خزمەتگوزاری",
     table: "services",
     mode: "detail-collection",
     supportsSoftDelete: true,
     supportsStatus: true,
     fields: [
-      { name: "title", label: "Title", type: "text" },
-      { name: "slug", label: "Slug", type: "text" },
-      { name: "short_description", label: "Short Description", type: "textarea" },
-      { name: "full_description", label: "Full Description", type: "richtext" },
-      { name: "icon", label: "Icon", type: "text" },
-      { name: "cover_image", label: "Cover Image", type: "image" },
-      { name: "features", label: "Features", type: "tags" },
-      { name: "sort_order", label: "Sort Order", type: "number" },
-      { name: "status", label: "Status", type: "select", options: STATUS_OPTIONS.slice(0, 3) },
-      { name: "seo_title", label: "SEO Title", type: "text" },
-      { name: "seo_description", label: "SEO Description", type: "textarea" },
+      { name: "title", label: "ناونیشان", type: "text" },
+      { name: "slug", label: "سلەگ", type: "text" },
+      { name: "short_description", label: "وەسفی کورت", type: "textarea" },
+      { name: "full_description", label: "وەسفی تەواو", type: "richtext" },
+      { name: "icon", label: "ئایکۆن", type: "text" },
+      { name: "cover_image", label: "وێنەی سەرپۆش", type: "image" },
+      { name: "features", label: "تایبەتمەندییەکان", type: "tags" },
+      { name: "sort_order", label: "ڕیزبەندی", type: "number" },
+      { name: "status", label: "دۆخ", type: "select", options: STATUS_OPTIONS.slice(0, 3) },
+      { name: "seo_title", label: "ناونیشانی SEO", type: "text" },
+      { name: "seo_description", label: "وەسفی SEO", type: "textarea" },
     ],
   },
   projects: {
     key: "projects",
-    title: "Projects",
-    description: "Manage portfolio items, featured flags, links, and galleries.",
-    entityLabel: "project",
+    title: "پڕۆژەکان",
+    description: "بەرهەمەکانی پۆرتفۆلیۆ، نیشانەکردنی تایبەت، لینک و گالەری بەڕێوەببە.",
+    entityLabel: "پڕۆژە",
     table: "projects",
     mode: "detail-collection",
     supportsSoftDelete: true,
     supportsStatus: true,
     fields: [
-      { name: "name", label: "Name", type: "text" },
-      { name: "slug", label: "Slug", type: "text" },
-      { name: "category_id", label: "Category", type: "select" },
-      { name: "short_description", label: "Short Description", type: "textarea" },
-      { name: "full_description", label: "Full Description", type: "richtext" },
-      { name: "icon", label: "Icon / Logo", type: "image" },
-      { name: "cover_image", label: "Cover Image", type: "image" },
-      { name: "client_name", label: "Client Name", type: "text" },
-      { name: "completion_date", label: "Completion Date", type: "date" },
-      { name: "website_url", label: "Website URL", type: "text" },
-      { name: "play_store_url", label: "Play Store URL", type: "text" },
-      { name: "app_store_url", label: "App Store URL", type: "text" },
-      { name: "github_url", label: "GitHub URL", type: "text" },
-      { name: "challenge", label: "Challenge", type: "textarea" },
-      { name: "solution", label: "Solution", type: "textarea" },
-      { name: "result", label: "Result", type: "textarea" },
-      { name: "case_study", label: "Case Study", type: "richtext" },
-      { name: "features", label: "Features", type: "tags" },
-      { name: "platforms", label: "Platforms", type: "tags" },
-      { name: "sort_order", label: "Sort Order", type: "number" },
-      { name: "featured", label: "Featured", type: "switch" },
-      { name: "show_in_marquee", label: "Show In Marquee", type: "switch" },
-      { name: "status", label: "Status", type: "select", options: STATUS_OPTIONS.slice(0, 3) },
+      { name: "name", label: "ناو", type: "text" },
+      { name: "slug", label: "سلەگ", type: "text" },
+      { name: "category_id", label: "پۆل", type: "select" },
+      { name: "short_description", label: "وەسفی کورت", type: "textarea" },
+      { name: "full_description", label: "وەسفی تەواو", type: "richtext" },
+      { name: "icon", label: "ئایکۆن / لۆگۆ", type: "image" },
+      { name: "cover_image", label: "وێنەی سەرپۆش", type: "image" },
+      { name: "client_name", label: "ناوی کڕیار", type: "text" },
+      { name: "completion_date", label: "بەرواری تەواوکردن", type: "date" },
+      { name: "website_url", label: "بەستەری وێبسایت", type: "text" },
+      { name: "play_store_url", label: "بەستەری Play Store", type: "text" },
+      { name: "app_store_url", label: "بەستەری App Store", type: "text" },
+      { name: "github_url", label: "بەستەری GitHub", type: "text" },
+      { name: "challenge", label: "ئاڵنگاری", type: "textarea" },
+      { name: "solution", label: "چارەسەر", type: "textarea" },
+      { name: "result", label: "ئەنجام", type: "textarea" },
+      { name: "case_study", label: "توێژینەوەی کەیس", type: "richtext" },
+      { name: "features", label: "تایبەتمەندییەکان", type: "tags" },
+      { name: "platforms", label: "پلاتفۆرمەکان", type: "tags" },
+      { name: "sort_order", label: "ڕیزبەندی", type: "number" },
+      { name: "featured", label: "تایبەت", type: "switch" },
+      { name: "show_in_marquee", label: "پیشاندان لە مارکی", type: "switch" },
+      { name: "status", label: "دۆخ", type: "select", options: STATUS_OPTIONS.slice(0, 3) },
     ],
   },
   posts: {
     key: "posts",
-    title: "Posts",
-    description: "Manage blog posts, categories, tags, SEO, and publishing dates.",
-    entityLabel: "post",
+    title: "پۆستەکان",
+    description: "پۆستی بلۆگ، پۆل، تاگ، SEO و بەرواری بڵاوکردنەوە بەڕێوەببە.",
+    entityLabel: "پۆست",
     table: "posts",
     mode: "detail-collection",
     supportsSoftDelete: true,
     supportsStatus: true,
     fields: [
-      { name: "title", label: "Title", type: "text" },
-      { name: "slug", label: "Slug", type: "text" },
-      { name: "excerpt", label: "Excerpt", type: "textarea" },
-      { name: "content", label: "Content", type: "richtext" },
-      { name: "cover_image", label: "Cover Image", type: "image" },
-      { name: "category_id", label: "Category", type: "select" },
-      { name: "tag_ids", label: "Tags", type: "tags" },
-      { name: "featured", label: "Featured", type: "switch" },
-      { name: "status", label: "Status", type: "select", options: STATUS_OPTIONS },
-      { name: "published_at", label: "Published At", type: "date" },
-      { name: "seo_title", label: "SEO Title", type: "text" },
-      { name: "seo_description", label: "SEO Description", type: "textarea" },
-      { name: "og_image", label: "OG Image", type: "image" },
+      { name: "title", label: "ناونیشان", type: "text" },
+      { name: "slug", label: "سلەگ", type: "text" },
+      { name: "excerpt", label: "کورتە", type: "textarea" },
+      { name: "content", label: "ناوەڕۆک", type: "richtext" },
+      { name: "cover_image", label: "وێنەی سەرپۆش", type: "image" },
+      { name: "category_id", label: "پۆل", type: "select" },
+      { name: "tag_ids", label: "تاگەکان", type: "tags" },
+      { name: "featured", label: "تایبەت", type: "switch" },
+      { name: "status", label: "دۆخ", type: "select", options: STATUS_OPTIONS },
+      { name: "published_at", label: "بەرواری بڵاوکردنەوە", type: "date" },
+      { name: "seo_title", label: "ناونیشانی SEO", type: "text" },
+      { name: "seo_description", label: "وەسفی SEO", type: "textarea" },
+      { name: "og_image", label: "وێنەی OG", type: "image" },
     ],
   },
   pages: {
     key: "pages",
-    title: "Pages",
-    description: "Create dynamic site pages with reusable content blocks.",
-    entityLabel: "page",
+    title: "پەڕەکان",
+    description: "پەڕەی داینامیکی ماڵپەڕ دروست بکە لەگەڵ بلۆکی ناوەڕۆکی دووبارە بەکارهێنراو.",
+    entityLabel: "پەڕە",
     table: "pages",
     mode: "detail-collection",
     supportsSoftDelete: true,
     supportsStatus: true,
     fields: [
-      { name: "title", label: "Title", type: "text" },
-      { name: "slug", label: "Slug", type: "text" },
-      { name: "status", label: "Status", type: "select", options: STATUS_OPTIONS.slice(0, 3) },
-      { name: "seo_title", label: "SEO Title", type: "text" },
-      { name: "seo_description", label: "SEO Description", type: "textarea" },
-      { name: "blocks_json", label: "Blocks", type: "textarea" },
+      { name: "title", label: "ناونیشان", type: "text" },
+      { name: "slug", label: "سلەگ", type: "text" },
+      { name: "status", label: "دۆخ", type: "select", options: STATUS_OPTIONS.slice(0, 3) },
+      { name: "seo_title", label: "ناونیشانی SEO", type: "text" },
+      { name: "seo_description", label: "وەسفی SEO", type: "textarea" },
+      { name: "blocks_json", label: "بلۆکەکان", type: "textarea" },
     ],
   },
   clients: {
     key: "clients",
-    title: "Clients",
-    description: "Manage logos, links, ordering, and visibility.",
-    entityLabel: "client",
+    title: "کڕیارەکان",
+    description: "لۆگۆ، لینک، ڕیزکردن و بینین بەڕێوەببە.",
+    entityLabel: "کڕیار",
     table: "clients",
     mode: "inline-collection",
     fields: [
-      { name: "name", label: "Name", type: "text" },
-      { name: "logo", label: "Logo", type: "image" },
-      { name: "website", label: "Website", type: "text" },
-      { name: "sort_order", label: "Sort Order", type: "number" },
-      { name: "visible", label: "Visible", type: "switch" },
+      { name: "name", label: "ناو", type: "text" },
+      { name: "logo", label: "لۆگۆ", type: "image" },
+      { name: "website", label: "وێبسایت", type: "text" },
+      { name: "sort_order", label: "ڕیزبەندی", type: "number" },
+      { name: "visible", label: "دیار", type: "switch" },
     ],
   },
   testimonials: {
     key: "testimonials",
-    title: "Testimonials",
-    description: "Manage client quotes, visibility, featured state, and rating.",
-    entityLabel: "testimonial",
+    title: "شایەتییەکان",
+    description: "وتەی کڕیار، بینین، دۆخی تایبەت و هەڵسەنگاندن بەڕێوەببە.",
+    entityLabel: "شایەتی",
     table: "testimonials",
     mode: "inline-collection",
     fields: [
-      { name: "name", label: "Name", type: "text" },
-      { name: "job_title", label: "Job Title", type: "text" },
-      { name: "company", label: "Company", type: "text" },
-      { name: "avatar", label: "Avatar", type: "image" },
-      { name: "testimonial", label: "Testimonial", type: "textarea" },
-      { name: "rating", label: "Rating", type: "number" },
-      { name: "featured", label: "Featured", type: "switch" },
-      { name: "visible", label: "Visible", type: "switch" },
-      { name: "sort_order", label: "Sort Order", type: "number" },
+      { name: "name", label: "ناو", type: "text" },
+      { name: "job_title", label: "ناونیشانی کار", type: "text" },
+      { name: "company", label: "کۆمپانیا", type: "text" },
+      { name: "avatar", label: "وێنەی کەسی", type: "image" },
+      { name: "testimonial", label: "شایەتی", type: "textarea" },
+      { name: "rating", label: "هەڵسەنگاندن", type: "number" },
+      { name: "featured", label: "تایبەت", type: "switch" },
+      { name: "visible", label: "دیار", type: "switch" },
+      { name: "sort_order", label: "ڕیزبەندی", type: "number" },
     ],
   },
   process: {
     key: "process",
-    title: "Process",
-    description: "Manage steps in the company workflow section.",
-    entityLabel: "process step",
+    title: "پرۆسە",
+    description: "هەنگاوەکانی بەشی شێوازی کاری کۆمپانیا بەڕێوەببە.",
+    entityLabel: "هەنگاوی پرۆسە",
     table: "process_steps",
     mode: "inline-collection",
     fields: [
-      { name: "step_number", label: "Step Number", type: "number" },
-      { name: "title", label: "Title", type: "text" },
-      { name: "description", label: "Description", type: "textarea" },
-      { name: "icon", label: "Icon", type: "text" },
-      { name: "sort_order", label: "Sort Order", type: "number" },
-      { name: "visible", label: "Visible", type: "switch" },
+      { name: "step_number", label: "ژمارەی هەنگاو", type: "number" },
+      { name: "title", label: "ناونیشان", type: "text" },
+      { name: "description", label: "وەسف", type: "textarea" },
+      { name: "icon", label: "ئایکۆن", type: "text" },
+      { name: "sort_order", label: "ڕیزبەندی", type: "number" },
+      { name: "visible", label: "دیار", type: "switch" },
     ],
   },
   stats: {
     key: "stats",
-    title: "Stats",
-    description: "Manage homepage statistics and hero visibility.",
-    entityLabel: "stat",
+    title: "ئامارەکان",
+    description: "ئاماری پەڕەی سەرەکی و بینینی هیڕۆ بەڕێوەببە.",
+    entityLabel: "ئامار",
     table: "stats",
     mode: "inline-collection",
     fields: [
-      { name: "value", label: "Value", type: "text" },
-      { name: "label", label: "Label", type: "text" },
-      { name: "icon", label: "Icon", type: "text" },
-      { name: "sort_order", label: "Sort Order", type: "number" },
-      { name: "visible", label: "Visible", type: "switch" },
-      { name: "show_in_hero", label: "Show In Hero", type: "switch" },
+      { name: "value", label: "بەها", type: "text" },
+      { name: "label", label: "ناونیشان", type: "text" },
+      { name: "icon", label: "ئایکۆن", type: "text" },
+      { name: "sort_order", label: "ڕیزبەندی", type: "number" },
+      { name: "visible", label: "دیار", type: "switch" },
+      { name: "show_in_hero", label: "پیشاندان لە هیڕۆ", type: "switch" },
     ],
   },
   messages: {
     key: "messages",
-    title: "Messages",
-    description: "Review contact form submissions and moderation state.",
-    entityLabel: "message",
+    title: "نامەکان",
+    description: "پێشکەشکردنەکانی فۆرمی پەیوەندی و دۆخی مۆدێرەیشن پێداچوونەوە بکە.",
+    entityLabel: "نامە",
     table: "contact_messages",
     mode: "messages",
   },
   navigation: {
     key: "navigation",
-    title: "Navigation",
-    description: "Manage menu labels, links, order, and visibility.",
-    entityLabel: "navigation item",
+    title: "گەشتکردن",
+    description: "ناونیشانی مێنیو، لینک، ڕیز و بینین بەڕێوەببە.",
+    entityLabel: "بڕگەی گەشتکردن",
     table: "navigation_items",
     mode: "navigation",
   },
   media: {
     key: "media",
-    title: "Media",
-    description: "Upload files, search media, and copy URLs.",
-    entityLabel: "media file",
+    title: "میدیا",
+    description: "فایل باربکە، میدیا بگەڕێ و URL کۆپی بکە.",
+    entityLabel: "فایلی میدیا",
     table: "media",
     mode: "media",
   },
   settings: {
     key: "settings",
-    title: "Settings",
-    description: "Manage site, theme, and footer settings.",
-    entityLabel: "settings",
+    title: "ڕێکخستنەکان",
+    description: "ڕێکخستنی ماڵپەڕ، ڕووکار و فووتەر بەڕێوەببە.",
+    entityLabel: "ڕێکخستنەکان",
     mode: "settings",
   },
   users: {
     key: "users",
-    title: "Users",
-    description: "Manage admin team access and roles.",
-    entityLabel: "user",
+    title: "بەکارهێنەران",
+    description: "دەستگەیشتن و ڕۆڵی تیمی ئادمین بەڕێوەببە.",
+    entityLabel: "بەکارهێنەر",
     table: "profiles",
     mode: "users",
   },
   activity: {
     key: "activity",
-    title: "Activity",
-    description: "Review audit logs of admin changes.",
-    entityLabel: "activity",
+    title: "چالاکی",
+    description: "لۆگی گۆڕانکارییەکانی ئادمین پێداچوونەوە بکە.",
+    entityLabel: "چالاکی",
     table: "audit_logs",
     mode: "activity",
   },
   trash: {
     key: "trash",
-    title: "Trash",
-    description: "Restore soft-deleted projects, posts, and pages.",
-    entityLabel: "trash",
+    title: "زبڵدان",
+    description: "پڕۆژە، پۆست و پەڕەی سڕاوە بە نەرمی بگەڕێنەوە.",
+    entityLabel: "زبڵدان",
     mode: "trash",
   },
   tags: {
     key: "tags",
-    title: "Tags",
-    description: "Manage reusable blog tags.",
-    entityLabel: "tag",
+    title: "تاگەکان",
+    description: "تاگە دووبارە بەکارهێنراوەکانی بلۆگ بەڕێوەببە.",
+    entityLabel: "تاگ",
     table: "tags",
     mode: "inline-collection",
     fields: [
-      { name: "name", label: "Name", type: "text" },
-      { name: "slug", label: "Slug", type: "text" },
+      { name: "name", label: "ناو", type: "text" },
+      { name: "slug", label: "سلەگ", type: "text" },
     ],
   },
   categories: {
     key: "categories",
-    title: "Categories",
-    description: "Manage project and post categories in one place.",
-    entityLabel: "category",
+    title: "پۆلەکان",
+    description: "پۆلی پڕۆژە و پۆست لە یەک شوێن بەڕێوەببە.",
+    entityLabel: "پۆل",
     mode: "categories",
   },
 };
@@ -451,7 +452,7 @@ const demoAuditLogs: AuditLog[] = [
     action: "updated",
     entity: "settings",
     entity_id: null,
-    entity_label: "Site settings",
+    entity_label: "ڕێکخستنی سایت",
     created_at: new Date().toISOString(),
   },
 ];
@@ -461,7 +462,7 @@ async function getDb() {
 }
 
 export function isAdminDemoMode() {
-  return !isSupabaseConfigured();
+  return !isClerkConfigured() && !isSupabaseConfigured();
 }
 
 export function getSectionConfig(section: string) {
@@ -500,62 +501,71 @@ export function getNewRecordTemplate(section: string) {
 }
 
 export const getAdminDashboard = cache(async () => {
+  const demoPayload = {
+    demoMode: true as const,
+    counts: {
+      projects: demoProjects.length,
+      publishedProjects: demoProjects.filter((item) => item.status === "published").length,
+      posts: demoPosts.length,
+      draftPosts: demoPosts.filter((item) => item.status === "draft").length,
+      unreadMessages: demoMessages.filter((item) => !item.is_read).length,
+      services: demoServices.length,
+      pages: demoPages.length,
+    },
+    recentProjects: demoProjects.slice(0, 4),
+    recentPosts: demoPosts.slice(0, 4),
+    recentMessages: demoMessages.slice(0, 4),
+  };
+
   if (!isSupabaseConfigured()) {
-    return {
-      demoMode: true,
-      counts: {
-        projects: demoProjects.length,
-        publishedProjects: demoProjects.filter((item) => item.status === "published").length,
-        posts: demoPosts.length,
-        draftPosts: demoPosts.filter((item) => item.status === "draft").length,
-        unreadMessages: demoMessages.filter((item) => !item.is_read).length,
-        services: demoServices.length,
-        pages: demoPages.length,
-      },
-      recentProjects: demoProjects.slice(0, 4),
-      recentPosts: demoPosts.slice(0, 4),
-      recentMessages: demoMessages.slice(0, 4),
-    };
+    return demoPayload;
   }
 
-  const supabase = await getDb();
-  const [
-    projects,
-    posts,
-    messages,
-    services,
-    pages,
-  ] = await Promise.all([
-    supabase.from("projects").select("*").order("updated_at", { ascending: false }),
-    supabase.from("posts").select("*").order("updated_at", { ascending: false }),
-    supabase.from("contact_messages").select("*").order("created_at", { ascending: false }),
-    supabase.from("services").select("*"),
-    supabase.from("pages").select("*"),
-  ]);
+  try {
+    const supabase = await getDb();
+    const [projects, posts, messages, services, pages] = await Promise.all([
+      supabase.from("projects").select("*").order("updated_at", { ascending: false }),
+      supabase.from("posts").select("*").order("updated_at", { ascending: false }),
+      supabase.from("contact_messages").select("*").order("created_at", { ascending: false }),
+      supabase.from("services").select("*"),
+      supabase.from("pages").select("*"),
+    ]);
 
-  const projectRows = (projects.data ?? []) as Project[];
-  const postRows = (posts.data ?? []) as Post[];
-  const messageRows = (messages.data ?? []) as ContactMessage[];
-  const serviceRows = (services.data ?? []) as Service[];
-  const pageRows = (pages.data ?? []) as Page[];
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    if (
+      [projects, posts, messages, services, pages].some((result) =>
+        isMissingRelationError(result.error?.message)
+      )
+    ) {
+      return demoPayload;
+    }
 
-  return {
-    demoMode: false,
-    counts: {
-      projects: projectRows.filter((item) => !item.deleted_at).length,
-      publishedProjects: projectRows.filter(
-        (item) => !item.deleted_at && item.status === "published"
-      ).length,
-      posts: postRows.filter((item) => !item.deleted_at).length,
-      draftPosts: postRows.filter((item) => !item.deleted_at && item.status === "draft").length,
-      unreadMessages: messageRows.filter((item) => !item.is_read && !item.is_archived).length,
-      services: serviceRows.filter((item) => !item.deleted_at).length,
-      pages: pageRows.filter((item) => !item.deleted_at).length,
-    },
-    recentProjects: projectRows.slice(0, 4),
-    recentPosts: postRows.slice(0, 4),
-    recentMessages: messageRows.slice(0, 4),
-  };
+    const projectRows = (projects.data ?? []) as Project[];
+    const postRows = (posts.data ?? []) as Post[];
+    const messageRows = (messages.data ?? []) as ContactMessage[];
+    const serviceRows = (services.data ?? []) as Service[];
+    const pageRows = (pages.data ?? []) as Page[];
+
+    return {
+      demoMode: false,
+      counts: {
+        projects: projectRows.filter((item) => !item.deleted_at).length,
+        publishedProjects: projectRows.filter(
+          (item) => !item.deleted_at && item.status === "published"
+        ).length,
+        posts: postRows.filter((item) => !item.deleted_at).length,
+        draftPosts: postRows.filter((item) => !item.deleted_at && item.status === "draft").length,
+        unreadMessages: messageRows.filter((item) => !item.is_read && !item.is_archived).length,
+        services: serviceRows.filter((item) => !item.deleted_at).length,
+        pages: pageRows.filter((item) => !item.deleted_at).length,
+      },
+      recentProjects: projectRows.slice(0, 4),
+      recentPosts: postRows.slice(0, 4),
+      recentMessages: messageRows.slice(0, 4),
+    };
+  } catch {
+    return demoPayload;
+  }
 });
 
 export async function getHomepageAdminData() {
@@ -580,52 +590,75 @@ export async function getCollectionRecords(section: string) {
     return getDemoCollection(section);
   }
 
-  const supabase = await getDb();
-  switch (section) {
-    case "services": {
-      const { data } = await supabase.from("services").select("*").order("sort_order");
-      return (data ?? []) as Service[];
+  try {
+    const supabase = await getDb();
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+
+    const run = async <T,>(promise: PromiseLike<{ data: T[] | null; error: { message?: string } | null }>) => {
+      const { data, error } = await promise;
+      if (error && isMissingRelationError(error.message)) {
+        return null;
+      }
+      return (data ?? []) as T[];
+    };
+
+    switch (section) {
+      case "services": {
+        const rows = await run(
+          supabase.from("services").select("*").order("sort_order")
+        );
+        return rows ?? getDemoCollection(section);
+      }
+      case "projects": {
+        const rows = await run(
+          supabase.from("projects").select("*, category:project_categories(*)").order("sort_order")
+        );
+        return rows ?? getDemoCollection(section);
+      }
+      case "posts": {
+        const rows = await run(
+          supabase
+            .from("posts")
+            .select("*, category:post_categories(*)")
+            .order("updated_at", { ascending: false })
+        );
+        return rows ?? getDemoCollection(section);
+      }
+      case "pages": {
+        const rows = await run(
+          supabase.from("pages").select("*").order("updated_at", { ascending: false })
+        );
+        return rows ?? getDemoCollection(section);
+      }
+      case "clients": {
+        const rows = await run(supabase.from("clients").select("*").order("sort_order"));
+        return rows ?? getDemoCollection(section);
+      }
+      case "testimonials": {
+        const rows = await run(
+          supabase.from("testimonials").select("*").order("sort_order")
+        );
+        return rows ?? getDemoCollection(section);
+      }
+      case "process": {
+        const rows = await run(
+          supabase.from("process_steps").select("*").order("sort_order")
+        );
+        return rows ?? getDemoCollection(section);
+      }
+      case "stats": {
+        const rows = await run(supabase.from("stats").select("*").order("sort_order"));
+        return rows ?? getDemoCollection(section);
+      }
+      case "tags": {
+        const rows = await run(supabase.from("tags").select("*").order("name"));
+        return rows ?? getDemoCollection(section);
+      }
+      default:
+        return [];
     }
-    case "projects": {
-      const { data } = await supabase
-        .from("projects")
-        .select("*, category:project_categories(*)")
-        .order("sort_order");
-      return (data ?? []) as Project[];
-    }
-    case "posts": {
-      const { data } = await supabase
-        .from("posts")
-        .select("*, category:post_categories(*)")
-        .order("updated_at", { ascending: false });
-      return (data ?? []) as Post[];
-    }
-    case "pages": {
-      const { data } = await supabase.from("pages").select("*").order("updated_at", { ascending: false });
-      return (data ?? []) as Page[];
-    }
-    case "clients": {
-      const { data } = await supabase.from("clients").select("*").order("sort_order");
-      return (data ?? []) as Client[];
-    }
-    case "testimonials": {
-      const { data } = await supabase.from("testimonials").select("*").order("sort_order");
-      return (data ?? []) as Testimonial[];
-    }
-    case "process": {
-      const { data } = await supabase.from("process_steps").select("*").order("sort_order");
-      return (data ?? []) as ProcessStep[];
-    }
-    case "stats": {
-      const { data } = await supabase.from("stats").select("*").order("sort_order");
-      return (data ?? []) as StatItem[];
-    }
-    case "tags": {
-      const { data } = await supabase.from("tags").select("*").order("name");
-      return (data ?? []) as Tag[];
-    }
-    default:
-      return [];
+  } catch {
+    return getDemoCollection(section);
   }
 }
 

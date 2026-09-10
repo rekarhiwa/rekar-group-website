@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export function ConfirmDialog({
   title,
   description,
-  confirmLabel = "Delete",
+  confirmLabel = "سڕینەوە",
   onConfirm,
   children,
 }: {
@@ -31,7 +31,7 @@ export function ConfirmDialog({
           <div className="mt-6 flex justify-end gap-3">
             <AlertDialog.Cancel asChild>
               <Button type="button" variant="secondary">
-                Cancel
+                هەڵوەشاندنەوە
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action asChild>

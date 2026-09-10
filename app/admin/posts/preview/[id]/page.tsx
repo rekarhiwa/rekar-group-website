@@ -32,7 +32,18 @@ export default async function PostPreviewPage({
   return (
     <div className="ambient-bg min-h-screen px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto mb-6 flex max-w-3xl flex-wrap items-center justify-between gap-3">
-        <Badge className="bg-amber-500/20 text-amber-100">Preview · {post.status}</Badge>
+        <Badge className="bg-amber-500/20 text-amber-100">
+          پێشبینین ·{" "}
+          {post.status === "published"
+            ? "بڵاوکراوە"
+            : post.status === "archived"
+              ? "ئەرشیفکراو"
+              : post.status === "scheduled"
+                ? "خشتەکراو"
+                : post.status === "draft"
+                  ? "ڕەشنووس"
+                  : post.status}
+        </Badge>
         <div className="flex gap-2">
           <Button asChild variant="secondary" size="sm">
             <Link href={`/admin/posts/${post.id}`}>گەڕانەوە بۆ دەستکاری</Link>

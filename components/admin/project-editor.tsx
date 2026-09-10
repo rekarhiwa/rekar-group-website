@@ -48,6 +48,12 @@ const schema = z.object({
 type Fields = z.infer<typeof schema>;
 const section = "glass space-y-4 rounded-2xl p-5";
 
+const statusLabels: Record<string, string> = {
+  draft: "ڕەشنووس",
+  published: "بڵاوکراو",
+  archived: "ئەرشیفکراو",
+};
+
 export function ProjectEditor({ project, categories, technologies }: { project?: Project | null; categories: ProjectCategory[]; technologies: Technology[] }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -96,27 +102,27 @@ export function ProjectEditor({ project, categories, technologies }: { project?:
   const field = (name: keyof Fields, label: string, textarea = false, dir?: "ltr") => <div><Label className="mb-2 block">{label}</Label>{textarea ? <Textarea {...form.register(name)} dir={dir} /> : <Input {...form.register(name)} dir={dir} />}</div>;
   return (
     <div className="space-y-6" dir="rtl">
-      <div className="flex flex-wrap items-center justify-between gap-4"><div><h1 className="text-2xl font-bold text-white">{project ? "دەستکاری پڕۆژە" : "پڕۆژەی نوێ"}</h1><p className="text-sm text-muted">دۆخ: {form.watch("status")}</p></div>
+      <div className="flex flex-wrap items-center justify-between gap-4"><div><h1 className="text-2xl font-bold text-white">{project ? "دەستکاری پڕۆژە" : "پڕۆژەی نوێ"}</h1><p className="text-sm text-muted">دۆخ: {statusLabels[form.watch("status")] || form.watch("status")}</p></div>
         <div className="flex flex-wrap gap-2">
           <Button type="button" variant="secondary" disabled={pending} onClick={() => submit("save_draft")}><Save className="h-4 w-4" /> پاشەکەوتکردن</Button>
-          <Button type="button" variant="outline" onClick={() => project?.id ? window.open(`/admin/projects/preview/${project.id}`, "_blank") : toast.error("سەرەتا پاشەکەوتی بکە")}><Eye className="h-4 w-4" /> Preview</Button>
+          <Button type="button" variant="outline" onClick={() => project?.id ? window.open(`/admin/projects/preview/${project.id}`, "_blank") : toast.error("سەرەتا پاشەکەوتی بکە")}><Eye className="h-4 w-4" /> پێشبینین</Button>
           <Button type="button" disabled={pending} onClick={() => submit("publish")}><Send className="h-4 w-4" /> بڵاوکردنەوە</Button>
-          <Button type="button" variant="outline" disabled={pending} onClick={() => submit("archive")}><Archive className="h-4 w-4" /> Archive</Button>
-          {project?.id ? <ConfirmDialog title="گواستنەوە بۆ Trash" description="دڵنیایت لە گواستنەوەی ئەم پڕۆژەیە؟" confirmLabel="گواستنەوە" onConfirm={() => void trash()}><Button type="button" variant="destructive"><Trash2 className="h-4 w-4" /> Move to Trash</Button></ConfirmDialog> : null}
+          <Button type="button" variant="outline" disabled={pending} onClick={() => submit("archive")}><Archive className="h-4 w-4" /> ئەرشیف</Button>
+          {project?.id ? <ConfirmDialog title="گواستنەوە بۆ زبڵ" description="دڵنیایت لە گواستنەوەی ئەم پڕۆژەیە؟" confirmLabel="گواستنەوە" onConfirm={() => void trash()}><Button type="button" variant="destructive"><Trash2 className="h-4 w-4" /> گواستنەوە بۆ زبڵ</Button></ConfirmDialog> : null}
         </div>
       </div>
       <div className="grid gap-6 xl:grid-cols-[1fr_360px]"><main className="space-y-5">
-        <section className={section}><h2 className="font-bold">GENERAL</h2>{field("name", "ناوی پڕۆژە")}<div><Label className="mb-2 block">Slug</Label><Input {...form.register("slug")} dir="ltr" onBlur={() => !form.getValues("slug") && form.setValue("slug", slugify(form.getValues("name")))} /></div>{field("subtitle", "ژێرناونیشان")}{field("short_description", "کورتە وەسف", true)}{field("full_description", "وەسفی تەواو", true)}<div><Label className="mb-2 block">پۆل</Label><select {...form.register("category_id")} className="h-11 w-full rounded-xl border border-border bg-card px-3"><option value="">—</option>{categories.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select></div></section>
-        <section className={section}><h2 className="font-bold">MEDIA</h2><Label>Cover</Label><ProjectImageUploader value={cover} onChange={setCover} projectId={project?.id} kind="cover" /><Label>Gallery</Label><ProjectGalleryManager value={gallery} onChange={setGallery} projectId={project?.id} /></section>
-        <section className={section}><h2 className="font-bold">DETAILS</h2>{field("client_name", "کڕیار")}{field("completion_date", "بەرواری تەواوبوون")}{field("challenge", "ئاستەنگ", true)}{field("solution", "چارەسەر", true)}{field("result", "ئەنجام", true)}{field("case_study", "Case study", true)}</section>
-        <section className={section}><h2 className="font-bold">FEATURES</h2><ProjectFeaturesEditor value={features} onChange={setFeatures} /></section>
-        <section className={section}><h2 className="font-bold">LINKS</h2>{field("website_url", "Website", false, "ltr")}{field("play_store_url", "Play Store", false, "ltr")}{field("app_store_url", "App Store", false, "ltr")}{field("github_url", "GitHub", false, "ltr")}</section>
-        <section className={section}><h2 className="font-bold">SEO</h2>{field("seo_title", "SEO Title")}{field("seo_description", "SEO Description", true)}{field("og_image", "OG Image", false, "ltr")}</section>
+        <section className={section}><h2 className="font-bold">گشتی</h2>{field("name", "ناوی پڕۆژە")}<div><Label className="mb-2 block">Slug</Label><Input {...form.register("slug")} dir="ltr" onBlur={() => !form.getValues("slug") && form.setValue("slug", slugify(form.getValues("name")))} /></div>{field("subtitle", "ژێرناونیشان")}{field("short_description", "کورتە وەسف", true)}{field("full_description", "وەسفی تەواو", true)}<div><Label className="mb-2 block">پۆل</Label><select {...form.register("category_id")} className="h-11 w-full rounded-xl border border-border bg-card px-3"><option value="">—</option>{categories.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select></div></section>
+        <section className={section}><h2 className="font-bold">میدیا</h2><Label>بەرگ</Label><ProjectImageUploader value={cover} onChange={setCover} projectId={project?.id} kind="cover" /><Label>گەلەری</Label><ProjectGalleryManager value={gallery} onChange={setGallery} projectId={project?.id} /></section>
+        <section className={section}><h2 className="font-bold">وردەکاری</h2>{field("client_name", "کڕیار")}{field("completion_date", "بەرواری تەواوبوون")}{field("challenge", "ئاستەنگ", true)}{field("solution", "چارەسەر", true)}{field("result", "ئەنجام", true)}{field("case_study", "کەیس ستادی", true)}</section>
+        <section className={section}><h2 className="font-bold">تایبەتمەندییەکان</h2><ProjectFeaturesEditor value={features} onChange={setFeatures} /></section>
+        <section className={section}><h2 className="font-bold">بەستەرەکان</h2>{field("website_url", "وێبسایت", false, "ltr")}{field("play_store_url", "Play Store", false, "ltr")}{field("app_store_url", "App Store", false, "ltr")}{field("github_url", "GitHub", false, "ltr")}</section>
+        <section className={section}><h2 className="font-bold">SEO</h2>{field("seo_title", "ناونیشانی SEO")}{field("seo_description", "وەسفی SEO", true)}{field("og_image", "وێنەی OG", false, "ltr")}</section>
       </main><aside className="space-y-5">
-        <section className={section}><h2 className="font-bold">MEDIA</h2><Label>Icon</Label><ProjectImageUploader value={icon} onChange={setIcon} projectId={project?.id} kind="icon" /></section>
-        <section className={section}><h2 className="font-bold">TECHNOLOGY</h2><div className="flex flex-wrap gap-2" dir="ltr">{technologies.map((tech) => <button type="button" key={tech.id} onClick={() => setTechnologyIds((old) => old.includes(tech.id) ? old.filter((id) => id !== tech.id) : [...old, tech.id])} className={`rounded-lg border px-3 py-1 text-sm ${technologyIds.includes(tech.id) ? "border-primary bg-primary/20 text-white" : "border-white/10 text-muted"}`}>{tech.name}</button>)}</div>{field("platforms", "Platforms", false, "ltr")}</section>
-        <section className={section}><h2 className="font-bold">DISPLAY</h2><div className="flex items-center justify-between"><Label>Featured</Label><Switch checked={featured} onCheckedChange={setFeatured} /></div><div className="flex items-center justify-between"><Label>Marquee</Label><Switch checked={marquee} onCheckedChange={setMarquee} /></div>{field("sort_order", "ڕیزبەندی", false, "ltr")}</section>
-        <section className={section}><h2 className="font-bold">STATUS</h2><select {...form.register("status")} className="h-11 w-full rounded-xl border border-border bg-card px-3"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></section>
+        <section className={section}><h2 className="font-bold">میدیا</h2><Label>ئایکۆن</Label><ProjectImageUploader value={icon} onChange={setIcon} projectId={project?.id} kind="icon" /></section>
+        <section className={section}><h2 className="font-bold">تەکنەلۆژیا</h2><div className="flex flex-wrap gap-2" dir="ltr">{technologies.map((tech) => <button type="button" key={tech.id} onClick={() => setTechnologyIds((old) => old.includes(tech.id) ? old.filter((id) => id !== tech.id) : [...old, tech.id])} className={`rounded-lg border px-3 py-1 text-sm ${technologyIds.includes(tech.id) ? "border-primary bg-primary/20 text-white" : "border-white/10 text-muted"}`}>{tech.name}</button>)}</div>{field("platforms", "پلاتفۆرمەکان", false, "ltr")}</section>
+        <section className={section}><h2 className="font-bold">پیشاندان</h2><div className="flex items-center justify-between"><Label>تایبەت</Label><Switch checked={featured} onCheckedChange={setFeatured} /></div><div className="flex items-center justify-between"><Label>مارکیو</Label><Switch checked={marquee} onCheckedChange={setMarquee} /></div>{field("sort_order", "ڕیزبەندی", false, "ltr")}</section>
+        <section className={section}><h2 className="font-bold">دۆخ</h2><select {...form.register("status")} className="h-11 w-full rounded-xl border border-border bg-card px-3"><option value="draft">ڕەشنووس</option><option value="published">بڵاوکراو</option><option value="archived">ئەرشیفکراو</option></select></section>
       </aside></div>
     </div>
   );

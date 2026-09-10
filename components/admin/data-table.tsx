@@ -45,13 +45,13 @@ export function DataTable<T extends { id?: string }>({
       <div className="flex flex-col gap-3 border-b border-white/10 p-4 md:flex-row md:items-center md:justify-between">
         <div>
           {title ? <h3 className="font-semibold text-white">{title}</h3> : null}
-          <p className="text-sm text-muted">{filteredRows.length} items</p>
+          <p className="text-sm text-muted">{filteredRows.length} بڕگە</p>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search..."
+            placeholder="گەڕان..."
             className="min-w-[220px] border-white/10 bg-[#1b0826]"
           />
           {filters.length ? (
@@ -66,7 +66,7 @@ export function DataTable<T extends { id?: string }>({
                     : "border-white/10 text-muted"
                 )}
               >
-                All
+                هەموو
               </button>
               {filters.map((filter) => (
                 <button
@@ -115,7 +115,7 @@ export function DataTable<T extends { id?: string }>({
                   colSpan={columns.length}
                   className="px-4 py-10 text-center text-sm text-muted"
                 >
-                  No items found.
+                  هیچ بڕگەیەک نەدۆزرایەوە.
                 </td>
               </tr>
             ) : null}

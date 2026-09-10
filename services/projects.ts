@@ -218,7 +218,22 @@ export async function getAdminProjects(filters: {
 
   const from = (page - 1) * pageSize;
   const { data, count, error } = await q.range(from, from + pageSize - 1);
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (/schema cache|does not exist|Could not find the table/i.test(error.message)) {
+      let list = [...demoProjects];
+      if (filters.search) {
+        const s = filters.search.toLowerCase();
+        list = list.filter((p) => p.name.toLowerCase().includes(s));
+      }
+      if (filters.status && filters.status !== "all") {
+        list = list.filter((p) => p.status === filters.status);
+      }
+      const total = list.length;
+      const start = (page - 1) * pageSize;
+      return { items: list.slice(start, start + pageSize), total };
+    }
+    throw new Error(error.message);
+  }
   return {
     items: ((data as Record<string, unknown>[]) ?? []).map(mapProject),
     total: count ?? 0,
@@ -248,15 +263,43 @@ export async function getProjectFormOptions() {
       technologies: demoTechnologies as Technology[],
     };
   }
-  const supabase = await db();
-  const [{ data: categories }, { data: technologies }] = await Promise.all([
-    supabase.from("project_categories").select("*").order("sort_order"),
-    supabase.from("technologies").select("*").order("name"),
-  ]);
-  return {
-    categories: (categories as ProjectCategory[]) ?? [],
-    technologies: (technologies as Technology[]) ?? [],
-  };
+  try {
+    const supabase = await db();
+    const [{ data: categories, error: catError }, { data: technologies, error: techError }] =
+      await Promise.all([
+        supabase.from("project_categories").select("*").order("sort_order"),
+        supabase.from("technologies").select("*").order("name"),
+      ]);
+    if (
+      catError ||
+      techError ||
+      (!categories?.length && !technologies?.length)
+    ) {
+      if (
+        /schema cache|does not exist|Could not find the table/i.test(
+          catError?.message || techError?.message || ""
+        )
+      ) {
+        return {
+          categories: demoCategories as ProjectCategory[],
+          technologies: demoTechnologies as Technology[],
+        };
+      }
+    }
+    return {
+      categories: ((categories as ProjectCategory[]) ?? []).length
+        ? (categories as ProjectCategory[])
+        : (demoCategories as ProjectCategory[]),
+      technologies: ((technologies as Technology[]) ?? []).length
+        ? (technologies as Technology[])
+        : (demoTechnologies as Technology[]),
+    };
+  } catch {
+    return {
+      categories: demoCategories as ProjectCategory[],
+      technologies: demoTechnologies as Technology[],
+    };
+  }
 }
 
 export async function getTrashedProjects(): Promise<Project[]> {

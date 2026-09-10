@@ -11,6 +11,12 @@ import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import type { Project, ProjectCategory } from "@/types/database";
 
+const statusLabels: Record<string, string> = {
+  draft: "ڕەشنووس",
+  published: "بڵاوکراو",
+  archived: "ئەرشیفکراو",
+};
+
 export function ProjectsAdminTable({ items, total, categories, page, pageSize }: { items: Project[]; total: number; categories: ProjectCategory[]; page: number; pageSize: number }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -34,18 +40,18 @@ export function ProjectsAdminTable({ items, total, categories, page, pageSize }:
       }}>
         <div className="relative xl:col-span-2"><Search className="absolute right-3 top-3 h-4 w-4 text-muted" /><Input name="search" defaultValue={query.search} className="pr-10" placeholder="گەڕان..." /></div>
         <select name="categoryId" defaultValue={query.categoryId} className="h-11 rounded-xl border border-border bg-card px-3"><option value="">هەموو پۆلەکان</option>{categories.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select>
-        <select name="status" defaultValue={query.status} className="h-11 rounded-xl border border-border bg-card px-3"><option value="all">هەموو دۆخەکان</option><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select>
-        <select name="featured" defaultValue={query.featured} className="h-11 rounded-xl border border-border bg-card px-3"><option value="">Featured: هەموو</option><option value="true">بەڵێ</option><option value="false">نەخێر</option></select>
-        <select name="marquee" defaultValue={query.marquee} className="h-11 rounded-xl border border-border bg-card px-3"><option value="">Marquee: هەموو</option><option value="true">بەڵێ</option><option value="false">نەخێر</option></select>
+        <select name="status" defaultValue={query.status} className="h-11 rounded-xl border border-border bg-card px-3"><option value="all">هەموو دۆخەکان</option><option value="draft">ڕەشنووس</option><option value="published">بڵاوکراو</option><option value="archived">ئەرشیفکراو</option></select>
+        <select name="featured" defaultValue={query.featured} className="h-11 rounded-xl border border-border bg-card px-3"><option value="">تایبەت: هەموو</option><option value="true">بەڵێ</option><option value="false">نەخێر</option></select>
+        <select name="marquee" defaultValue={query.marquee} className="h-11 rounded-xl border border-border bg-card px-3"><option value="">مارکیو: هەموو</option><option value="true">بەڵێ</option><option value="false">نەخێر</option></select>
         <select name="sort" defaultValue={query.sort || "sort_order"} className="h-11 rounded-xl border border-border bg-card px-3"><option value="sort_order">ڕیزبەندی</option><option value="updated">نوێترین</option><option value="name">ناو</option></select>
         <Button type="submit" variant="secondary">فلتەر</Button>
       </form>
       <div className="overflow-x-auto rounded-2xl border border-white/10">
-        <table className="min-w-full text-sm"><thead className="bg-white/5 text-muted"><tr>{["ئایکۆن","ناو","پۆل","دۆخ","Featured","Marquee","نوێکردنەوە","کردار"].map((x) => <th key={x} className="p-3 text-start">{x}</th>)}</tr></thead>
+        <table className="min-w-full text-sm"><thead className="bg-white/5 text-muted"><tr>{["ئایکۆن","ناو","پۆل","دۆخ","تایبەت","مارکیو","نوێکردنەوە","کردار"].map((x) => <th key={x} className="p-3 text-start">{x}</th>)}</tr></thead>
           <tbody>{items.map((project) => <tr key={project.id} className="border-t border-white/10">
             <td className="p-3">{project.icon ? <Image src={project.icon} alt="" width={40} height={40} className="h-10 w-10 rounded-lg object-cover" unoptimized /> : "—"}</td>
             <td className="p-3"><Link className="font-medium text-white hover:text-light-violet" href={`/admin/projects/${project.id}/edit`}>{project.name}</Link></td>
-            <td className="p-3 text-muted">{project.category?.name || "—"}</td><td className="p-3"><Badge>{project.status}</Badge></td>
+            <td className="p-3 text-muted">{project.category?.name || "—"}</td><td className="p-3"><Badge>{statusLabels[project.status] || project.status}</Badge></td>
             <td className="p-3">{project.featured ? "✓" : "—"}</td><td className="p-3">{project.show_in_marquee ? "✓" : "—"}</td>
             <td className="p-3 text-muted">{formatDate(project.updated_at)}</td><td className="p-3"><Button asChild size="sm" variant="outline"><Link href={`/admin/projects/${project.id}/edit`}>دەستکاری</Link></Button></td>
           </tr>)}

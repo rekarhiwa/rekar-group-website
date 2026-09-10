@@ -8,7 +8,7 @@ import { withMutationGuard } from "@/app/admin/actions/_shared";
 
 const schema = z.object({
   id: z.string().optional().default(""),
-  email: z.email("Valid email required"),
+  email: z.email("ئیمەیڵی دروست پێویستە"),
   full_name: z.string().optional().default(""),
   role: z.enum(["super_admin", "admin", "editor"]),
   is_active: z.string().optional().default(""),

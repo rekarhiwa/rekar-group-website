@@ -28,21 +28,21 @@ export default async function AdminHomePage() {
 
       <Card className="border-white/10 bg-white/[0.03] p-6">
         <div className="mb-5">
-          <h2 className="text-xl font-semibold text-white">Hero Settings</h2>
-          <p className="text-sm text-muted">Edit the main homepage hero copy and CTAs.</p>
+          <h2 className="text-xl font-semibold text-white">ڕێکخستنەکانی هیرۆ</h2>
+          <p className="text-sm text-muted">دەستکاریکردنی نووسین و دوگمەکانی هیرۆی سەرەکی ماڵەوە.</p>
         </div>
         <ServerForm action={saveHeroSettingsAction} className="space-y-5">
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <Label className="mb-2 block">Badge</Label>
+              <Label className="mb-2 block">نیشانە</Label>
               <Input name="badge" defaultValue={hero?.badge ?? ""} className="border-white/10 bg-[#160021]" />
             </div>
             <div>
-              <Label className="mb-2 block">Heading</Label>
+              <Label className="mb-2 block">سەردێڕ</Label>
               <Input name="heading" defaultValue={hero?.heading ?? ""} className="border-white/10 bg-[#160021]" />
             </div>
             <div>
-              <Label className="mb-2 block">Highlighted heading</Label>
+              <Label className="mb-2 block">سەردێڕی هایلایتکراو</Label>
               <Input
                 name="highlighted_heading"
                 defaultValue={hero?.highlighted_heading ?? ""}
@@ -50,7 +50,7 @@ export default async function AdminHomePage() {
               />
             </div>
             <div>
-              <Label className="mb-2 block">Primary button label</Label>
+              <Label className="mb-2 block">ناوی دوگمەی سەرەکی</Label>
               <Input
                 name="primary_button_label"
                 defaultValue={hero?.primary_button_label ?? ""}
@@ -58,7 +58,7 @@ export default async function AdminHomePage() {
               />
             </div>
             <div>
-              <Label className="mb-2 block">Primary button URL</Label>
+              <Label className="mb-2 block">بەستەری دوگمەی سەرەکی</Label>
               <Input
                 name="primary_button_url"
                 defaultValue={hero?.primary_button_url ?? ""}
@@ -66,7 +66,7 @@ export default async function AdminHomePage() {
               />
             </div>
             <div>
-              <Label className="mb-2 block">Secondary button label</Label>
+              <Label className="mb-2 block">ناوی دوگمەی لاوەکی</Label>
               <Input
                 name="secondary_button_label"
                 defaultValue={hero?.secondary_button_label ?? ""}
@@ -74,7 +74,7 @@ export default async function AdminHomePage() {
               />
             </div>
             <div>
-              <Label className="mb-2 block">Secondary button URL</Label>
+              <Label className="mb-2 block">بەستەری دوگمەی لاوەکی</Label>
               <Input
                 name="secondary_button_url"
                 defaultValue={hero?.secondary_button_url ?? ""}
@@ -82,7 +82,7 @@ export default async function AdminHomePage() {
               />
             </div>
             <div className="md:col-span-2">
-              <Label className="mb-2 block">Description</Label>
+              <Label className="mb-2 block">وەسف</Label>
               <Textarea
                 name="description"
                 defaultValue={hero?.description ?? ""}
@@ -91,20 +91,20 @@ export default async function AdminHomePage() {
             </div>
             <div className="rounded-2xl border border-white/10 bg-[#160021] p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white">Visual enabled</span>
+                <span className="text-sm text-white">بینین چالاکە</span>
                 <Switch name="visual_enabled" defaultChecked={hero?.visual_enabled ?? true} />
               </div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-[#160021] p-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white">Stats enabled</span>
+                <span className="text-sm text-white">ئامارەکان چالاکن</span>
                 <Switch name="stats_enabled" defaultChecked={hero?.stats_enabled ?? true} />
               </div>
             </div>
           </div>
           <div className="flex justify-end">
             <Button type="submit" disabled={demoMode}>
-              Save Hero
+              پاشەکەوتکردنی هیرۆ
             </Button>
           </div>
         </ServerForm>

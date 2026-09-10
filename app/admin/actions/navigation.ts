@@ -11,8 +11,8 @@ import {
 } from "@/app/admin/actions/_shared";
 
 const navSchema = z.object({
-  label: z.string().min(1, "Label is required"),
-  url: z.string().min(1, "URL is required"),
+  label: z.string().min(1, "ناو پێویستە"),
+  url: z.string().min(1, "بەستەر پێویستە"),
   type: z.string().optional().default("link"),
   parent_id: z.string().optional().default(""),
   sort_order: z.coerce.number().int().default(0),
@@ -21,8 +21,8 @@ const navSchema = z.object({
 });
 
 const socialSchema = z.object({
-  platform: z.string().min(1, "Platform is required"),
-  url: z.string().min(1, "URL is required"),
+  platform: z.string().min(1, "پلاتفۆرم پێویستە"),
+  url: z.string().min(1, "بەستەر پێویستە"),
   enabled: z.string().optional().default(""),
   sort_order: z.coerce.number().int().default(0),
 });
