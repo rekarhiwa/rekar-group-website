@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
   --background: #100018;
   --background-secondary: #190026;
   --primary: #7b00c8;
@@ -11,7 +12,54 @@
   --muted: #c8abd9;
   --border: rgba(255, 255, 255, 0.1);
   --card: rgba(255, 255, 255, 0.04);
+  --soft: rgba(255, 255, 255, 0.05);
+  --cta: #ffffff;
+  --cta-foreground: #100018;
+  --chip: #e7c5ff;
   --radius: 0.75rem;
+}
+
+html.light {
+  color-scheme: light;
+  --background: #f6f1fb;
+  --background-secondary: #ece3f6;
+  --primary: #7b00c8;
+  --primary-deep: #6f00b8;
+  --accent: #8a1fe0;
+  --light-violet: #6f00b8;
+  --foreground: #1b0a2b;
+  --muted: #5d4273;
+  --border: rgba(88, 28, 132, 0.14);
+  --card: rgba(255, 255, 255, 0.78);
+  --soft: rgba(123, 0, 200, 0.06);
+  --cta: #7b00c8;
+  --cta-foreground: #ffffff;
+  --chip: #6f00b8;
+}
+
+html.dark .public-shell {
+  --background: var(--brand-background, #100018);
+  --background-secondary: var(--brand-background-secondary, #190026);
+}
+
+.admin-shell {
+  color-scheme: dark;
+  --background: #100018;
+  --background-secondary: #190026;
+  --primary: #7b00c8;
+  --primary-deep: #6f00b8;
+  --accent: #9a24f0;
+  --light-violet: #c878ff;
+  --foreground: #fbf7ff;
+  --muted: #c8abd9;
+  --border: rgba(255, 255, 255, 0.1);
+  --card: rgba(255, 255, 255, 0.04);
+  --soft: rgba(255, 255, 255, 0.05);
+  --cta: #ffffff;
+  --cta-foreground: #100018;
+  --chip: #e7c5ff;
+  background: #100018;
+  color: #fbf7ff;
 }
 
 @theme inline {
@@ -25,6 +73,10 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-card: var(--card);
+  --color-soft: var(--soft);
+  --color-cta: var(--cta);
+  --color-cta-foreground: var(--cta-foreground);
+  --color-chip: var(--chip);
   --font-sans: var(--font-rabar), "Rabar", Tahoma, Arial, sans-serif;
   --radius-lg: var(--radius);
 }
@@ -55,8 +107,16 @@ body {
   backdrop-filter: blur(12px);
 }
 
+html.light .glass {
+  box-shadow: 0 12px 40px rgba(88, 28, 132, 0.06);
+}
+
 .glow-purple {
   box-shadow: 0 0 80px rgba(123, 0, 200, 0.25);
+}
+
+html.light .glow-purple {
+  box-shadow: 0 0 60px rgba(123, 0, 200, 0.12);
 }
 
 .ambient-bg {
@@ -66,6 +126,27 @@ body {
     radial-gradient(ellipse 50% 30% at 50% 100%, rgba(123, 0, 200, 0.15), transparent),
     var(--background);
 }
+
+html.light .ambient-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(154, 36, 240, 0.14), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(111, 0, 184, 0.1), transparent),
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(123, 0, 200, 0.08), transparent),
+    var(--background);
+}
+
+.blog-shell {
+  background:
+    radial-gradient(ellipse 70% 45% at 100% 0%, rgba(154, 36, 240, 0.16), transparent 55%),
+    var(--background);
+}
+
+html.light .blog-shell {
+  background:
+    radial-gradient(ellipse 70% 45% at 100% 0%, rgba(154, 36, 240, 0.08), transparent 55%),
+    var(--background);
+}
+
 
 .prose-cms {
   line-height: 1.8;
@@ -98,8 +179,8 @@ body {
 
 .prose-cms .callout,
 .prose-cms [data-type="callout"] {
-  border: 1px solid rgba(200, 120, 255, 0.35);
-  background: rgba(123, 0, 200, 0.12);
+  border: 1px solid color-mix(in srgb, var(--light-violet) 35%, transparent);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
   border-radius: 1rem;
   padding: 1rem 1.25rem;
   margin: 1.25rem 0;

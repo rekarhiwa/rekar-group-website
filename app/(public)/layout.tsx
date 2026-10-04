@@ -21,14 +21,14 @@ export default async function PublicLayout({
   ]);
 
   const style = {
-    "--background": theme.background_color,
-    "--background-secondary": theme.secondary_color,
     "--primary": theme.primary_color,
     "--accent": theme.accent_color,
+    "--brand-background": theme.background_color,
+    "--brand-background-secondary": theme.secondary_color,
   } as React.CSSProperties;
 
   return (
-    <div className="relative min-h-screen bg-[#100018] text-foreground" style={style}>
+    <div className="public-shell ambient-bg relative min-h-screen bg-background text-foreground" style={style}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

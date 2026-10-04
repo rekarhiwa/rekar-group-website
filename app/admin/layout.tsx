@@ -22,13 +22,14 @@ export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
   }
 
   return (
-    <div dir="rtl" className="flex min-h-screen bg-[#100018] text-foreground">
+    <div dir="rtl" className="admin-shell flex min-h-screen bg-[#100018] text-foreground">
       <AdminSidebar clerkEnabled={clerkReady} />
       <div className="min-w-0 flex-1">
         <header className="sticky top-0 z-20 border-b border-white/10 bg-[#100018]/85 px-6 py-4 backdrop-blur">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-xl font-semibold text-white">سیستەمی بەڕێوەبردنی Rekar Group</h1>
+              <p className="text-sm text-muted">وێبسایت و پۆستەکان وەک دوو بەشی جیا بەڕێوە دەبرێن.</p>
               <p className="text-sm text-muted">
                 {demoMode
                   ? "دۆخی دیمۆ چالاکە تا Clerk / Supabase ڕێک نەخرێن."

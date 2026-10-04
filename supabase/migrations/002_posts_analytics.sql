@@ -8,13 +8,14 @@ CREATE TABLE IF NOT EXISTS public.post_views (
   post_id UUID NOT NULL REFERENCES public.posts (id) ON DELETE CASCADE,
   viewer_hash TEXT,
   user_agent TEXT,
+  viewed_on DATE NOT NULL DEFAULT CURRENT_DATE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS post_views_post_id_idx ON public.post_views (post_id);
 CREATE INDEX IF NOT EXISTS post_views_created_at_idx ON public.post_views (created_at);
 CREATE UNIQUE INDEX IF NOT EXISTS post_views_unique_daily_idx
-  ON public.post_views (post_id, viewer_hash, (created_at::date))
+  ON public.post_views (post_id, viewer_hash, viewed_on)
   WHERE viewer_hash IS NOT NULL;
 
 ALTER TABLE public.post_views ENABLE ROW LEVEL SECURITY;

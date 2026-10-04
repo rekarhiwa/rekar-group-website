@@ -15,7 +15,7 @@ export function ProjectGrid({
         {Array.from({ length: 6 }).map((_, index) => (
           <div
             key={index}
-            className="glass h-[31rem] animate-pulse rounded-[2rem] bg-white/[0.03]"
+            className="glass h-[31rem] animate-pulse rounded-[2rem] bg-soft"
           />
         ))}
       </div>
@@ -25,8 +25,8 @@ export function ProjectGrid({
   if (!projects.length) {
     return (
       <div className="glass rounded-[2rem] px-6 py-16 text-center">
-        <p className="text-lg font-semibold text-[#FBF7FF]">هیچ پڕۆژەیەک نەدۆزرایەوە</p>
-        <p className="mt-2 text-sm text-[#C8ABD9]">گەڕان یان فلتەرەکەت بگۆڕە.</p>
+        <p className="text-lg font-semibold text-foreground">هیچ پڕۆژەیەک نەدۆزرایەوە</p>
+        <p className="mt-2 text-sm text-muted">گەڕان یان فلتەرەکەت بگۆڕە.</p>
       </div>
     );
   }

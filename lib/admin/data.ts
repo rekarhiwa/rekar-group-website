@@ -151,7 +151,7 @@ export const adminSections: Record<string, AdminSectionConfig> = {
   posts: {
     key: "posts",
     title: "پۆستەکان",
-    description: "پۆستی بلۆگ، پۆل، تاگ، SEO و بەرواری بڵاوکردنەوە بەڕێوەببە.",
+    description: "پۆستەکان، پۆل، تاگ، SEO و بەرواری بڵاوکردنەوە بەڕێوەببە.",
     entityLabel: "پۆست",
     table: "posts",
     mode: "detail-collection",
@@ -314,7 +314,7 @@ export const adminSections: Record<string, AdminSectionConfig> = {
   tags: {
     key: "tags",
     title: "تاگەکان",
-    description: "تاگە دووبارە بەکارهێنراوەکانی بلۆگ بەڕێوەببە.",
+    description: "تاگە دووبارە بەکارهێنراوەکانی پۆستەکان بەڕێوەببە.",
     entityLabel: "تاگ",
     table: "tags",
     mode: "inline-collection",
@@ -326,7 +326,7 @@ export const adminSections: Record<string, AdminSectionConfig> = {
   categories: {
     key: "categories",
     title: "پۆلەکان",
-    description: "پۆلی پڕۆژە و پۆست لە یەک شوێن بەڕێوەببە.",
+    description: "پۆلەکانی پۆستەکان بەڕێوەببە.",
     entityLabel: "پۆل",
     mode: "categories",
   },
@@ -573,16 +573,29 @@ export async function getHomepageAdminData() {
     const { demoSections, demoHero } = await import("@/lib/demo-data");
     return { sections: demoSections, hero: demoHero, demoMode: true };
   }
-  const supabase = await getDb();
-  const [sections, hero] = await Promise.all([
-    supabase.from("homepage_sections").select("*").order("sort_order"),
-    supabase.from("hero_settings").select("*").limit(1).single(),
-  ]);
-  return {
-    sections: ((sections.data ?? []) as HomepageSection[]) ?? [],
-    hero: hero.data,
-    demoMode: false,
-  };
+  try {
+    const supabase = await getDb();
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    const [sections, hero] = await Promise.all([
+      supabase.from("homepage_sections").select("*").order("sort_order"),
+      supabase.from("hero_settings").select("*").limit(1).maybeSingle(),
+    ]);
+    if (
+      (sections.error && isMissingRelationError(sections.error.message)) ||
+      (hero.error && isMissingRelationError(hero.error.message))
+    ) {
+      const { demoSections, demoHero } = await import("@/lib/demo-data");
+      return { sections: demoSections, hero: demoHero, demoMode: true };
+    }
+    return {
+      sections: ((sections.data ?? []) as HomepageSection[]) ?? [],
+      hero: hero.data,
+      demoMode: false,
+    };
+  } catch {
+    const { demoSections, demoHero } = await import("@/lib/demo-data");
+    return { sections: demoSections, hero: demoHero, demoMode: true };
+  }
 }
 
 export async function getCollectionRecords(section: string) {
@@ -605,13 +618,17 @@ export async function getCollectionRecords(section: string) {
     switch (section) {
       case "services": {
         const rows = await run(
-          supabase.from("services").select("*").order("sort_order")
+          supabase.from("services").select("*").is("deleted_at", null).order("sort_order")
         );
         return rows ?? getDemoCollection(section);
       }
       case "projects": {
         const rows = await run(
-          supabase.from("projects").select("*, category:project_categories(*)").order("sort_order")
+          supabase
+            .from("projects")
+            .select("*, category:project_categories(*)")
+            .is("deleted_at", null)
+            .order("sort_order")
         );
         return rows ?? getDemoCollection(section);
       }
@@ -620,13 +637,18 @@ export async function getCollectionRecords(section: string) {
           supabase
             .from("posts")
             .select("*, category:post_categories(*)")
+            .is("deleted_at", null)
             .order("updated_at", { ascending: false })
         );
         return rows ?? getDemoCollection(section);
       }
       case "pages": {
         const rows = await run(
-          supabase.from("pages").select("*").order("updated_at", { ascending: false })
+          supabase
+            .from("pages")
+            .select("*")
+            .is("deleted_at", null)
+            .order("updated_at", { ascending: false })
         );
         return rows ?? getDemoCollection(section);
       }
@@ -780,18 +802,39 @@ export async function getSettingsData() {
     };
   }
 
-  const supabase = await getDb();
-  const [site, theme, socialLinks] = await Promise.all([
-    supabase.from("site_settings").select("*").limit(1).single(),
-    supabase.from("theme_settings").select("*").limit(1).single(),
-    supabase.from("social_links").select("*").order("sort_order"),
-  ]);
-  return {
-    site: (site.data as SiteSettings | null) ?? demoSiteSettings,
-    theme: (theme.data as ThemeSettings | null) ?? demoThemeSettings,
-    socialLinks: (socialLinks.data ?? []) as SocialLink[],
-    demoMode: false,
-  };
+  try {
+    const supabase = await getDb();
+    const { isMissingRelationError } = await import("@/lib/supabase/schema");
+    const [site, theme, socialLinks] = await Promise.all([
+      supabase.from("site_settings").select("*").limit(1).maybeSingle(),
+      supabase.from("theme_settings").select("*").limit(1).maybeSingle(),
+      supabase.from("social_links").select("*").order("sort_order"),
+    ]);
+    if (
+      (site.error && isMissingRelationError(site.error.message)) ||
+      (theme.error && isMissingRelationError(theme.error.message))
+    ) {
+      return {
+        site: demoSiteSettings,
+        theme: demoThemeSettings,
+        socialLinks: demoSocial,
+        demoMode: true,
+      };
+    }
+    return {
+      site: (site.data as SiteSettings | null) ?? demoSiteSettings,
+      theme: (theme.data as ThemeSettings | null) ?? demoThemeSettings,
+      socialLinks: (socialLinks.data ?? []) as SocialLink[],
+      demoMode: false,
+    };
+  } catch {
+    return {
+      site: demoSiteSettings,
+      theme: demoThemeSettings,
+      socialLinks: demoSocial,
+      demoMode: true,
+    };
+  }
 }
 
 export async function getUsersData() {

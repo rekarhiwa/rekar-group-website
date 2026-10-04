@@ -14,13 +14,13 @@ export function CtaSection({
   buttonUrl?: string;
 }) {
   return (
-    <section className="border-t border-white/[0.06] px-4 py-28 sm:px-6 lg:px-8">
+    <section className="border-t border-border px-4 py-28 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl sm:leading-tight">
+        <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-5xl sm:leading-tight">
           {title}
         </h2>
         {subtitle ? (
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-[#C8ABD9]">{subtitle}</p>
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-muted">{subtitle}</p>
         ) : null}
         {buttonLabel && buttonUrl ? (
           <div className="mt-10">

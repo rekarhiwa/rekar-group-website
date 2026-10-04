@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { MagazineCard } from "@/components/blog/magazine-card";
+import { PostCover } from "@/components/public/post-cover";
 import { RichContent } from "@/components/public/rich-content";
 import { ShareButtons } from "@/components/public/share-buttons";
 import { TrackPostView } from "@/components/public/track-post-view";
 import { Badge } from "@/components/ui/badge";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { getPostCategories } from "@/lib/posts/taxonomy";
 import { calculateReadingTime } from "@/lib/posts/utils";
 import { formatDate } from "@/lib/utils";
 import { getPublicPostBySlug, getRelatedPosts } from "@/services/posts";
@@ -39,7 +41,7 @@ export default async function InsightDetailsPage(
 
   if (!post) notFound();
 
-  const related = await getRelatedPosts(post, 3);
+  const related = await getRelatedPosts(post, 4);
   const readingTime = calculateReadingTime(post.content);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || settings.website_url || "https://www.rekar.group";
   const canonical = `${siteUrl.replace(/\/$/, "")}/insights/${post.slug}`;
@@ -65,7 +67,7 @@ export default async function InsightDetailsPage(
   };
 
   return (
-    <div className="px-4 py-16 sm:px-6 lg:px-8">
+    <div className="px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
       <TrackPostView postId={post.id} />
       <script
         type="application/ld+json"
@@ -74,24 +76,19 @@ export default async function InsightDetailsPage(
 
       <article className="mx-auto max-w-3xl">
         <Link href="/insights" className="text-sm text-light-violet">
-          ← گەڕانەوە بۆ زانیاری
+          گەڕانەوە بۆ سەرەتا
         </Link>
 
-        {post.cover_image ? (
-          <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-[2rem] border border-white/10">
-            <Image
-              src={post.cover_image}
-              alt={post.title}
-              fill
-              className="object-cover"
-              unoptimized
-              priority
-            />
-          </div>
-        ) : null}
+        <div className="relative mt-6 overflow-hidden rounded-[2rem] border border-border">
+          <PostCover post={post} className="aspect-[16/9] min-h-56" />
+        </div>
 
-        <div className="mt-8 flex flex-wrap items-center gap-3 text-sm text-muted">
-          {post.category ? <Badge>{post.category.name}</Badge> : null}
+        <div className="mt-8 flex flex-wrap items-center gap-2 text-sm text-muted">
+          {getPostCategories(post).map((category) => (
+            <Link key={category.id} href={`/insights?category=${category.slug}`}>
+              <Badge>{category.name}</Badge>
+            </Link>
+          ))}
           <span>{post.published_at ? formatDate(post.published_at) : ""}</span>
           <span>·</span>
           <span>{readingTime} خولەک خوێندنەوە</span>
@@ -121,42 +118,29 @@ export default async function InsightDetailsPage(
         {post.tags?.length ? (
           <div className="mt-10 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <Badge key={tag.id} className="bg-white/5">
+              <Badge key={tag.id} className="bg-soft">
                 #{tag.name}
               </Badge>
             ))}
           </div>
         ) : null}
 
-        <div className="mt-10 border-t border-white/10 pt-8">
+        <div className="mt-10 border-t border-border pt-8">
           <ShareButtons url={canonical} title={post.title} />
         </div>
       </article>
 
       {related.length ? (
-        <section className="mx-auto mt-20 max-w-7xl">
-          <h2 className="mb-8 text-2xl font-bold text-foreground">بابەتە پەیوەندیدارەکان</h2>
-          <div className="grid gap-6 md:grid-cols-3">
+        <section className="mx-auto mt-20 max-w-6xl">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <h2 className="text-2xl font-bold text-foreground">پۆستی هاوشێوە</h2>
+            <Link href="/insights" className="text-sm text-light-violet">
+              هەموو پۆستەکان
+            </Link>
+          </div>
+          <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item) => (
-              <Link
-                key={item.id}
-                href={`/insights/${item.slug}`}
-                className="glass rounded-[1.5rem] p-6 transition hover:border-light-violet/40"
-              >
-                {item.cover_image ? (
-                  <div className="relative mb-4 aspect-[16/10] overflow-hidden rounded-xl">
-                    <Image
-                      src={item.cover_image}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                ) : null}
-                <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                <p className="mt-2 line-clamp-2 text-sm text-muted">{item.excerpt}</p>
-              </Link>
+              <MagazineCard key={item.id} post={item} />
             ))}
           </div>
         </section>

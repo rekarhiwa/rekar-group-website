@@ -31,8 +31,8 @@ export function ProjectFilter({
               className={cn(
                 "relative shrink-0 overflow-hidden rounded-full border px-5 py-2.5 text-sm font-semibold transition",
                 active
-                  ? "border-[#C878FF]/40 text-white"
-                  : "border-white/10 bg-white/[0.03] text-[#C8ABD9] hover:border-[#C878FF]/25 hover:text-white"
+                  ? "border-accent/40 text-white"
+                  : "border-border bg-soft text-muted hover:border-accent/25 hover:text-foreground"
               )}
             >
               {active ? (

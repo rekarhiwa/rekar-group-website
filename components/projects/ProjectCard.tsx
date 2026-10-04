@@ -34,7 +34,7 @@ export function ProjectCard({
         className="absolute inset-0 z-10"
       />
 
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.08] bg-[#190026]">
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-background-secondary">
         {project.cover_image ? (
           <Image
             src={project.cover_image}
@@ -75,11 +75,11 @@ export function ProjectCard({
 
       <div className="flex flex-1 flex-col p-6 sm:p-7">
         <div>
-          <h3 className="text-2xl font-bold text-[#FBF7FF]">{project.name}</h3>
+          <h3 className="text-2xl font-bold text-foreground">{project.name}</h3>
           {project.subtitle ? (
-            <p className="mt-1 text-sm font-medium text-[#C878FF]">{project.subtitle}</p>
+            <p className="mt-1 text-sm font-medium text-light-violet">{project.subtitle}</p>
           ) : null}
-          <p className="mt-4 line-clamp-3 text-sm leading-7 text-[#C8ABD9]">
+          <p className="mt-4 line-clamp-3 text-sm leading-7 text-muted">
             {project.short_description || project.full_description}
           </p>
         </div>
@@ -92,7 +92,7 @@ export function ProjectCard({
           </div>
         ) : null}
 
-        <div className="mt-auto flex items-center gap-2 pt-7 text-sm font-semibold text-[#FBF7FF]">
+        <div className="mt-auto flex items-center gap-2 pt-7 text-sm font-semibold text-foreground">
           وردەکاری پڕۆژە
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
         </div>

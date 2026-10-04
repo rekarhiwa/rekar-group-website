@@ -36,10 +36,17 @@ export async function saveStatAction(
       visible: parseBoolean(formData.get("visible")),
       show_in_hero: parseBoolean(formData.get("show_in_hero")),
     }),
-    revalidate: ["/admin/stats", "/admin", "/", "/admin/home"],
+    revalidate: ["/admin/stats", "/admin/content", "/admin", "/", "/admin/home", "/about"],
   });
 }
 
 export async function deleteStatAction(id: string) {
-  return hardDeleteRecord({ table: "stats", section: "stats", id });
+  const result = await hardDeleteRecord({ table: "stats", section: "stats", id });
+  if (result.status === "success") {
+    const { revalidatePath } = await import("next/cache");
+    revalidatePath("/admin/content");
+    revalidatePath("/");
+    revalidatePath("/about");
+  }
+  return result;
 }

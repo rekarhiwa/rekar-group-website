@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme-provider";
 import { getSiteSettings } from "@/services/content";
 import { isClerkConfigured } from "@/lib/auth/clerk";
 import "./globals.css";
@@ -55,20 +56,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="ckb"
       dir="rtl"
-      className={`${rabar.variable} h-full antialiased`}
+      className={`${rabar.variable} dark h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className={`${rabar.className} min-h-full flex flex-col`}>
-        {isClerkConfigured() ? (
-          <ClerkProvider
-            signInUrl="/auth/login"
-            signUpUrl="/auth/login"
-            afterSignOutUrl="/"
-          >
-            {body}
-          </ClerkProvider>
-        ) : (
-          body
-        )}
+      <body className={`${rabar.className} min-h-full flex flex-col bg-background text-foreground`}>
+        <ThemeProvider>
+          {isClerkConfigured() ? (
+            <ClerkProvider
+              signInUrl="/auth/login"
+              signUpUrl="/auth/login"
+              afterSignOutUrl="/"
+            >
+              {body}
+            </ClerkProvider>
+          ) : (
+            body
+          )}
+        </ThemeProvider>
       </body>
     </html>
   );

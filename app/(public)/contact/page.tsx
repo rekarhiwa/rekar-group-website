@@ -9,7 +9,7 @@ export default async function ContactPage() {
     <section className="px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-6">
-          <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold tracking-[0.3em] text-light-violet uppercase">
+          <span className="inline-flex rounded-full border border-border bg-soft px-4 py-1 text-xs font-semibold tracking-[0.3em] text-light-violet uppercase">
             Contact
           </span>
           <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">

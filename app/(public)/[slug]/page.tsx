@@ -58,7 +58,7 @@ function BlockRenderer({ block }: { block: PageBlock }) {
       if (!src) return null;
       return (
         <section className="py-6">
-          <div className="relative h-80 overflow-hidden rounded-[2rem] border border-white/10">
+          <div className="relative h-80 overflow-hidden rounded-[2rem] border border-border">
             <Image
               src={src}
               alt={value(content, "alt") || "image"}
@@ -78,7 +78,7 @@ function BlockRenderer({ block }: { block: PageBlock }) {
       return (
         <section className="grid gap-8 py-8 lg:grid-cols-2 lg:items-center">
           {src ? (
-            <div className="relative h-80 overflow-hidden rounded-[2rem] border border-white/10">
+            <div className="relative h-80 overflow-hidden rounded-[2rem] border border-border">
               <Image
                 src={src}
                 alt={value(content, "alt") || title || "image"}
@@ -109,7 +109,7 @@ function BlockRenderer({ block }: { block: PageBlock }) {
             image.src ? (
               <div
                 key={`${image.src}-${index}`}
-                className="relative h-64 overflow-hidden rounded-[2rem] border border-white/10"
+                className="relative h-64 overflow-hidden rounded-[2rem] border border-border"
               >
                 <Image
                   src={image.src}
@@ -145,7 +145,7 @@ function BlockRenderer({ block }: { block: PageBlock }) {
       const label = value(content, "label");
       if (!title && !subtitle && !href && !label) return null;
       return (
-        <section className="rounded-[2rem] border border-white/10 bg-white/5 px-8 py-12 text-center">
+        <section className="rounded-[2rem] border border-border bg-soft px-8 py-12 text-center">
           {title ? <h2 className="text-3xl font-bold text-foreground">{title}</h2> : null}
           {subtitle ? <p className="mt-4 text-lg text-muted">{subtitle}</p> : null}
           {href && label ? (
@@ -243,7 +243,7 @@ export default async function CustomPage(props: PageProps<"/[slug]">) {
 
   return (
     <div className="px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-5xl rounded-[2rem] border border-white/10 bg-black/10 p-8 sm:p-10">
+      <div className="mx-auto max-w-5xl rounded-[2rem] border border-border bg-card p-8 sm:p-10">
         <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">
           {page.title}
         </h1>

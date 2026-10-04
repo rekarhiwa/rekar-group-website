@@ -36,7 +36,7 @@ export async function saveProcessAction(
       sort_order: parseNumber(formData.get("sort_order")),
       visible: parseBoolean(formData.get("visible")),
     }),
-    revalidate: ["/admin/process", "/admin", "/"],
+    revalidate: ["/admin/process", "/admin/content", "/admin", "/", "/about"],
   });
 }
 

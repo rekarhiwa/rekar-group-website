@@ -8,45 +8,7 @@ function clerkRole(): UserRole {
   return "super_admin";
 }
 
-export async function getCurrentProfile(): Promise<Profile | null> {
-  if (isClerkConfigured()) {
-    try {
-      const { auth, currentUser } = await import("@clerk/nextjs/server");
-      const session = await auth();
-      if (!session.userId) return null;
-
-      const user = await currentUser();
-      const email =
-        user?.primaryEmailAddress?.emailAddress ||
-        user?.emailAddresses?.[0]?.emailAddress ||
-        "";
-      const fullName =
-        [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
-        user?.username ||
-        email ||
-        "Clerk Admin";
-
-      const metaRole = user?.publicMetadata?.role;
-      const role: UserRole =
-        metaRole === "admin" || metaRole === "editor" || metaRole === "super_admin"
-          ? metaRole
-          : clerkRole();
-
-      return {
-        id: session.userId,
-        email,
-        full_name: fullName,
-        role,
-        avatar_url: user?.imageUrl ?? null,
-        is_active: true,
-        created_at: user?.createdAt ? new Date(user.createdAt).toISOString() : new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
-    } catch {
-      return null;
-    }
-  }
-
+async function getSupabaseProfile(): Promise<Profile | null> {
   if (!isSupabaseConfigured()) return null;
   try {
     const { createClient } = await import("@/lib/supabase/server");
@@ -64,6 +26,48 @@ export async function getCurrentProfile(): Promise<Profile | null> {
   } catch {
     return null;
   }
+}
+
+export async function getCurrentProfile(): Promise<Profile | null> {
+  if (isClerkConfigured()) {
+    try {
+      const { auth, currentUser } = await import("@clerk/nextjs/server");
+      const session = await auth();
+      if (session.userId) {
+        const user = await currentUser();
+        const email =
+          user?.primaryEmailAddress?.emailAddress ||
+          user?.emailAddresses?.[0]?.emailAddress ||
+          "";
+        const fullName =
+          [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
+          user?.username ||
+          email ||
+          "Clerk Admin";
+
+        const metaRole = user?.publicMetadata?.role;
+        const role: UserRole =
+          metaRole === "admin" || metaRole === "editor" || metaRole === "super_admin"
+            ? metaRole
+            : clerkRole();
+
+        return {
+          id: session.userId,
+          email,
+          full_name: fullName,
+          role,
+          avatar_url: user?.imageUrl ?? null,
+          is_active: true,
+          created_at: user?.createdAt ? new Date(user.createdAt).toISOString() : new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+      }
+    } catch {
+      // fall through to Supabase
+    }
+  }
+
+  return getSupabaseProfile();
 }
 
 export async function requireProfile() {

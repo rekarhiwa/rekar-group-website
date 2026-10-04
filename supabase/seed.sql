@@ -101,7 +101,7 @@ INSERT INTO public.homepage_sections (id, type, name, heading, subtitle, enabled
   ('00000000-0000-4000-8000-000000000002', 'project_marquee',   'Project Marquee',   NULL, NULL, TRUE,  2, '{}'::JSONB),
   ('00000000-0000-4000-8000-000000000003', 'services',          'Services',          'خزمەتگوزارییەکانمان', 'چارەسەری تەواو بۆ گەشەی دیجیتاڵی', TRUE, 3, '{}'::JSONB),
   ('00000000-0000-4000-8000-000000000004', 'featured_projects', 'Featured Projects', 'پڕۆژەکانمان', 'باشترین ناسنامەی کارمانن', TRUE, 4, '{}'::JSONB),
-  ('00000000-0000-4000-8000-000000000005', 'stats',             'Stats',             'ئامارەکانمان', NULL, TRUE, 5, '{}'::JSONB),
+  ('00000000-0000-4000-8000-000000000005', 'stats',             'Stats',             'ئامارەکانمان', NULL, FALSE, 5, '{}'::JSONB),
   ('00000000-0000-4000-8000-000000000006', 'process',           'Process',           'شێوازی کارکردن', 'لە بیرۆکەوە تا گەیاندن', FALSE, 6, '{}'::JSONB),
   ('00000000-0000-4000-8000-000000000007', 'clients',           'Clients',           'کڕیارەکانمان', NULL, FALSE, 7, '{}'::JSONB),
   ('00000000-0000-4000-8000-000000000008', 'posts',             'Posts',             'نوێترین زانیاری', 'بینین و شیکاری', FALSE, 8, '{}'::JSONB),
@@ -112,9 +112,8 @@ INSERT INTO public.homepage_sections (id, type, name, heading, subtitle, enabled
 -- Stats
 -- ---------------------------------------------------------------------------
 INSERT INTO public.stats (id, value, label, icon, sort_order, visible, show_in_hero) VALUES
-  ('00000000-0000-4000-8000-000000000020', '150+', 'پڕۆژەی تەواوکراو',     'briefcase', 1, TRUE, TRUE),
-  ('00000000-0000-4000-8000-000000000021', '98%',  'ڕەزامەندی کڕیارەکان', 'heart',     2, TRUE, TRUE),
-  ('00000000-0000-4000-8000-000000000022', '5+',   'ساڵ ئەزموون',          'calendar',  3, TRUE, TRUE);
+  ('00000000-0000-4000-8000-000000000020', '150+', 'پڕۆژەی تەواوکراو', 'briefcase', 1, TRUE, TRUE),
+  ('00000000-0000-4000-8000-000000000022', '5+',   'ساڵ ئەزموون',      'calendar',  2, TRUE, TRUE);
 
 -- ---------------------------------------------------------------------------
 -- Services (7 Kurdish names)
@@ -469,7 +468,7 @@ INSERT INTO public.navigation_items (
   ('00000000-0000-4000-8000-000000000070', 'سەرەتا',             '/',          'link', NULL, 1, FALSE, TRUE),
   ('00000000-0000-4000-8000-000000000071', 'خزمەتگوزارییەکان',  '/services',  'link', NULL, 2, FALSE, TRUE),
   ('00000000-0000-4000-8000-000000000072', 'پڕۆژەکان',           '/projects',  'link', NULL, 3, FALSE, TRUE),
-  ('00000000-0000-4000-8000-000000000073', 'زانیاری و نوێکاری',  '/insights',  'link', NULL, 4, FALSE, TRUE),
+  ('00000000-0000-4000-8000-000000000073', 'پۆستەکان',  '/insights',  'link', NULL, 4, FALSE, TRUE),
   ('00000000-0000-4000-8000-000000000074', 'دەربارەی ئێمە',      '/about',     'link', NULL, 5, FALSE, TRUE),
   ('00000000-0000-4000-8000-000000000075', 'پەیوەندی',           '/contact',   'link', NULL, 6, FALSE, TRUE);
 
@@ -556,7 +555,7 @@ INSERT INTO public.posts (
     'modern-web-design',
     'هەنگاوە سەرەکییەکانی دیزاین و گەشەپێدانی وێبسایتی سەرکەوتوو.',
     '<p>وێبسایتی مۆدێرن پێویستی بە دیزاینی ڕوون، خێرایی، و SEO هەیە.</p><p>لە ڕێکار گروپ ئێمە لەگەڵ کڕیار کار دەکەین بۆ دروستکردنی چارەسەری تایبەت.</p>',
-    NULL,
+    '/posts/modern-web-design.jpg',
     '00000000-0000-4000-8000-000000000120',
     NULL,
     TRUE,
@@ -564,7 +563,7 @@ INSERT INTO public.posts (
     '2025-01-10T00:00:00+00:00',
     NULL,
     NULL,
-    NULL
+    '/posts/modern-web-design.jpg'
   ),
   (
     '00000000-0000-4000-8000-000000000141',
@@ -588,7 +587,7 @@ INSERT INTO public.posts (
     'app-vs-website',
     'هەڵبژاردنی گونجاو بۆ کاروبارەکەت.',
     '<p>هەردووکیان سوودیان هەیە بەپێی ئامانج و بودجە.</p>',
-    NULL,
+    '/posts/app-vs-website.jpg',
     '00000000-0000-4000-8000-000000000120',
     NULL,
     FALSE,
@@ -596,7 +595,7 @@ INSERT INTO public.posts (
     '2025-03-01T00:00:00+00:00',
     NULL,
     NULL,
-    NULL
+    '/posts/app-vs-website.jpg'
   );
 
 INSERT INTO public.post_tags (post_id, tag_id) VALUES

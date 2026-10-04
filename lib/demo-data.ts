@@ -3,7 +3,6 @@ import type {
   HeroSettings,
   HomepageSection,
   NavigationItem,
-  Post,
   ProcessStep,
   Project,
   ProjectCategory,
@@ -15,6 +14,8 @@ import type {
   Technology,
   ThemeSettings,
 } from "@/types/database";
+
+export { demoPostCategories, demoPosts, demoTags } from "@/lib/demo-posts";
 
 export const demoSiteSettings: SiteSettings = {
   id: "00000000-0000-0000-0000-000000000001",
@@ -70,18 +71,17 @@ export const demoSections: HomepageSection[] = [
   { id: "s2", type: "project_marquee", name: "Project Marquee", heading: null, subtitle: null, enabled: true, sort_order: 2, settings: {}, created_at: "", updated_at: "" },
   { id: "s3", type: "services", name: "Services", heading: "خزمەتگوزارییەکانمان", subtitle: "چارەسەری تەواو بۆ گەشەی دیجیتاڵی", enabled: true, sort_order: 3, settings: {}, created_at: "", updated_at: "" },
   { id: "s4", type: "featured_projects", name: "Featured Projects", heading: "پڕۆژە دیارەکان", subtitle: "هەندێک لە کارەکانی ئێمە", enabled: true, sort_order: 4, settings: {}, created_at: "", updated_at: "" },
-  { id: "s5", type: "stats", name: "Stats", heading: "ئامارەکانمان", subtitle: null, enabled: true, sort_order: 5, settings: {}, created_at: "", updated_at: "" },
+  { id: "s5", type: "stats", name: "Stats", heading: "ئامارەکانمان", subtitle: null, enabled: false, sort_order: 5, settings: {}, created_at: "", updated_at: "" },
   { id: "s6", type: "process", name: "Process", heading: "شێوازی کارکردن", subtitle: "لە بیرۆکەوە تا گەیاندن", enabled: false, sort_order: 6, settings: {}, created_at: "", updated_at: "" },
   { id: "s7", type: "clients", name: "Clients", heading: "کڕیارەکانمان", subtitle: null, enabled: false, sort_order: 7, settings: {}, created_at: "", updated_at: "" },
-  { id: "s8", type: "posts", name: "Posts", heading: "نوێترین زانیاری", subtitle: "بینین و شیکاری", enabled: false, sort_order: 8, settings: {}, created_at: "", updated_at: "" },
+  { id: "s8", type: "posts", name: "Posts", heading: "نوێترین زانیاری", subtitle: "بینین و شیکاری", enabled: true, sort_order: 8, settings: { limit: 5 }, created_at: "", updated_at: "" },
   { id: "s9", type: "testimonials", name: "Testimonials", heading: "ڕای کڕیارەکان", subtitle: null, enabled: false, sort_order: 9, settings: {}, created_at: "", updated_at: "" },
   { id: "s10", type: "cta", name: "CTA", heading: "ئامادەیت بۆ دەستپێکردن؟", subtitle: "پەیوەندیمان پێوە بکە و پڕۆژەکەت باس بکە", enabled: true, sort_order: 10, settings: { button_label: "پەیوەندی", button_url: "/contact" }, created_at: "", updated_at: "" },
 ];
 
 export const demoStats: StatItem[] = [
   { id: "st1", value: "150+", label: "پڕۆژەی تەواوکراو", icon: "briefcase", sort_order: 1, visible: true, show_in_hero: true },
-  { id: "st2", value: "98%", label: "ڕەزامەندی کڕیارەکان", icon: "heart", sort_order: 2, visible: true, show_in_hero: true },
-  { id: "st3", value: "5+", label: "ساڵ ئەزموون", icon: "calendar", sort_order: 3, visible: true, show_in_hero: true },
+  { id: "st3", value: "5+", label: "ساڵ ئەزموون", icon: "calendar", sort_order: 2, visible: true, show_in_hero: true },
 ];
 
 export const demoServices: Service[] = [
@@ -253,7 +253,7 @@ export const demoNav: NavigationItem[] = [
   { id: "n1", label: "سەرەتا", url: "/", type: "link", parent_id: null, sort_order: 1, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
   { id: "n2", label: "خزمەتگوزارییەکان", url: "/services", type: "link", parent_id: null, sort_order: 2, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
   { id: "n3", label: "پڕۆژەکان", url: "/projects", type: "link", parent_id: null, sort_order: 3, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
-  { id: "n4", label: "زانیاری و نوێکاری", url: "/insights", type: "link", parent_id: null, sort_order: 4, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
+  { id: "n4", label: "پۆستەکان", url: "/insights", type: "link", parent_id: null, sort_order: 4, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
   { id: "n5", label: "دەربارەی ئێمە", url: "/about", type: "link", parent_id: null, sort_order: 5, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
   { id: "n6", label: "پەیوەندی", url: "/contact", type: "link", parent_id: null, sort_order: 6, open_in_new_tab: false, visible: true, created_at: "", updated_at: "" },
 ];
@@ -287,8 +287,3 @@ export const demoTestimonials: Testimonial[] = [
   { id: "t2", name: "هێمن سەعدی", job_title: "دامەزرێنەر", company: "Krin", avatar: null, testimonial: "تیمێکی پیشەیی و تێگەیشتنێکی قووڵ لە بازاڕی کوردی.", rating: 5, featured: true, visible: true, sort_order: 2 },
 ];
 
-export const demoPosts: Post[] = [
-  { id: "po1", title: "چۆن وێبسایتێکی مۆدێرن دروست دەکرێت؟", slug: "modern-web-design", excerpt: "هەنگاوە سەرەکییەکانی دیزاین و گەشەپێدانی وێبسایتی سەرکەوتوو.", content: "<p>وێبسایتی مۆدێرن پێویستی بە دیزاینی ڕوون، خێرایی، و SEO هەیە.</p><p>لە ڕێکار گروپ ئێمە لەگەڵ کڕیار کار دەکەین بۆ دروستکردنی چارەسەری تایبەت.</p>", cover_image: null, category_id: null, author_id: null, featured: true, status: "published", published_at: "2025-01-10T00:00:00Z", seo_title: null, seo_description: null, og_image: null, deleted_at: null, created_at: "", updated_at: "" },
-  { id: "po2", title: "گرنگی سۆشیال میدیا بۆ کاروبار", slug: "social-media-business", excerpt: "چۆن سۆشیال میدیا دەتوانێت فرۆشتن و ناسینەوە زیاد بکات.", content: "<p>سۆشیال میدیا ئامرازێکی بەهێزە بۆ پەیوەندی لەگەڵ کڕیار.</p>", cover_image: null, category_id: null, author_id: null, featured: false, status: "published", published_at: "2025-02-01T00:00:00Z", seo_title: null, seo_description: null, og_image: null, deleted_at: null, created_at: "", updated_at: "" },
-  { id: "po3", title: "ئەپی مۆبایل یان وێبسایت؟", slug: "app-vs-website", excerpt: "هەڵبژاردنی گونجاو بۆ کاروبارەکەت.", content: "<p>هەردووکیان سوودیان هەیە بەپێی ئامانج و بودجە.</p>", cover_image: null, category_id: null, author_id: null, featured: false, status: "published", published_at: "2025-03-01T00:00:00Z", seo_title: null, seo_description: null, og_image: null, deleted_at: null, created_at: "", updated_at: "" },
-];

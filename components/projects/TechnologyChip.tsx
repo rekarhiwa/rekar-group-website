@@ -11,7 +11,7 @@ export function TechnologyChip({
     <span
       dir="ltr"
       className={cn(
-        "inline-flex items-center rounded-full border border-[#C878FF]/20 bg-[#6F00B8]/10 px-3 py-1 text-xs font-medium text-[#E7C5FF]",
+        "inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-chip",
         className
       )}
     >

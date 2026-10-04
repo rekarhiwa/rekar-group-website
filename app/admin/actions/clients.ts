@@ -34,7 +34,7 @@ export async function saveClientAction(
       sort_order: parseNumber(formData.get("sort_order")),
       visible: parseBoolean(formData.get("visible")),
     }),
-    revalidate: ["/admin/clients", "/admin", "/"],
+    revalidate: ["/admin/clients", "/admin/content", "/admin", "/", "/about"],
   });
 }
 

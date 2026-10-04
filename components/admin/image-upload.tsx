@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
-import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { uploadMediaFileAction } from "@/app/admin/actions/media";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -37,35 +36,20 @@ export function ImageUpload({
   async function handleUpload(file: File | null) {
     if (!file) return;
 
-    if (!isSupabaseConfigured()) {
-      toast.error("هەڵەیەک ڕوویدا", {
-        description: "بۆ آپڵۆدکردن پێویستە Supabase ڕێکبخرێت.",
-      });
-      return;
-    }
-
     setUploading(true);
     try {
-      const supabase = createClient();
-      const objectPath = `${crypto.randomUUID()}/${file.name}`;
-      const { error: storageError } = await supabase.storage
-        .from("media")
-        .upload(objectPath, file, { upsert: true });
-      if (storageError) throw storageError;
-
-      const { data: publicUrlData } = supabase.storage.from("media").getPublicUrl(objectPath);
-      const publicUrl = publicUrlData.publicUrl;
-      await supabase.from("media").insert({
-        filename: file.name,
-        url: publicUrl,
-        size: file.size,
-        mime_type: file.type || "application/octet-stream",
-      });
-
-      setUrl(publicUrl);
+      const formData = new FormData();
+      formData.set("file", file);
+      formData.set("bucket", "media");
+      formData.set("prefix", "uploads");
+      const result = await uploadMediaFileAction(formData);
+      if (!result.ok || !result.url) {
+        throw new Error(result.error || "بارکردن سەرکەوتوو نەبوو");
+      }
+      setUrl(result.url);
       toast.success("پاشەکەوت کرا");
     } catch (error) {
-      toast.error("هەڵەیەک ڕوویدا", {
+      toast.error("بارکردنی وێنە سەرکەوتوو نەبوو", {
         description: error instanceof Error ? error.message : undefined,
       });
     } finally {

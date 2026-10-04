@@ -34,7 +34,7 @@ function MarqueeItem({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="glass flex shrink-0 items-center gap-3 rounded-full px-4 py-2 text-sm font-semibold text-[#C8ABD9] transition hover:border-[#C878FF]/35 hover:text-white"
+      className="glass flex shrink-0 items-center gap-3 rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:border-accent/35 hover:text-foreground"
     >
       <ProjectIcon project={project} />
       <span dir="auto">{project.name}</span>
@@ -58,7 +58,7 @@ export function ProjectMarquee({ projects }: { projects: Project[] }) {
 
   return (
     <section
-      className="overflow-hidden border-y border-white/[0.06] bg-[#190026]/45 py-5"
+      className="overflow-hidden border-y border-border bg-background-secondary/60 py-5"
       aria-label="پڕۆژەکانمان"
     >
       <div className="project-marquee group" dir="ltr">

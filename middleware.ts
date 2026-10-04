@@ -1,33 +1,40 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
+import { isClerkConfigured } from "@/lib/auth/clerk";
 import { updateSession } from "@/lib/supabase/middleware";
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 const isLoginRoute = createRouteMatcher(["/auth/login(.*)"]);
 
-export default clerkMiddleware(async (auth, request) => {
-  if (!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
-    return updateSession(request);
-  }
-
+const clerkHandler = clerkMiddleware(async (auth, request) => {
   const { userId } = await auth();
 
-  if (isAdminRoute(request) && !userId) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/auth/login";
-    url.searchParams.set("redirect_url", request.nextUrl.pathname);
-    return NextResponse.redirect(url);
+  // Clerk session present
+  if (userId) {
+    if (isLoginRoute(request)) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin";
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
   }
 
-  if (isLoginRoute(request) && userId) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/admin";
-    url.search = "";
-    return NextResponse.redirect(url);
+  // No Clerk user — allow Supabase auth to protect /admin when Clerk UI is down
+  if (isAdminRoute(request) || isLoginRoute(request)) {
+    return updateSession(request);
   }
 
   return NextResponse.next();
 });
+
+export default function middleware(request: NextRequest, event: NextFetchEvent) {
+  if (!isClerkConfigured()) {
+    return updateSession(request);
+  }
+
+  return clerkHandler(request, event);
+}
 
 export const config = {
   matcher: [

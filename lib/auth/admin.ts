@@ -21,8 +21,14 @@ export async function writeAuditLog(input: {
   try {
     const profile = await requireProfile();
     const supabase = await createClient();
+    const uuidLike =
+      typeof profile.id === "string" &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+        profile.id
+      );
     await supabase.from("audit_logs").insert({
-      user_id: profile.id,
+      // Clerk IDs are not UUIDs referencing auth.users / profiles
+      user_id: uuidLike ? profile.id : null,
       user_name: profile.full_name ?? profile.email,
       action: input.action,
       entity: input.entity,

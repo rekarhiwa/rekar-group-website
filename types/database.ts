@@ -252,6 +252,7 @@ export interface Post {
   created_at: string;
   updated_at: string;
   category?: PostCategory | null;
+  categories?: PostCategory[];
   tags?: Tag[];
   author?: Profile | null;
 }

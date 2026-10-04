@@ -39,91 +39,142 @@ export async function SettingsSitePanels() {
       <Card className="border-white/10 bg-white/[0.03] p-6">
         <h2 className="mb-4 text-xl font-semibold text-white">ڕێکخستنەکانی سایت</h2>
         <ServerForm action={saveSiteSettingsAction as never} className="grid gap-4 md:grid-cols-2">
-          <Input
-            name="company_name"
-            defaultValue={data.site.company_name}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="company_name_en"
-            defaultValue={data.site.company_name_en}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="tagline"
-            defaultValue={data.site.tagline ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="phone"
-            defaultValue={data.site.phone ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="email"
-            defaultValue={data.site.email ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="address"
-            defaultValue={data.site.address ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="website_url"
-            defaultValue={data.site.website_url ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="whatsapp"
-            defaultValue={data.site.whatsapp ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="logo_url"
-            defaultValue={data.site.logo_url ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="logo_mark_url"
-            defaultValue={data.site.logo_mark_url ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="favicon_url"
-            defaultValue={data.site.favicon_url ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="og_image_url"
-            defaultValue={data.site.og_image_url ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Textarea
-            name="default_seo_title"
-            defaultValue={data.site.default_seo_title ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Textarea
-            name="default_seo_description"
-            defaultValue={data.site.default_seo_description ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Textarea
-            name="footer_description"
-            defaultValue={data.site.footer_description ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Textarea
-            name="copyright_text"
-            defaultValue={data.site.copyright_text ?? ""}
-            className="border-white/10 bg-[#160021]"
-          />
-          <Input
-            name="google_maps_url"
-            defaultValue={data.site.google_maps_url ?? ""}
-            className="border-white/10 bg-[#160021] md:col-span-2"
-          />
+          <div>
+            <Label className="mb-2 block">ناوی کۆمپانیا</Label>
+            <Input
+              name="company_name"
+              defaultValue={data.site.company_name}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">ناوی ئینگلیزی</Label>
+            <Input
+              name="company_name_en"
+              defaultValue={data.site.company_name_en}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">تاگلاین</Label>
+            <Input
+              name="tagline"
+              defaultValue={data.site.tagline ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">تەلەفۆن</Label>
+            <Input
+              name="phone"
+              defaultValue={data.site.phone ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">ئیمەیڵ</Label>
+            <Input
+              name="email"
+              defaultValue={data.site.email ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">ناونیشان</Label>
+            <Input
+              name="address"
+              defaultValue={data.site.address ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">بەستەری وێبسایت</Label>
+            <Input
+              name="website_url"
+              defaultValue={data.site.website_url ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">واتساپ</Label>
+            <Input
+              name="whatsapp"
+              defaultValue={data.site.whatsapp ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">لۆگۆ</Label>
+            <Input
+              name="logo_url"
+              defaultValue={data.site.logo_url ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">لۆگۆی بچووک</Label>
+            <Input
+              name="logo_mark_url"
+              defaultValue={data.site.logo_mark_url ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">Favicon</Label>
+            <Input
+              name="favicon_url"
+              defaultValue={data.site.favicon_url ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">وێنەی OG</Label>
+            <Input
+              name="og_image_url"
+              defaultValue={data.site.og_image_url ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">سەردێڕی SEO</Label>
+            <Textarea
+              name="default_seo_title"
+              defaultValue={data.site.default_seo_title ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">وەسفی SEO</Label>
+            <Textarea
+              name="default_seo_description"
+              defaultValue={data.site.default_seo_description ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">وەسفی فوتر</Label>
+            <Textarea
+              name="footer_description"
+              defaultValue={data.site.footer_description ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div>
+            <Label className="mb-2 block">دەقی مافی لەبەرگرتنەوە</Label>
+            <Textarea
+              name="copyright_text"
+              defaultValue={data.site.copyright_text ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
+          <div className="md:col-span-2">
+            <Label className="mb-2 block">بەستەری Google Maps</Label>
+            <Input
+              name="google_maps_url"
+              defaultValue={data.site.google_maps_url ?? ""}
+              className="border-white/10 bg-[#160021]"
+            />
+          </div>
           <Button type="submit" disabled={data.demoMode} className="md:col-span-2 w-fit">
             پاشەکەوتکردنی ڕێکخستنەکانی سایت
           </Button>
@@ -274,25 +325,34 @@ export async function SettingsMediaPanel() {
 
 export async function SettingsUsersPanel() {
   const data = await getUsersData();
+  const { isClerkConfigured } = await import("@/lib/auth/clerk");
+  const clerk = isClerkConfigured();
   return (
     <Card className="border-white/10 bg-white/[0.03] p-6">
       <h2 className="mb-4 text-xl font-semibold text-white">بەکارهێنەران</h2>
-      <ServerForm action={saveUserAction as never} className="mb-6 grid gap-4 md:grid-cols-2">
-        <input type="hidden" name="id" value="" />
-        <Input name="email" placeholder="admin@rekar.group" className="border-white/10 bg-[#160021]" />
-        <Input name="full_name" placeholder="ناوی تەواو" className="border-white/10 bg-[#160021]" />
-        <select
-          name="role"
-          className="flex h-11 rounded-xl border border-white/10 bg-[#160021] px-3 text-sm text-white"
-        >
-          <option value="editor">دەستکاریکەر</option>
-          <option value="admin">ئەدمین</option>
-          <option value="super_admin">سوپەر ئەدمین</option>
-        </select>
-        <Button type="submit" disabled={data.demoMode} className="w-fit">
-          بانگهێشت / نوێکردنەوە
-        </Button>
-      </ServerForm>
+      {clerk ? (
+        <p className="mb-6 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-sm leading-7 text-amber-50">
+          چوونەژوورەوە لە ڕێگەی Clerk ـەوەیە. بۆ زیادکردنی بەکارهێنەری نوێ، لە Clerk Dashboard بانگهێشت
+          بکە و ڕۆڵ لە <span dir="ltr">publicMetadata.role</span> دابنێ (editor / admin / super_admin).
+        </p>
+      ) : (
+        <ServerForm action={saveUserAction as never} className="mb-6 grid gap-4 md:grid-cols-2">
+          <input type="hidden" name="id" value="" />
+          <Input name="email" placeholder="admin@rekar.group" className="border-white/10 bg-[#160021]" />
+          <Input name="full_name" placeholder="ناوی تەواو" className="border-white/10 bg-[#160021]" />
+          <select
+            name="role"
+            className="flex h-11 rounded-xl border border-white/10 bg-[#160021] px-3 text-sm text-white"
+          >
+            <option value="editor">دەستکاریکەر</option>
+            <option value="admin">ئەدمین</option>
+            <option value="super_admin">سوپەر ئەدمین</option>
+          </select>
+          <Button type="submit" disabled={data.demoMode} className="w-fit">
+            بانگهێشت / نوێکردنەوە
+          </Button>
+        </ServerForm>
+      )}
       <div className="space-y-3">
         {data.items.map((item) => (
           <div
@@ -305,11 +365,20 @@ export async function SettingsUsersPanel() {
                 {item.email} - {item.role} - {item.is_active ? "چالاک" : "ناچالاک"}
               </p>
             </div>
-            <ActionButton action={() => disableUserAction(item.id)} variant="destructive">
-              ناچالاککردن
-            </ActionButton>
+            {!clerk ? (
+              <ActionButton action={() => disableUserAction(item.id)} variant="destructive">
+                ناچالاککردن
+              </ActionButton>
+            ) : null}
           </div>
         ))}
+        {!data.items.length ? (
+          <p className="text-sm text-muted">
+            {clerk
+              ? "لیستی پڕۆفایلەکانی Supabase بەتاڵە؛ ڕۆڵی ئەدمین لە Clerk بەڕێوە دەبرێت."
+              : "هیچ بەکارهێنەرێک نییە."}
+          </p>
+        ) : null}
       </div>
     </Card>
   );

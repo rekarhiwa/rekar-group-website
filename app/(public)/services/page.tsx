@@ -8,7 +8,7 @@ export default async function ServicesPage() {
     <div className="px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 max-w-3xl space-y-4 text-start">
-          <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold tracking-[0.3em] text-light-violet uppercase">
+          <span className="inline-flex rounded-full border border-border bg-soft px-4 py-1 text-xs font-semibold tracking-[0.3em] text-light-violet uppercase">
             Services
           </span>
           <h1 className="text-4xl font-black tracking-tight text-foreground sm:text-5xl">

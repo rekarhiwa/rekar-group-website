@@ -78,6 +78,25 @@ BEGIN
 END;
 $$;
 
+-- ---------------------------------------------------------------------------
+-- Tables
+-- ---------------------------------------------------------------------------
+
+-- Profiles (linked to auth.users)
+CREATE TABLE public.profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users (id) ON DELETE CASCADE,
+  email TEXT NOT NULL,
+  full_name TEXT,
+  role public.user_role NOT NULL DEFAULT 'editor',
+  avatar_url TEXT,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX profiles_role_idx ON public.profiles (role);
+CREATE INDEX profiles_is_active_idx ON public.profiles (is_active);
+
 CREATE OR REPLACE FUNCTION public.get_user_role()
 RETURNS public.user_role
 LANGUAGE sql
@@ -120,25 +139,6 @@ SET search_path = public
 AS $$
   SELECT public.get_user_role() = 'super_admin';
 $$;
-
--- ---------------------------------------------------------------------------
--- Tables
--- ---------------------------------------------------------------------------
-
--- Profiles (linked to auth.users)
-CREATE TABLE public.profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users (id) ON DELETE CASCADE,
-  email TEXT NOT NULL,
-  full_name TEXT,
-  role public.user_role NOT NULL DEFAULT 'editor',
-  avatar_url TEXT,
-  is_active BOOLEAN NOT NULL DEFAULT TRUE,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX profiles_role_idx ON public.profiles (role);
-CREATE INDEX profiles_is_active_idx ON public.profiles (is_active);
 
 -- Site settings (singleton row expected)
 CREATE TABLE public.site_settings (

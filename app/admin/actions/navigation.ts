@@ -43,9 +43,12 @@ export async function saveNavigationItemAction(
       parent_id: input.parent_id || null,
       sort_order: parseNumber(formData.get("sort_order")),
       open_in_new_tab: parseBoolean(formData.get("open_in_new_tab")),
-      visible: parseBoolean(formData.get("visible")),
+      // Nav form has no visible switch yet — default new/edited items to visible.
+      visible: formData.has("visible")
+        ? parseBoolean(formData.get("visible"))
+        : true,
     }),
-    revalidate: ["/admin/navigation", "/admin", "/"],
+    revalidate: ["/admin/navigation", "/admin", "/admin/settings", "/"],
   });
 }
 

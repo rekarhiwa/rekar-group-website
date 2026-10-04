@@ -13,7 +13,7 @@ export function SiteFooter({
   socialLinks: SocialLink[];
 }) {
   return (
-    <footer className="border-t border-white/[0.06]">
+    <footer className="border-t border-border">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div className="space-y-5">
           <Link href="/" className="inline-flex items-center gap-3">
@@ -26,9 +26,9 @@ export function SiteFooter({
                 sizes="32px"
               />
             </span>
-            <span className="text-[15px] font-semibold text-white">{settings.company_name}</span>
+            <span className="text-[15px] font-semibold text-foreground">{settings.company_name}</span>
           </Link>
-          <p className="max-w-md text-sm leading-7 text-[#C8ABD9]">
+          <p className="max-w-md text-sm leading-7 text-muted">
             {settings.footer_description || settings.default_seo_description}
           </p>
           <div className="flex flex-wrap gap-4">
@@ -38,7 +38,7 @@ export function SiteFooter({
                 href={link.url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm text-[#C8ABD9] transition hover:text-white"
+                className="text-sm text-muted transition hover:text-foreground"
               >
                 {link.platform}
               </a>
@@ -47,7 +47,7 @@ export function SiteFooter({
         </div>
 
         <div>
-          <p className="mb-4 text-sm font-medium text-white">لینکەکان</p>
+          <p className="mb-4 text-sm font-medium text-foreground">لینکەکان</p>
           <div className="flex flex-col gap-3">
             {navigation
               .filter((item) => item.visible)
@@ -55,7 +55,7 @@ export function SiteFooter({
                 <Link
                   key={item.id}
                   href={item.url}
-                  className="text-sm text-[#C8ABD9] transition hover:text-white"
+                  className="text-sm text-muted transition hover:text-foreground"
                 >
                   {item.label}
                 </Link>
@@ -64,8 +64,8 @@ export function SiteFooter({
         </div>
 
         <div>
-          <p className="mb-4 text-sm font-medium text-white">پەیوەندی</p>
-          <div className="space-y-3 text-sm text-[#C8ABD9]">
+          <p className="mb-4 text-sm font-medium text-foreground">پەیوەندی</p>
+          <div className="space-y-3 text-sm text-muted">
             {settings.phone ? <p>{settings.phone}</p> : null}
             {settings.email ? <p>{settings.email}</p> : null}
             {settings.address ? <p>{settings.address}</p> : null}
@@ -73,8 +73,8 @@ export function SiteFooter({
         </div>
       </div>
 
-      <div className="border-t border-white/[0.06]">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-[#C8ABD9] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <div className="border-t border-border">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>{settings.copyright_text || `© ${settings.company_name}`}</p>
           <p>{settings.company_name_en}</p>
         </div>

@@ -358,13 +358,15 @@ export async function uploadEditorImageAction(formData: FormData): Promise<{
   const { data } = guard.supabase.storage.from("media").getPublicUrl(path);
 
   try {
+    const { isClerkConfigured } = await import("@/lib/auth/clerk");
     const profile = await requireProfile();
     await guard.supabase.from("media").insert({
       filename: file.name,
       url: data.publicUrl,
       size: file.size,
       mime_type: file.type,
-      uploaded_by: profile.id,
+      // Clerk user IDs are not rows in public.profiles
+      uploaded_by: isClerkConfigured() ? null : profile.id,
     });
   } catch {
     // non-fatal

@@ -21,8 +21,8 @@ export function ProcessSection({
           {steps.map((step) => (
             <div key={step.id} className="glass rounded-[2rem] p-7">
               <div className="mb-6 flex items-center justify-between">
-                <span className="text-5xl font-black text-white/12">{step.step_number}</span>
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-light-violet">
+                <span className="text-5xl font-black text-foreground/10">{step.step_number}</span>
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-soft text-light-violet">
                   <CmsIcon name={step.icon ?? undefined} className="h-5 w-5" />
                 </div>
               </div>

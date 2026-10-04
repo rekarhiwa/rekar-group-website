@@ -45,7 +45,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
             key={image.id}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-[#190026] text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C878FF]"
+            className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-background-secondary text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <Image
               src={image.image_url}

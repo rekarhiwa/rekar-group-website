@@ -1,25 +1,42 @@
 "use client";
 
+import * as React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { cn } from "@/lib/utils";
 
 export function Switch({
   className,
+  name,
+  checked,
+  defaultChecked,
+  onCheckedChange,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitives.Root>) {
+  const isControlled = checked !== undefined;
+  const [uncontrolled, setUncontrolled] = React.useState(Boolean(defaultChecked));
+  const on = isControlled ? Boolean(checked) : uncontrolled;
+
   return (
-    <SwitchPrimitives.Root
-      className={cn(
-        "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-border transition-colors data-[state=checked]:bg-primary data-[state=unchecked]:bg-card",
-        className
-      )}
-      {...props}
-    >
-      <SwitchPrimitives.Thumb
+    <>
+      {name ? <input type="hidden" name={name} value={on ? "on" : ""} /> : null}
+      <SwitchPrimitives.Root
         className={cn(
-          "pointer-events-none block h-5 w-5 rounded-full bg-white shadow transition-transform data-[state=checked]:-translate-x-4 data-[state=unchecked]:-translate-x-0.5"
+          "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-border transition-colors data-[state=checked]:bg-primary data-[state=unchecked]:bg-card",
+          className
         )}
-      />
-    </SwitchPrimitives.Root>
+        checked={on}
+        onCheckedChange={(next) => {
+          if (!isControlled) setUncontrolled(next);
+          onCheckedChange?.(next);
+        }}
+        {...props}
+      >
+        <SwitchPrimitives.Thumb
+          className={cn(
+            "pointer-events-none block h-5 w-5 rounded-full bg-white shadow transition-transform data-[state=checked]:-translate-x-4 data-[state=unchecked]:-translate-x-0.5"
+          )}
+        />
+      </SwitchPrimitives.Root>
+    </>
   );
 }

@@ -58,11 +58,11 @@ export function ProjectsExplorer({
           <ProjectSearch value={search} onChange={setSearch} />
           <label className="relative flex min-w-52 items-center">
             <span className="sr-only">ڕیزکردن</span>
-            <ArrowDownUp className="pointer-events-none absolute right-4 h-4 w-4 text-[#C8ABD9]" />
+            <ArrowDownUp className="pointer-events-none absolute right-4 h-4 w-4 text-muted" />
             <select
               value={sort}
               onChange={(event) => setSort(event.target.value as SortValue)}
-              className="h-12 w-full appearance-none rounded-2xl border border-white/10 bg-[#190026] pr-11 pl-4 text-sm text-[#FBF7FF] outline-none transition focus:border-[#C878FF]/45"
+              className="h-12 w-full appearance-none rounded-2xl border border-border bg-background-secondary pr-11 pl-4 text-sm text-foreground outline-none transition focus:border-accent/45"
             >
               <option value="newest">نوێترین</option>
               <option value="oldest">کۆنترین</option>
@@ -70,7 +70,7 @@ export function ProjectsExplorer({
             </select>
           </label>
         </div>
-        <div className="mt-4 border-t border-white/[0.06] pt-4">
+        <div className="mt-4 border-t border-border pt-4">
           <ProjectFilter categories={categories} value={category} onChange={setCategory} />
         </div>
       </div>
@@ -81,7 +81,7 @@ export function ProjectsExplorer({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25 }}
       >
-        <div className="mb-5 text-sm text-[#C8ABD9]">
+        <div className="mb-5 text-sm text-muted">
           {visibleProjects.length} پڕۆژە
         </div>
         <ProjectGrid projects={visibleProjects} />

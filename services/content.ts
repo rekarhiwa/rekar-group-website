@@ -143,10 +143,13 @@ export async function getStats(heroOnly = false): Promise<StatItem[]> {
     const supabase = await db();
     let q = supabase.from("stats").select("*").eq("visible", true).order("sort_order");
     if (heroOnly) q = q.eq("show_in_hero", true);
-    const { data } = await q;
-    return data?.length ? data : demoStats;
+    const { data, error } = await q;
+    if (error) return demoStats.filter((s) => s.visible && (!heroOnly || s.show_in_hero));
+    // Prefer real CMS rows (including empty) so deleted stats stay gone.
+    if (Array.isArray(data)) return data;
+    return demoStats.filter((s) => s.visible && (!heroOnly || s.show_in_hero));
   } catch {
-    return demoStats;
+    return demoStats.filter((s) => s.visible && (!heroOnly || s.show_in_hero));
   }
 }
 

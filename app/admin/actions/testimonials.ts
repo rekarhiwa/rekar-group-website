@@ -40,7 +40,7 @@ export async function saveTestimonialAction(
       visible: parseBoolean(formData.get("visible")),
       sort_order: parseNumber(formData.get("sort_order")),
     }),
-    revalidate: ["/admin/testimonials", "/admin", "/"],
+    revalidate: ["/admin/testimonials", "/admin/content", "/admin", "/", "/about"],
   });
 }
 

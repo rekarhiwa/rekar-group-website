@@ -20,7 +20,7 @@ export function StatsSection({
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.id} className="glass rounded-[2rem] p-7 text-center">
-              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-light-violet">
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-soft text-light-violet">
                 <CmsIcon name={stat.icon ?? undefined} className="h-6 w-6" />
               </div>
               <div className="text-4xl font-black text-foreground">{stat.value}</div>

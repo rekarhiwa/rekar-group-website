@@ -9,14 +9,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     settings.website_url ||
     "https://www.rekar.group";
 
-  const staticRoutes = ["", "/services", "/projects", "/insights", "/about", "/contact"].map(
-    (path) => ({
+  const staticRoutes = [
+    "",
+    "/services",
+    "/projects",
+    "/insights",
+    "/about",
+    "/contact",
+  ].map((path) => ({
       url: `${base}${path}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: path === "" ? 1 : 0.8,
-    })
-  );
+    }));
 
   const [projects, posts, services] = await Promise.all([
     getProjects(),

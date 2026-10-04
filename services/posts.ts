@@ -1,5 +1,6 @@
 import { isSupabaseConfigured } from "@/lib/supabase/config";
-import { demoPosts } from "@/lib/demo-data";
+import { demoPostCategories, demoPosts, demoTags } from "@/lib/demo-data";
+import { getPostCategories, postHasCategory } from "@/lib/posts/taxonomy";
 import { isPostPubliclyVisible } from "@/lib/posts/utils";
 import { publishDueScheduledPosts } from "@/lib/posts/publish-due";
 import type { Post, PostCategory, Profile, Tag } from "@/types/database";
@@ -18,6 +19,12 @@ function mapPost(data: Record<string, unknown>): Post {
     ...(data as unknown as Post),
     tags,
     category: (data.category as PostCategory) || null,
+    categories:
+      (data.categories as PostCategory[] | undefined)?.length
+        ? (data.categories as PostCategory[])
+        : data.category
+          ? [data.category as PostCategory]
+          : [],
     author: (data.author as Profile) || null,
   };
 }
@@ -37,10 +44,19 @@ export async function getPublicPosts(opts?: {
   if (!isSupabaseConfigured()) {
     let list = demoPosts.filter((p) => isPostPubliclyVisible(p));
     if (opts?.featuredOnly) list = list.filter((p) => p.featured);
+    if (opts?.categoryId) {
+      const wanted = demoPostCategories.find((c) => c.id === opts.categoryId);
+      list = list.filter((p) =>
+        wanted ? postHasCategory(p, wanted.slug) : p.category_id === opts.categoryId
+      );
+    }
     if (opts?.search) {
       const q = opts.search.toLowerCase();
       list = list.filter(
-        (p) => p.title.toLowerCase().includes(q) || p.excerpt?.toLowerCase().includes(q)
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.excerpt?.toLowerCase().includes(q) ||
+          p.content?.toLowerCase().includes(q)
       );
     }
     return opts?.limit ? list.slice(0, opts.limit) : list;
@@ -62,7 +78,12 @@ export async function getPublicPosts(opts?: {
     let list = ((data as Record<string, unknown>[]) ?? []).map(mapPost).filter(isPostPubliclyVisible);
 
     if (opts?.featuredOnly) list = list.filter((p) => p.featured);
-    if (opts?.categoryId) list = list.filter((p) => p.category_id === opts.categoryId);
+    if (opts?.categoryId) {
+      const wanted = demoPostCategories.find((c) => c.id === opts.categoryId);
+      list = list.filter((p) =>
+        wanted ? postHasCategory(p, wanted.slug) : p.category_id === opts.categoryId
+      );
+    }
     if (opts?.search) {
       const s = opts.search.toLowerCase();
       list = list.filter(
@@ -111,7 +132,10 @@ export async function getRelatedPosts(post: Post, limit = 3): Promise<Post[]> {
     .filter((p) => p.id !== post.id)
     .map((p) => {
       let score = 0;
-      if (post.category_id && p.category_id === post.category_id) score += 3;
+      const sourceCats = new Set(getPostCategories(post).map((c) => c.id));
+      for (const category of getPostCategories(p)) {
+        if (sourceCats.has(category.id)) score += 3;
+      }
       for (const tag of p.tags ?? []) {
         if (tagIds.has(tag.id)) score += 1;
       }
@@ -125,6 +149,11 @@ export async function getRelatedPosts(post: Post, limit = 3): Promise<Post[]> {
 
   const fillers = all
     .filter((p) => p.id !== post.id && !related.some((r) => r.id === p.id))
+    .sort((a, b) => {
+      const aSame = post.category_id && a.category_id === post.category_id ? 1 : 0;
+      const bSame = post.category_id && b.category_id === post.category_id ? 1 : 0;
+      return bSame - aSame;
+    })
     .slice(0, limit - related.length);
   return [...related, ...fillers];
 }
@@ -228,8 +257,8 @@ export async function getAdminPostById(id: string): Promise<Post | null> {
 export async function getPostFormOptions() {
   if (!isSupabaseConfigured()) {
     return {
-      categories: [] as PostCategory[],
-      tags: [] as Tag[],
+      categories: demoPostCategories,
+      tags: demoTags,
       authors: [] as Profile[],
     };
   }

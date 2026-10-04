@@ -43,8 +43,8 @@ function DetailSection({
 
   return (
     <section className="glass rounded-[2rem] p-7 sm:p-8">
-      <h2 className="text-2xl font-bold text-[#FBF7FF]">{title}</h2>
-      <p className="mt-4 whitespace-pre-line text-sm leading-8 text-[#C8ABD9]">
+      <h2 className="text-2xl font-bold text-foreground">{title}</h2>
+      <p className="mt-4 whitespace-pre-line text-sm leading-8 text-muted">
         {content}
       </p>
     </section>
@@ -87,7 +87,7 @@ export default async function ProjectDetailsPage(
 
         {featureItems.length ? (
           <section>
-            <h2 className="text-3xl font-bold text-[#FBF7FF]">تایبەتمەندییەکان</h2>
+            <h2 className="text-3xl font-bold text-foreground">تایبەتمەندییەکان</h2>
             <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {featureItems.map((feature) => (
                 <ProjectFeatureCard key={feature.id} feature={feature} />
@@ -98,7 +98,7 @@ export default async function ProjectDetailsPage(
 
         {project.technologies?.length ? (
           <section className="glass rounded-[2rem] p-7 sm:p-8">
-            <h2 className="text-2xl font-bold text-[#FBF7FF]">
+            <h2 className="text-2xl font-bold text-foreground">
               تەکنەلۆژیا بەکارهاتووەکان
             </h2>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -115,14 +115,14 @@ export default async function ProjectDetailsPage(
 
         {project.case_study ? (
           <section className="glass rounded-[2rem] p-7 sm:p-8">
-            <h2 className="text-2xl font-bold text-[#FBF7FF]">وردەکاری توێژینەوە</h2>
+            <h2 className="text-2xl font-bold text-foreground">وردەکاری توێژینەوە</h2>
             <RichContent html={project.case_study} className="mt-6" />
           </section>
         ) : null}
 
         {project.images?.length ? (
           <section>
-            <h2 className="text-3xl font-bold text-[#FBF7FF]">وێنەکانی پڕۆژە</h2>
+            <h2 className="text-3xl font-bold text-foreground">وێنەکانی پڕۆژە</h2>
             <div className="mt-7">
               <ProjectGallery images={project.images} />
             </div>
@@ -131,7 +131,7 @@ export default async function ProjectDetailsPage(
 
         {relatedProjects.length ? (
           <section>
-            <h2 className="text-3xl font-bold text-[#FBF7FF]">
+            <h2 className="text-3xl font-bold text-foreground">
               پڕۆژە پەیوەندیدارەکان
             </h2>
             <div className="mt-7 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
