@@ -88,6 +88,7 @@ export function ProjectHero({ project }: { project: Project }) {
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
               className="object-cover"
+              unoptimized
             />
           ) : (
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(200,120,255,0.3),transparent_28%),linear-gradient(145deg,#27003b,#100018)]" />

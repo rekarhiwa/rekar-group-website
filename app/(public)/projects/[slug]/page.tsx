@@ -63,7 +63,7 @@ export default async function ProjectDetailsPage(
   const featureItems: ProjectFeature[] =
     project.feature_items?.length
       ? project.feature_items
-      : project.features.map((title, index) => ({
+      : (project.features ?? []).map((title, index) => ({
           id: `${project.id}-feature-${index}`,
           project_id: project.id,
           title,

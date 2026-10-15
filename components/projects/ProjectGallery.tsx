@@ -53,6 +53,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition duration-500 group-hover:scale-105"
+              unoptimized
             />
             {image.caption ? (
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 pt-10 text-sm text-white">
@@ -118,6 +119,7 @@ export function ProjectGallery({ images }: { images: ProjectImage[] }) {
                 fill
                 sizes="100vw"
                 className="object-contain"
+                unoptimized
               />
             </div>
             {activeImage.caption ? (
