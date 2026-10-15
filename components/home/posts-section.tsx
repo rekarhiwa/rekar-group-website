@@ -17,9 +17,15 @@ export function PostsSection({
   if (!posts.length) return null;
 
   return (
-    <section className="px-4 py-20 sm:px-6 lg:px-8">
+    <section className="px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading eyebrow="پۆستەکان" title={title} subtitle={subtitle} />
+        <SectionHeading
+          index={3}
+          eyebrow="پۆستەکان"
+          title={title}
+          subtitle={subtitle}
+          align="center"
+        />
         <div className="grid gap-6 lg:grid-cols-3">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />

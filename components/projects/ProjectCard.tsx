@@ -48,14 +48,15 @@ export function ProjectCard({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#100018]/90 via-transparent to-transparent" />
         <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4">
-          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-[#100018]/80 p-3 shadow-lg backdrop-blur">
+          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-[#100018]/85 p-1.5 shadow-lg backdrop-blur">
             {isImageSource(project.icon) ? (
               <Image
                 src={project.icon!}
                 alt=""
-                width={40}
-                height={40}
-                className="h-full w-full object-contain"
+                width={48}
+                height={48}
+                className="h-full w-full rounded-xl object-cover"
+                unoptimized
               />
             ) : (
               <CmsIcon

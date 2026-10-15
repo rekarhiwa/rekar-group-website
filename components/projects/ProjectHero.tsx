@@ -16,7 +16,8 @@ function ProjectIcon({ project }: { project: Project }) {
         alt=""
         width={56}
         height={56}
-        className="h-14 w-14 object-contain"
+        className="h-14 w-14 rounded-2xl object-contain"
+        unoptimized
       />
     );
   }
@@ -45,7 +46,7 @@ export function ProjectHero({ project }: { project: Project }) {
           </Link>
 
           <div className="flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-border bg-soft p-3">
+            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-border bg-soft p-1.5">
               <ProjectIcon project={project} />
             </div>
             {project.category?.name ? (

@@ -86,7 +86,10 @@ export async function getPublishedProjects(opts?: {
       );
     }
     if (opts?.sort === "oldest") list = [...list].reverse();
-    if (opts?.sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    else if (opts?.sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    else if (opts?.featured || opts?.marquee) {
+      list = [...list].sort((a, b) => a.sort_order - b.sort_order);
+    }
     return opts?.limit ? list.slice(0, opts.limit) : list;
   }
 
@@ -123,7 +126,7 @@ export async function getPublishedProjects(opts?: {
 }
 
 export async function getFeaturedProjects() {
-  return getPublishedProjects({ featured: true, sort: "newest" });
+  return getPublishedProjects({ featured: true });
 }
 
 export async function getMarqueeProjects() {

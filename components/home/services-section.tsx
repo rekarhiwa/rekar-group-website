@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+import { SectionHeading } from "@/components/public/section-heading";
 import type { Service } from "@/types/database";
 
 export function ServicesSection({
@@ -15,16 +16,15 @@ export function ServicesSection({
   if (!services.length) return null;
 
   return (
-    <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+    <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 max-w-xl space-y-2">
-          <h2 className="text-2xl font-medium tracking-tight text-foreground sm:text-[1.65rem]">
-            {title}
-          </h2>
-          {subtitle ? (
-            <p className="text-sm leading-6 text-muted">{subtitle}</p>
-          ) : null}
-        </div>
+        <SectionHeading
+          index={1}
+          eyebrow="خزمەتگوزاری"
+          title={title}
+          subtitle={subtitle}
+          className="mb-10"
+        />
 
         <div className="divide-y divide-border">
           {services.map((service) => (

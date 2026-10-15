@@ -13,7 +13,7 @@ export function SiteFooter({
   socialLinks: SocialLink[];
 }) {
   return (
-    <footer className="border-t border-border">
+    <footer className="glass-nav border-t border-white/10">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div className="space-y-5">
           <Link href="/" className="inline-flex items-center gap-3">

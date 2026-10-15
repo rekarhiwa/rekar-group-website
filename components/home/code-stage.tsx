@@ -255,7 +255,7 @@ export function CodeStage() {
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.35, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0B0014]"
+      className="relative overflow-hidden bg-[#0B0014]"
     >
       <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-[#7B00C8]/25 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -left-10 h-72 w-72 rounded-full bg-[#9A24F0]/15 blur-3xl" />

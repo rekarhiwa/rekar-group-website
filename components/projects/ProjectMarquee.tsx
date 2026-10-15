@@ -14,9 +14,10 @@ function ProjectIcon({ project }: { project: Project }) {
       <Image
         src={project.icon}
         alt=""
-        width={32}
-        height={32}
-        className="h-8 w-8 rounded-lg object-contain"
+        width={36}
+        height={36}
+        className="h-9 w-9 rounded-lg object-contain"
+        unoptimized
       />
     );
   }
@@ -25,7 +26,7 @@ function ProjectIcon({ project }: { project: Project }) {
     <CmsIcon
       name={project.icon ?? undefined}
       fallback={Briefcase}
-      className="h-5 w-5 text-[#C878FF]"
+      className="h-4 w-4 text-light-violet"
     />
   );
 }
@@ -34,10 +35,17 @@ function MarqueeItem({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="glass flex shrink-0 items-center gap-3 rounded-full px-4 py-2 text-sm font-semibold text-muted transition hover:border-accent/35 hover:text-foreground"
+      className="marquee-chip glass group flex shrink-0 items-center gap-2.5 !rounded-full"
     >
-      <ProjectIcon project={project} />
-      <span dir="auto">{project.name}</span>
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.08] ring-1 ring-white/10">
+        <ProjectIcon project={project} />
+      </span>
+      <span dir="auto" className="text-sm font-medium text-muted transition group-hover:text-foreground">
+        {project.name}
+      </span>
+      <span className="text-white/20" aria-hidden>
+        ·
+      </span>
     </Link>
   );
 }
@@ -45,20 +53,18 @@ function MarqueeItem({ project }: { project: Project }) {
 export function ProjectMarquee({ projects }: { projects: Project[] }) {
   const loopProjects = useMemo(() => {
     if (!projects.length) return [];
-    // Keep the strip wide enough for a seamless loop on large screens.
-    const minItems = 12;
-    const copies = Math.max(2, Math.ceil(minItems / projects.length));
+    const minItems = 14;
+    const copies = Math.max(3, Math.ceil(minItems / projects.length));
     return Array.from({ length: copies }, () => projects).flat();
   }, [projects]);
 
   if (!projects.length) return null;
 
-  // Two identical halves → animate exactly -50% with no visible jump.
   const halves = [loopProjects, loopProjects];
 
   return (
     <section
-      className="overflow-hidden border-y border-border bg-background-secondary/60 py-5"
+      className="glass-nav overflow-hidden border-y border-white/10 py-4"
       aria-label="پڕۆژەکانمان"
     >
       <div className="project-marquee group" dir="ltr">
@@ -66,7 +72,7 @@ export function ProjectMarquee({ projects }: { projects: Project[] }) {
           {halves.map((half, halfIndex) => (
             <div
               key={halfIndex}
-              className="flex shrink-0 items-center gap-4 px-2"
+              className="flex shrink-0 items-center gap-1 px-1"
               aria-hidden={halfIndex > 0}
             >
               {half.map((project, index) => (
