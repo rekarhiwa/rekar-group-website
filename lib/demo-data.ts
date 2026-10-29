@@ -37,7 +37,7 @@ export const demoSiteSettings: SiteSettings = {
   google_maps_url: null,
   footer_description:
     "ڕێکار گروپ — دەزگای دیجیتاڵ و تەکنەلۆجیا. چارەسەری نوێ بۆ گەشەی کاروبار و براند.",
-  copyright_text: "© ڕێکار گروپ. هەموو مافەکان پارێزراون.",
+  copyright_text: "© 2026 Walam Rekar Group. All Rights Reserved.",
   updated_at: new Date().toISOString(),
 };
 
